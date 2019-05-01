@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotificationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="8dp"
+            fab:menu_animationDelayPerItem="55"
+            fab:menu_backgroundColor="@android:color/transparent"
+            fab:menu_buttonSpacing="5dp"
+            fab:menu_colorPressed="#8401C5"
+            fab:menu_colorRipple="#8BC34A"
+            fab:menu_fab_size="normal"
+            fab:menu_labels_colorNormal="#FFFFFF"
+            fab:menu_labels_colorPressed="#80337E00"
+            fab:menu_labels_colorRipple="#3B00B8D4"
+            fab:menu_labels_cornerRadius="3dp"
+            fab:menu_labels_ellipsize="none"
+            fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+            fab:menu_labels_maxLines="1"
+            fab:menu_labels_position="left"
+            fab:menu_labels_showAnimation="@anim/fab_slide_out_to_right"
+            fab:menu_labels_showShadow="true"
+            fab:menu_labels_singleLine="false"
+            fab:menu_labels_textColor="#AA00FF"
+            fab:menu_labels_textSize="15dp"
+            fab:menu_openDirection="up"
+            fab:menu_shadowRadius="4dp"
+            fab:menu_shadowXOffset="1dp"
+            fab:menu_shadowYOffset="4dp"
+            fab:menu_showShadow="true">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/teachers_only_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_white_24dp"
+                fab:fab_label="Teachers Only" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/public_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_public_public_24dp"
+                fab:fab_label="Public" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/local_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_supervisor_account_black_24dp"
+                fab:fab_label="Local" />
+
+        </com.github.clans.fab.FloatingActionMenu>
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

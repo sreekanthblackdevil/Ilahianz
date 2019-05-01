@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="1dp">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="7dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:id="@+id/relat_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00B8D4"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:orientation="horizontal"
+                tools:ignore="UnusedAttribute">
+
+                <TextView
+                    android:id="@+id/show_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Hello"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/seen_indicator"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_below="@+id/card_view"
+            android:layout_alignEnd="@+id/card_view"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="5dp" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/seen"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/card_view"-->
+        <!--android:layout_marginStart="12dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:layout_toEndOf="@+id/time_view"-->
+        <!--android:text="seen"-->
+        <!--android:textSize="12sp"-->
+        <!--tools:ignore="HardcodedText,SmallSp" />-->
+        <TextView
+            android:id="@+id/time_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_view"
+            android:layout_alignStart="@+id/card_view"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            android:text="12:12"
+            android:textSize="8sp"
+            tools:ignore="HardcodedText,SmallSp" />
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="300dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/dev_bg"
+    android:layout_gravity="center">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_Image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:textSize="18sp"
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_Image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="username"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/edit_username_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10sp"
+        android:layout_toStartOf="@+id/emoji"
+        android:background="@drawable/edittext_background"
+        android:drawableStart="@drawable/ic_person_white_24dp"
+        android:drawablePadding="12dp"
+        android:ems="8"
+        android:fontFamily="casual"
+        android:hint="Username"
+        android:inputType="textShortMessage"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:textColorHint="#ffffff"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/ok_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/popup_btn_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_action_check" />
+
+    <ImageView
+        android:id="@+id/emoji"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/username"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/popup_btn_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_action_emoji_white" />
+
+    <ImageView
+        android:id="@+id/cancel_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/popup_btn_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_close_white_24dp" />
+</RelativeLayout>
