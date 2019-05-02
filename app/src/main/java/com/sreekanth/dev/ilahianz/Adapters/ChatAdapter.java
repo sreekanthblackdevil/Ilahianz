@@ -27,12 +27,13 @@ import com.sreekanth.dev.ilahianz.R;
 import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
 import com.sreekanth.dev.ilahianz.model.Chat;
 import com.sreekanth.dev.ilahianz.model.User;
-import com.sreekanth.dev.ilahianz.utils.FileUtil;
 
 import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.sreekanth.dev.ilahianz.Supports.FileSupports.saveImage;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
@@ -197,7 +198,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileUtil.saveImage(mContext, profile_image, user);
+                saveImage(mContext, profile_image, user);
+
             }
         });
         message.setOnClickListener(new View.OnClickListener() {

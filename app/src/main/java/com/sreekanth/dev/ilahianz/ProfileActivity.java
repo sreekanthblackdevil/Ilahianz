@@ -1,4 +1,11 @@
 package com.sreekanth.dev.ilahianz;
+/**
+ * This code {ProfileActivity}
+ * Created on May-01-2019
+ * Author Sreekanth K R
+ * name Ilahianz
+ * Github https://github.com/sreekanthblackdevil/Ilahianz
+ */
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -12,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -60,6 +68,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -76,18 +85,17 @@ public class ProfileActivity extends AppCompatActivity {
     TextView username, about, birthday;
     private static final int CAMERA_REQUEST = 200;
     DatePickerDialog.OnDateSetListener dateSetListener;
-    Dialog change_username, change_description;
+    Dialog change_username, change_description, changeNickname;
 
     DatabaseReference reference;
     FirebaseUser fuser;
     ImageView change_profile;
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 998;
-    private Uri imageUri;
     private StorageTask uploadTask;
     private int birth_day, birth_month, birth_year;
     Dialog profile_view;
-    ImageView changeName;
+    ImageView changeName, editNickname;
     LinearLayout chaneDescription, ChangeBirthday;
     String username_txt;
     String imageURL;
@@ -107,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
     CardView nickname_carry;
     Intent intent;
     boolean fetched;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +140,10 @@ public class ProfileActivity extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance();
         progress = findViewById(R.id.progressBar);
         nickname = findViewById(R.id.nickname);
+        editNickname = findViewById(R.id.edit_nickname);
         nickname_carry = findViewById(R.id.card6);
         intent = getIntent();
+        view = View.inflate(this, R.layout.activity_profile, null);
         init();
         fetched = false;
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
@@ -156,44 +167,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(ProfileActivity.this);
-                dialog.setContentView(R.layout.edit_phone_number);
-                ImageView ok = dialog.findViewById(R.id.ok);
-                ImageView cancel = dialog.findViewById(R.id.cancel);
-                final EditText number = dialog.findViewById(R.id.phone_number);
-                number.setText(user1.getPhoneNumber());
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!TextUtils.isEmpty(number.getText().toString())) {
-                            if (TextUtils.isDigitsOnly(number.getText().toString())) {
-                                if (TextUtils.getTrimmedLength(number.getText().toString()) >= 10) {
-                                    UpdateInfo("PhoneNumber", number.getText().toString());
-                                    dialog.dismiss();
-                                } else
-                                    Toast.makeText(ProfileActivity.this,
-                                            "Phone number must be 10 Digits", Toast.LENGTH_SHORT).show();
-                            } else
-                                Toast.makeText(ProfileActivity.this,
-                                        "Phone number must be digits !", Toast.LENGTH_SHORT).show();
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
         pro_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +227,7 @@ public class ProfileActivity extends AppCompatActivity {
         calendar.set(Calendar.DAY_OF_MONTH, birth_day);
         calendar.set(Calendar.MONTH, birth_month);
         calendar.set(Calendar.YEAR, birth_year);
-        SimpleDateFormat format = new SimpleDateFormat(getString(R.string.simple_date_formate));
+        SimpleDateFormat format = new SimpleDateFormat(getString(R.string.simple_date_formate), Locale.US);
         String birthDay = format.format(calendar.getTime());
         birthday.setText(birthDay);
 
@@ -273,7 +246,52 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void changes() {
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Supports.Connected(ProfileActivity.this)) {
+                    if (fetched) {
+                        final Dialog dialog = new Dialog(ProfileActivity.this);
+                        dialog.setContentView(R.layout.edit_phone_number);
+                        ImageView ok = dialog.findViewById(R.id.ok);
+                        ImageView cancel = dialog.findViewById(R.id.cancel);
+                        final EditText number = dialog.findViewById(R.id.phone_number);
+                        number.setText(getUserInfo("number"));
+                        number.setSelection(0, getUserInfo("number").length());
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!TextUtils.isEmpty(number.getText().toString())) {
+                                    if (TextUtils.isDigitsOnly(number.getText().toString())) {
+                                        if (TextUtils.getTrimmedLength(number.getText().toString()) >= 10) {
+                                            UpdateInfo("PhoneNumber", number.getText().toString());
+                                            dialog.dismiss();
+                                        } else {
+                                            number.setError("Must be 10 Digits");
+                                        }
+                                    } else
+                                        number.setError("Must be Digits");
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
 
+                        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    } else {
+                        Toast.makeText(ProfileActivity.this, "Loading information...", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null);
+                }
+            }
+        });
         changeName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -290,8 +308,9 @@ public class ProfileActivity extends AppCompatActivity {
 
                         username_txt.setText(getUserInfo("username"));
                         username.setText(getUserInfo("username"));
-                        username.setSelection(getUserInfo("username").length());
                         username.setSelection(0, getUserInfo("username").length());
+                        username.setSelection(getUserInfo("username").length());
+                        username.setCursorVisible(true);
 
                         ImageView ok = change_username.findViewById(R.id.ok_btn);
                         ok.setOnClickListener(new View.OnClickListener() {
@@ -310,6 +329,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                 setUserInfo("username", username.getText().toString());
                                                 Toast.makeText(ProfileActivity.this, "Changes applied",
                                                         Toast.LENGTH_SHORT).show();
+                                                init();
                                             } else {
                                                 Toast.makeText(ProfileActivity.this, "Unable to apply changes",
                                                         Toast.LENGTH_SHORT).show();
@@ -397,6 +417,65 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        editNickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Supports.Connected(ProfileActivity.this)) {
+                    if (fetched) {
+                        changeNickname.setContentView(R.layout.edit_nickname);
+                        Objects.requireNonNull(changeNickname.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                        final EditText nickname = changeNickname.findViewById(R.id.nickname);
+                        ImageView cancel = changeNickname.findViewById(R.id.cancel);
+                        ImageView ok = changeNickname.findViewById(R.id.ok);
+
+                        nickname.setText(getUserInfo("nickname"));
+                        nickname.setSelection(getUserInfo("nickname").length());
+                        nickname.setSelection(0, getUserInfo("nickname").length());
+                        nickname.setCursorVisible(true);
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                changeNickname.dismiss();
+                            }
+                        });
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!TextUtils.isEmpty(nickname.getText())) {
+                                    reference = FirebaseDatabase.getInstance()
+                                            .getReference("Users").child(fuser.getUid());
+                                    HashMap<String, Object> hashMap = new HashMap<>();
+                                    hashMap.put("Nickname", nickname.getText().toString());
+                                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isComplete()) {
+                                                setUserInfo("nickname", nickname.getText().toString());
+                                                Snackbar.make(view, "Changes applied ",
+                                                        Snackbar.LENGTH_SHORT).show();
+                                            } else {
+                                                Snackbar.make(view, "Failed to applied Changes !",
+                                                        Snackbar.LENGTH_SHORT).show();
+                                            }
+                                            init();
+                                        }
+                                    });
+                                }
+
+                                changeNickname.dismiss();
+                            }
+                        });
+
+                        changeNickname.show();
+                    } else
+                        Toast.makeText(ProfileActivity.this, "Loading Information", Toast.LENGTH_SHORT).show();
+                } else
+                    Snackbar.make(v, "No Internet !", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+            }
+        });
+
         change_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -442,10 +521,12 @@ public class ProfileActivity extends AppCompatActivity {
                             setUserInfo("Birthday", String.valueOf(birth_day));
                             setUserInfo("BirthMonth", String.valueOf(birth_month));
                             setUserInfo("BirthYear", String.valueOf(birth_year));
-                            Toast.makeText(ProfileActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(view, "Changes applied ", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
                             init();
                         } else {
-                            Toast.makeText(ProfileActivity.this, "Unable to apply change", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(view, "Failed t apply Changes !", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
                         }
                     }
                 });
@@ -456,6 +537,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void openSheet() {
+        @SuppressLint("InflateParams")
         View view = LayoutInflater.from(this).inflate(R.layout.profile_bottom_sheet, null);
         if (!Supports.Connected(this)) {
             dialog = new BottomSheetDialog(this);
@@ -500,33 +582,57 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void openImage() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, IMAGE_REQUEST);
+            } else ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, IMAGE_REQUEST);
+        } else {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent, IMAGE_REQUEST);
-        } else ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, IMAGE_REQUEST);
+        }
     }
 
     private void openCamera() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera, CAMERA_REQUEST);
+            } else
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
+        } else {
             Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(camera, CAMERA_REQUEST);
-        } else ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri imageUri;
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             if (imageUri != null) {
                 try {
-                    actualImage = FileUtil.from(this, imageUri);
+                    if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP) {
+                        if (ContextCompat.checkSelfPermission(this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            actualImage = FileUtil.from(this, imageUri);
+                        }
+                    } else {
+                        actualImage = FileUtil.from(this, imageUri);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -537,7 +643,14 @@ public class ProfileActivity extends AppCompatActivity {
             imageUri = data.getData();
             if (imageUri != null) {
                 try {
-                    actualImage = FileUtil.from(this, imageUri);
+                    if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP) {
+                        if (ContextCompat.checkSelfPermission(this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            actualImage = FileUtil.from(this, imageUri);
+                        }
+                    } else {
+                        actualImage = FileUtil.from(this, imageUri);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -595,6 +708,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     });*/
             // Compress image using RxJava in background thread with custom Compressor
+            //noinspection ResultOfMethodCallIgnored
             new Compressor(this)
                     .setQuality(50)
                     .setCompressFormat(Bitmap.CompressFormat.JPEG)
@@ -659,85 +773,92 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }*/
         // Compress image using RxJava in background thread with custom Compressor
-        if (croppedImage != null) new Compressor(this)
-                .setMaxWidth(140)
-                .setMaxHeight(140)
-                .setQuality(50)
-                .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                .compressToFileAsFlowable(croppedImage)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<File>() {
-                    @Override
-                    public void accept(File file) {
-                        thumbnail = file;
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        throwable.printStackTrace();
+        if (croppedImage != null) //noinspection ResultOfMethodCallIgnored
+            new Compressor(this)
+                    .setMaxWidth(140)
+                    .setMaxHeight(140)
+                    .setQuality(50)
+                    .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                    .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                    .compressToFileAsFlowable(croppedImage)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<File>() {
+                        @Override
+                        public void accept(File file) {
+                            thumbnail = file;
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) {
+                            throwable.printStackTrace();
 
-                    }
-                });
+                        }
+                    });
         else thumbnail = null;
     }
 
     private void deleteImage(String deleteURL, final String deleteURL2) {
         if (!Supports.Connected(this)) {
-            final ProgressDialog pd = new ProgressDialog(ProfileActivity.this);
-            pd.setMessage("Removing Photo...");
-            pd.show();
-            if (!TextUtils.equals(deleteURL, "default") && deleteURL != null) {
-                mStorage = FirebaseStorage.getInstance();
-                final StorageReference imageRef = mStorage.getReferenceFromUrl(deleteURL);
-                imageRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            UpdateInfo("imageURL", "default");
-                            pd.dismiss();
-                            deleteThumbnail(deleteURL2);
-                        } else {
-                            Toast.makeText(ProfileActivity.this, "Could not delete image", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
+            if (fetched) {
+                final ProgressDialog pd = new ProgressDialog(ProfileActivity.this);
+                pd.setMessage("Removing Photo...");
+                pd.show();
+                if (!TextUtils.equals(deleteURL, "default") && deleteURL != null) {
+                    mStorage = FirebaseStorage.getInstance();
+                    final StorageReference imageRef = mStorage.getReferenceFromUrl(deleteURL);
+                    imageRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                UpdateInfo("imageURL", "default");
+                                pd.dismiss();
+                                Snackbar.make(view, "Profile Image Deleted", Snackbar.LENGTH_SHORT).show();
+                                deleteThumbnail(deleteURL2);
+                            } else {
+                                Toast.makeText(ProfileActivity.this, "Could not delete image", Toast.LENGTH_SHORT).show();
+                                pd.dismiss();
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    pd.dismiss();
+                }
             } else {
-                pd.dismiss();
+                Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void deleteThumbnail(String deleteURL) {
         if (!Supports.Connected(this)) {
-            final ProgressDialog pd = new ProgressDialog(ProfileActivity.this);
-            pd.setMessage("Removing Thumbnail...");
-            pd.show();
-            if (!TextUtils.equals(deleteURL, "default") && deleteURL != null) {
-                mStorage = FirebaseStorage.getInstance();
-                final StorageReference thumbnailRef = mStorage.getReferenceFromUrl(deleteURL);
-                thumbnailRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            UpdateInfo("thumbnailURL", "default");
-                            pd.dismiss();
-                        } else {
-                            Toast.makeText(ProfileActivity.this, "Could not delete thumbnail", Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
+            if (fetched) {
+                final ProgressDialog pd = new ProgressDialog(ProfileActivity.this);
+                pd.setMessage("Removing Thumbnail...");
+                pd.show();
+                if (!TextUtils.equals(deleteURL, "default") && deleteURL != null) {
+                    mStorage = FirebaseStorage.getInstance();
+                    final StorageReference thumbnailRef = mStorage.getReferenceFromUrl(deleteURL);
+                    thumbnailRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                UpdateInfo("thumbnailURL", "default");
+                                pd.dismiss();
+                                Snackbar.make(view, "Thumbnail Deleted", Snackbar.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ProfileActivity.this, "Could not delete thumbnail", Toast.LENGTH_SHORT).show();
+                                pd.dismiss();
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    pd.dismiss();
+                }
             } else {
-                pd.dismiss();
+                Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
         }
     }
 

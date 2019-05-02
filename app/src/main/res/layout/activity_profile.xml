@@ -26,6 +26,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:fontFamily="@font/roboto_black"
                     android:id="@+id/class_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,15 +45,16 @@
                 android:layout_below="@+id/card1"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_regular"
                 android:padding="10dp"
                 android:text="Provide your Actual name because other users wants to identify you"
                 tools:ignore="HardcodedText" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card6"
-                android:layout_below="@id/condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/condition"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="10dp"
@@ -76,6 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
+                        android:fontFamily="@font/roboto_regular"
                         android:padding="5dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"
@@ -95,9 +98,9 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card1"
-                android:layout_below="@id/linear1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/linear1"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
@@ -117,14 +120,14 @@
                         android:background="#AAAAAA" />
 
                     <TextView
-                        android:fontFamily="@font/acme_regular"
                         android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
+                        android:fontFamily="@font/roboto_bold"
                         android:padding="5dp"
                         android:text="USERNAME"
-                        android:textColor="#2962FF"
+                        android:textColor="#6C6E75"
                         android:textSize="20sp"
                         tools:ignore="HardcodedText" />
 
@@ -156,6 +159,7 @@
                     android:layout_alignStart="@+id/card2">
 
                     <TextView
+                        android:fontFamily="@font/roboto_black"
                         android:id="@+id/caption1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -183,6 +187,7 @@
                             android:layout_marginBottom="5dp"
                             android:drawableEnd="@drawable/ic_action_edit"
                             android:drawablePadding="10dp"
+                            android:fontFamily="@font/roboto_regular"
                             android:padding="5dp"
                             android:text="About"
                             android:textColor="@color/black"
@@ -220,6 +225,7 @@
                             android:layout_marginBottom="10dp"
                             android:drawableEnd="@drawable/ic_action_edit"
                             android:drawablePadding="10dp"
+                            android:fontFamily="@font/roboto_regular"
                             android:padding="5dp"
                             android:text="Birthday"
                             android:textColor="#000000"
@@ -248,6 +254,7 @@
                     android:layout_alignStart="@+id/card2">
 
                     <TextView
+                        android:fontFamily="@font/roboto_black"
                         android:id="@+id/caption2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -275,6 +282,7 @@
                             android:layout_marginBottom="5dp"
                             android:drawableEnd="@drawable/ic_action_edit"
                             android:drawablePadding="10dp"
+                            android:fontFamily="@font/roboto_regular"
                             android:padding="5dp"
                             android:text="Phone number"
                             android:textColor="@color/black"
@@ -310,6 +318,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/roboto_regular"
                             android:padding="5dp"
                             android:text="Email"
                             android:textColor="#000000"
