@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="250dp"
     android:layout_height="300dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/dev_bg"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@drawable/dev_bg">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -15,16 +15,17 @@
         android:layout_marginTop="20dp" />
 
     <TextView
-        android:textSize="18sp"
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_Image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_bold"
         android:text="username"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_username_txt"
@@ -39,11 +40,11 @@
         android:drawableStart="@drawable/ic_person_white_24dp"
         android:drawablePadding="12dp"
         android:ems="8"
-        android:fontFamily="casual"
+        android:fontFamily="@font/roboto_light"
         android:hint="Username"
         android:inputType="textShortMessage"
         android:maxLines="1"
-        android:padding="8dp"
+        android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="#ffffff"
         tools:ignore="HardcodedText" />
@@ -68,7 +69,7 @@
         android:layout_below="@+id/username"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/popup_btn_bg"
         android:clickable="true"

@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
     CircleImageView proImage;
     DatabaseReference reference;
     FirebaseUser fuser;
+    RelativeLayout profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
         chats = findViewById(R.id.relat_layout4);
         help = findViewById(R.id.relat_layout5);
         invite = findViewById(R.id.relat_layout6);
+        profile = findViewById(R.id.relat_layout);
         username = findViewById(R.id.username);
         about = findViewById(R.id.about_text);
         proImage = findViewById(R.id.profile_Image);
@@ -65,6 +67,15 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         proImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //animation
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SettingsActivity.this,
+                        new Pair<View, String>(proImage, "imageTransition"));
+                startActivity(new Intent(SettingsActivity.this, ProfileActivity.class), options.toBundle());
+            }
+        });
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //animation
@@ -109,11 +120,5 @@ public class SettingsActivity extends AppCompatActivity {
     public String getUserInfo(String key) {
         SharedPreferences preferences = getSharedPreferences("userInfo", MODE_PRIVATE);
         return preferences.getString(key, "none");
-    }
-
-    private void setUserInfo(String key, String value) {
-        SharedPreferences.Editor editor = getSharedPreferences("userInfo", MODE_PRIVATE).edit();
-        editor.putString(key, value);
-        editor.apply();
     }
 }

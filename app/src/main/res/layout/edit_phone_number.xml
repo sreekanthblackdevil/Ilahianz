@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="200dp"
+    android:layout_height="180dp"
     android:layout_gravity="center"
     android:background="@drawable/bg_police_help">
 
@@ -10,31 +10,31 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Enter Phone Number"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Phone Number"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="10sp"
         android:layout_marginEnd="20sp"
         android:background="@drawable/edittext_background"
         android:drawableStart="@drawable/ic_phone_black_24dp"
         android:drawablePadding="12dp"
-        android:ems="8"
-        android:fontFamily="casual"
+        android:fontFamily="@font/roboto_light"
         android:hint="Phone Number"
         android:inputType="phone"
         android:maxLines="1"
-        android:padding="8dp"
+        android:padding="10dp"
         android:textColor="@color/white"
-        android:textColorHint="#ffffff"
+        android:textColorHint="@color/white"
         tools:ignore="HardcodedText" />
 
     <ImageView

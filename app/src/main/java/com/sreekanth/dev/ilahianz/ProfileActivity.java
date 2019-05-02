@@ -39,6 +39,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +87,10 @@ public class ProfileActivity extends AppCompatActivity {
     TextView username, about, birthday;
     private static final int CAMERA_REQUEST = 200;
     DatePickerDialog.OnDateSetListener dateSetListener;
-    Dialog change_username, change_description, changeNickname;
+    Dialog change_username,
+            change_description,
+            changeNickname,
+            edit_class;
 
     DatabaseReference reference;
     FirebaseUser fuser;
@@ -115,6 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
     CardView nickname_carry;
     Intent intent;
     boolean fetched;
+    LinearLayout edit_class_str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
         change_description = new Dialog(this);
         change_username = new Dialog(this);
         changeNickname = new Dialog(this);
+        edit_class = new Dialog(this);
         pro_image = findViewById(R.id.profile_Image);
         birthday = findViewById(R.id.birthday);
         changeName = findViewById(R.id.edit_username);
@@ -140,6 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance();
         progress = findViewById(R.id.progressBar);
         nickname = findViewById(R.id.nickname);
+        edit_class_str = findViewById(R.id.edit_class);
         editNickname = findViewById(R.id.edit_nickname);
         nickname_carry = findViewById(R.id.card6);
         intent = getIntent();
@@ -245,6 +253,81 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void changes() {
+
+        edit_class_str.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Supports.Connected(ProfileActivity.this)) {
+                    if (fetched) {
+
+                        edit_class.setContentView(R.layout.edit_class);
+                        Objects.requireNonNull(edit_class.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        ImageView cancel = edit_class.findViewById(R.id.cancel_btn);
+                        ImageView ok = edit_class.findViewById(R.id.ok_btn);
+
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                edit_class.dismiss();
+                            }
+                        });
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(final View v) {
+                                int divisionID;
+                                RadioButton txt_class, txt_division;
+                                RadioGroup division = edit_class.findViewById(R.id.division_rg);
+                                RadioGroup classname = edit_class.findViewById(R.id.class_rg);
+                                divisionID = division.getCheckedRadioButtonId();
+                                int classID = classname.getCheckedRadioButtonId();
+                                txt_class = edit_class.findViewById(classID);
+                                txt_division = edit_class.findViewById(divisionID);
+
+                                if (txt_class == null) {
+                                    Toast.makeText(ProfileActivity.this,
+                                            "Specify your class", Toast.LENGTH_SHORT).show();
+                                } else if (txt_division == null) {
+                                    Toast.makeText(ProfileActivity.this,
+                                            "Specify your Division", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    edit_class.dismiss();
+                                    String className = txt_class.getText().toString();
+                                    className += txt_division.getText().toString();
+
+                                    reference = FirebaseDatabase.getInstance()
+                                            .getReference("Users").child(fuser.getUid());
+                                    HashMap<String, Object> hashMap = new HashMap<>();
+                                    hashMap.put("className", className);
+                                    final String finalClassName = className;
+                                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isComplete()) {
+                                                setUserInfo("className", finalClassName);
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Changes applied", Toast.LENGTH_SHORT).show();
+                                                init();
+                                            } else
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                        edit_class.show();
+
+                    } else {
+                        Toast.makeText(ProfileActivity.this, "Loading Information...", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Snackbar.make(v, "No Internet !", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+            }
+        });
+
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,19 +342,32 @@ public class ProfileActivity extends AppCompatActivity {
                         number.setSelection(0, getUserInfo("number").length());
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(number.getText().toString())) {
-                                    if (TextUtils.isDigitsOnly(number.getText().toString())) {
-                                        if (TextUtils.getTrimmedLength(number.getText().toString()) >= 10) {
-                                            UpdateInfo("PhoneNumber", number.getText().toString());
-                                            dialog.dismiss();
-                                        } else {
-                                            number.setError("Must be 10 Digits");
-                                        }
-                                    } else
-                                        number.setError("Must be Digits");
+
+                                    if (TextUtils.getTrimmedLength(number.getText().toString()) >= 10) {
+                                        DatabaseReference reference = FirebaseDatabase.getInstance()
+                                                .getReference("Users").child(fuser.getUid());
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("PhoneNumber", number.getText().toString());
+                                        reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isComplete()) {
+                                                    setUserInfo("number", number.getText().toString());
+                                                    Toast.makeText(ProfileActivity.this, "Changes applied",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    init();
+                                                } else
+                                                    Toast.makeText(ProfileActivity.this, "Failed to apply changes",
+                                                            Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        dialog.dismiss();
+                                    } else {
+                                        number.setError("Must be 10 Digits");
+                                    }
                                 }
-                                dialog.dismiss();
                             }
                         });
                         cancel.setOnClickListener(new View.OnClickListener() {
@@ -287,7 +383,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Toast.makeText(ProfileActivity.this, "Loading information...", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null);
+                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }
             }
         });
@@ -309,12 +405,11 @@ public class ProfileActivity extends AppCompatActivity {
                         username.setText(getUserInfo("username"));
                         username.setSelection(0, getUserInfo("username").length());
                         username.setSelection(getUserInfo("username").length());
-                        username.setCursorVisible(true);
 
                         ImageView ok = change_username.findViewById(R.id.ok_btn);
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(username.getText().toString())) {
                                     reference = FirebaseDatabase.getInstance()
                                             .getReference("Users").child(fuser.getUid());
@@ -326,13 +421,12 @@ public class ProfileActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isComplete()) {
                                                 setUserInfo("username", username.getText().toString());
-                                                Toast.makeText(ProfileActivity.this, "Changes applied",
-                                                        Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Changes applied", Toast.LENGTH_SHORT).show();
                                                 init();
-                                            } else {
-                                                Toast.makeText(ProfileActivity.this, "Unable to apply changes",
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
+                                            } else
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -354,7 +448,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Toast.makeText(ProfileActivity.this, "Loading information...", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null);
+                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }
             }
         });
@@ -383,7 +477,7 @@ public class ProfileActivity extends AppCompatActivity {
                         });
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(description.getText())) {
                                     reference = FirebaseDatabase.getInstance()
                                             .getReference("Users").child(fuser.getUid());
@@ -394,11 +488,11 @@ public class ProfileActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isComplete()) {
                                                 setUserInfo("description", description.getText().toString());
-                                                Toast.makeText(ProfileActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(ProfileActivity.this, "Unable to apply changes", Toast.LENGTH_SHORT).show();
-                                            }
-                                            init();
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Changes applied", Toast.LENGTH_SHORT).show();
+                                            } else
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -451,11 +545,11 @@ public class ProfileActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isComplete()) {
                                                 setUserInfo("nickname", nickname.getText().toString());
-                                                Snackbar.make(v, "Changes applied ",
-                                                        Snackbar.LENGTH_SHORT).show();
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Changes applied", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Snackbar.make(v, "Failed to applied Changes !",
-                                                        Snackbar.LENGTH_SHORT).show();
+                                                Toast.makeText(ProfileActivity.this,
+                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
                                             }
                                             init();
                                         }
@@ -520,13 +614,10 @@ public class ProfileActivity extends AppCompatActivity {
                             setUserInfo("Birthday", String.valueOf(birth_day));
                             setUserInfo("BirthMonth", String.valueOf(birth_month));
                             setUserInfo("BirthYear", String.valueOf(birth_year));
-                            Snackbar.make(view, "Changes applied ", Snackbar.LENGTH_SHORT)
-                                    .setAction("Action", null).show();
+                            Toast.makeText(ProfileActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
                             init();
-                        } else {
-                            Snackbar.make(view, "Failed t apply Changes !", Snackbar.LENGTH_SHORT)
-                                    .setAction("Action", null).show();
-                        }
+                        } else
+                            Toast.makeText(ProfileActivity.this, "Failed to apply changes", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -539,45 +630,46 @@ public class ProfileActivity extends AppCompatActivity {
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(this).inflate(R.layout.profile_bottom_sheet, null);
         if (!Supports.Connected(this)) {
-            dialog = new BottomSheetDialog(this);
-            dialog.setContentView(view);
-            {/////////////////////////////
-                LinearLayout camera, gallery, delete;
-                camera = view.findViewById(R.id.camera);
-                gallery = view.findViewById(R.id.gallery);
-                delete = view.findViewById(R.id.delete);
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!TextUtils.equals(imageURL, "default"))
-                            popupMSG();
-                        else
-                            openCamera();
-                        dialog.dismiss();
-                    }
-                });
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!TextUtils.equals(imageURL, "default"))
-                            popupMSG();
-                        else
-                            openImage();
-                        dialog.dismiss();
-                    }
-                });
-                delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteImage(imageURL, thumbURL);
-                        dialog.dismiss();
-                    }
-                });
-            }//////////////////////////////////////////////////
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-        } else Snackbar.make(view, "No Internet !", Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show();
+            if (fetched) {
+                dialog = new BottomSheetDialog(this);
+                dialog.setContentView(view);
+                {/////////////////////////////
+                    LinearLayout camera, gallery, delete;
+                    camera = view.findViewById(R.id.camera);
+                    gallery = view.findViewById(R.id.gallery);
+                    delete = view.findViewById(R.id.delete);
+                    camera.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!TextUtils.equals(imageURL, "default"))
+                                popupMSG();
+                            else
+                                openCamera();
+                            dialog.dismiss();
+                        }
+                    });
+                    gallery.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!TextUtils.equals(imageURL, "default"))
+                                popupMSG();
+                            else
+                                openImage();
+                            dialog.dismiss();
+                        }
+                    });
+                    delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteImage(imageURL, thumbURL);
+                            dialog.dismiss();
+                        }
+                    });
+                }//////////////////////////////////////////////////
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            } else Toast.makeText(this, "Loading Information...", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
     }
 
     private void openImage() {

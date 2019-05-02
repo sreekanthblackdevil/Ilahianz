@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/form_stud"
     android:layout_width="300dp"
-    android:layout_height="400dp"
+    android:layout_height="370dp"
     android:layout_gravity="center"
     android:background="@drawable/staff_form_bg"
     android:orientation="vertical"
@@ -18,11 +18,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:text="Form for(BCA) Staff"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
     <!--<EditText-->
@@ -63,7 +63,7 @@
         android:background="@drawable/finish_btn_bg"
         android:clickable="true"
         android:focusable="true"
-        android:fontFamily="casual"
+        android:fontFamily="@font/roboto_bold"
         android:padding="16dp"
         android:text="Finish"
         android:textAllCaps="false"
@@ -81,11 +81,11 @@
         android:layout_marginStart="112dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="112dp"
+        android:fontFamily="@font/roboto_bold"
         android:text="Position"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15sp"
-        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
     <RadioGroup
@@ -103,6 +103,7 @@
         android:paddingEnd="10dp">
 
         <RadioButton
+            android:fontFamily="@font/roboto_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Guest"
@@ -110,6 +111,7 @@
             tools:ignore="HardcodedText" />
 
         <RadioButton
+            android:fontFamily="@font/roboto_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HOD"
@@ -117,6 +119,7 @@
             tools:ignore="HardcodedText" />
 
         <RadioButton
+            android:fontFamily="@font/roboto_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assist HOD"
@@ -124,6 +127,7 @@
             tools:ignore="HardcodedText" />
 
         <RadioButton
+            android:fontFamily="@font/roboto_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Professor"
@@ -133,6 +137,7 @@
             />
 
         <RadioButton
+            android:fontFamily="@font/roboto_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Other"
@@ -141,7 +146,6 @@
     </RadioGroup>
 
     <EditText
-        android:textColor="@color/white"
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,12 +159,13 @@
         android:drawableStart="@drawable/ic_phone_black_24dp"
         android:drawablePadding="12dp"
         android:ems="8"
-        android:fontFamily="casual"
+        android:fontFamily="@font/roboto_light"
         android:hint="Phone No: (optional)"
         android:inputType="phone"
         android:maxLines="1"
-        android:padding="8dp"
+        android:padding="10dp"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textColorHint="#ffffff"
         tools:ignore="HardcodedText" />
 </RelativeLayout>

@@ -1,8 +1,17 @@
 package com.sreekanth.dev.ilahianz;
 
+/**
+ * This code
+ * Created in 2019
+ * Author Sreekanth K R
+ * Name Ilahianz
+ * Github https://github.com/sreekanthblackdevil/Ilahianz
+ */
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -52,6 +61,8 @@ public class PrivacyActivity extends AppCompatActivity {
     User userInfo = new User();
     ScrollView content;
     RelativeLayout progress;
+    AnimationDrawable animationDrawable;
+    ImageView progressBar;
 
 
     @SuppressLint("SetTextI18n")
@@ -94,6 +105,12 @@ public class PrivacyActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 dialog.show();
             }
         });
@@ -126,6 +143,12 @@ public class PrivacyActivity extends AppCompatActivity {
                         RadioButton value = dialog.findViewById(id);
                         statusUpdate("AboutPrivacy", value.getText().toString());
                         dialog.cancel();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
@@ -162,6 +185,12 @@ public class PrivacyActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 dialog.show();
             }
         });
@@ -194,6 +223,12 @@ public class PrivacyActivity extends AppCompatActivity {
                         RadioButton value = dialog.findViewById(id);
                         statusUpdate("LocationPrivacy", value.getText().toString());
                         dialog.cancel();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
@@ -272,6 +307,12 @@ public class PrivacyActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
                 dialog.show();
             }
@@ -309,7 +350,12 @@ public class PrivacyActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 dialog.show();
             }
         });
@@ -317,6 +363,7 @@ public class PrivacyActivity extends AppCompatActivity {
     }
 
     private void init() {
+        progressBar = findViewById(R.id.progressBar);
         edit_about = findViewById(R.id.layout3);
         edit_lastSeen = findViewById(R.id.layout1);
         edit_profile = findViewById(R.id.layout2);
@@ -347,6 +394,9 @@ public class PrivacyActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         content.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
+        progressBar.setBackgroundResource(R.drawable.fly);
+        animationDrawable = (AnimationDrawable) progressBar.getBackground();
+        animationDrawable.start();
     }
 
     private void setUserInfo(User userInfo) {
@@ -376,6 +426,7 @@ public class PrivacyActivity extends AppCompatActivity {
                 assert userInfo != null;
                 setUserInfo(userInfo);
                 content.setVisibility(View.VISIBLE);
+                animationDrawable.stop();
                 progress.setVisibility(View.GONE);
             }
 
