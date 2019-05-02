@@ -115,7 +115,6 @@ public class ProfileActivity extends AppCompatActivity {
     CardView nickname_carry;
     Intent intent;
     boolean fetched;
-    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
         profile_view = new Dialog(this);
         change_description = new Dialog(this);
         change_username = new Dialog(this);
+        changeNickname = new Dialog(this);
         pro_image = findViewById(R.id.profile_Image);
         birthday = findViewById(R.id.birthday);
         changeName = findViewById(R.id.edit_username);
@@ -143,7 +143,6 @@ public class ProfileActivity extends AppCompatActivity {
         editNickname = findViewById(R.id.edit_nickname);
         nickname_carry = findViewById(R.id.card6);
         intent = getIntent();
-        view = View.inflate(this, R.layout.activity_profile, null);
         init();
         fetched = false;
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
@@ -441,7 +440,7 @@ public class ProfileActivity extends AppCompatActivity {
                         });
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(nickname.getText())) {
                                     reference = FirebaseDatabase.getInstance()
                                             .getReference("Users").child(fuser.getUid());
@@ -452,10 +451,10 @@ public class ProfileActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isComplete()) {
                                                 setUserInfo("nickname", nickname.getText().toString());
-                                                Snackbar.make(view, "Changes applied ",
+                                                Snackbar.make(v, "Changes applied ",
                                                         Snackbar.LENGTH_SHORT).show();
                                             } else {
-                                                Snackbar.make(view, "Failed to applied Changes !",
+                                                Snackbar.make(v, "Failed to applied Changes !",
                                                         Snackbar.LENGTH_SHORT).show();
                                             }
                                             init();
@@ -606,6 +605,11 @@ public class ProfileActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST);
                 Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(camera, CAMERA_REQUEST);
             } else
@@ -629,6 +633,8 @@ public class ProfileActivity extends AppCompatActivity {
                         if (ContextCompat.checkSelfPermission(this,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                             actualImage = FileUtil.from(this, imageUri);
+                        } else {
+                            Toast.makeText(this, "Storage permission not granted", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         actualImage = FileUtil.from(this, imageUri);
@@ -814,7 +820,7 @@ public class ProfileActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 UpdateInfo("imageURL", "default");
                                 pd.dismiss();
-                                Snackbar.make(view, "Profile Image Deleted", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "Image Delated", Toast.LENGTH_SHORT).show();
                                 deleteThumbnail(deleteURL2);
                             } else {
                                 Toast.makeText(ProfileActivity.this, "Could not delete image", Toast.LENGTH_SHORT).show();
@@ -846,7 +852,7 @@ public class ProfileActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 UpdateInfo("thumbnailURL", "default");
                                 pd.dismiss();
-                                Snackbar.make(view, "Thumbnail Deleted", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "Thumbnail deleted", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ProfileActivity.this, "Could not delete thumbnail", Toast.LENGTH_SHORT).show();
                                 pd.dismiss();
