@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(SettingsActivity.this, NotificationSettings.class));
             }
         });
         chats.setOnClickListener(new View.OnClickListener() {

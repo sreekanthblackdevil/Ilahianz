@@ -80,57 +80,78 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.sreekanth.dev.ilahianz.Supports.FileSupports.saveImage;
+import static com.sreekanth.dev.ilahianz.model.Literals.CAMERA_REQUEST;
+import static com.sreekanth.dev.ilahianz.model.Literals.DEFAULT;
+import static com.sreekanth.dev.ilahianz.model.Literals.IMAGE_REQUEST;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTHDAY_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_DAY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_MONTH;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_YEAR;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CATEGORY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_GENDER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ID;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LAST_SEEN;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LOCATION_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_NICKNAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PHONE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PH_NUMBER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PROFILE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
+
 
 public class ProfileActivity extends AppCompatActivity {
 
-    CircleImageView pro_image;
-    TextView username, about, birthday;
-    private static final int CAMERA_REQUEST = 200;
-    DatePickerDialog.OnDateSetListener dateSetListener;
-    Dialog change_username,
+    private CircleImageView pro_image;
+    private TextView username, about, birthday;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private Dialog change_username,
             change_description,
             changeNickname,
             edit_class;
-
-    DatabaseReference reference;
-    FirebaseUser fuser;
-    ImageView change_profile;
-    StorageReference storageReference;
-    private static final int IMAGE_REQUEST = 998;
+    private DatabaseReference reference;
+    private FirebaseUser fuser;
+    private ImageView change_profile;
+    private StorageReference storageReference;
     private StorageTask uploadTask;
     private int birth_day, birth_month, birth_year;
-    Dialog profile_view;
-    ImageView changeName, editNickname;
-    LinearLayout chaneDescription, ChangeBirthday;
-    String username_txt;
-    String imageURL;
-    String thumbURL;
-    User user1 = new User();
-    BottomSheetDialog dialog;
-    FirebaseStorage mStorage;
+    private Dialog profile_view;
+    private ImageView changeName, editNickname;
+    private LinearLayout chaneDescription, ChangeBirthday;
+    private String username_txt;
+    private String imageURL;
+    private String thumbURL;
+    private User user1 = new User();
+    private BottomSheetDialog dialog;
+    private FirebaseStorage mStorage;
     private File croppedImage;
     private File compressedImage;
     private File thumbnail;
     private File actualImage;
-    ProgressBar progress;
+    private ProgressBar progress;
     private TextView phone;
     private TextView email;
     private TextView class_name;
     private TextView nickname;
-    CardView nickname_carry;
-    Intent intent;
+    private CardView nickname_carry;
     boolean fetched;
-    LinearLayout edit_class_str;
+    private LinearLayout edit_class_str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         profile_view = new Dialog(this);
         change_description = new Dialog(this);
         change_username = new Dialog(this);
         changeNickname = new Dialog(this);
         edit_class = new Dialog(this);
+
         pro_image = findViewById(R.id.profile_Image);
         birthday = findViewById(R.id.birthday);
         changeName = findViewById(R.id.edit_username);
@@ -150,7 +171,6 @@ public class ProfileActivity extends AppCompatActivity {
         edit_class_str = findViewById(R.id.edit_class);
         editNickname = findViewById(R.id.edit_nickname);
         nickname_carry = findViewById(R.id.card6);
-        intent = getIntent();
         init();
         fetched = false;
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
@@ -222,14 +242,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void init() {
-        username.setText(getUserInfo("username"));
-        username_txt = getUserInfo("username");
-        about.setText(getUserInfo("description"));
-        birth_day = Integer.parseInt(getUserInfo("Birthday"));
-        birth_month = Integer.parseInt(getUserInfo("BirthMonth"));
-        birth_year = Integer.parseInt(getUserInfo("BirthYear"));
-        email.setText(getUserInfo("email"));
-        phone.setText(getUserInfo("number"));
+        username.setText(getUserInfo(SP_USERNAME));
+        username_txt = getUserInfo(SP_USERNAME);
+        about.setText(getUserInfo(SP_ABOUT));
+        birth_day = Integer.parseInt(getUserInfo(SP_BIRTH_DAY));
+        birth_month = Integer.parseInt(getUserInfo(SP_BIRTH_MONTH));
+        birth_year = Integer.parseInt(getUserInfo(SP_BIRTH_YEAR));
+        email.setText(getUserInfo(SP_EMAIL));
+        phone.setText(getUserInfo(SP_PH_NUMBER));
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, birth_day);
         calendar.set(Calendar.MONTH, birth_month);
@@ -238,17 +258,17 @@ public class ProfileActivity extends AppCompatActivity {
         String birthDay = format.format(calendar.getTime());
         birthday.setText(birthDay);
 
-        if (!TextUtils.equals(getUserInfo("className"), "Other"))
-            class_name.setText(getUserInfo("className"));
+        if (!TextUtils.equals(getUserInfo(SP_CLASS_NAME), "Other"))
+            class_name.setText(getUserInfo(SP_CLASS_NAME));
         else class_name.setVisibility(View.GONE);
 
-        if (!TextUtils.equals(getUserInfo("nickname"), "default")) {
-            nickname.setText(getUserInfo("nickname"));
+        if (!TextUtils.equals(getUserInfo(SP_NICKNAME), DEFAULT)) {
+            nickname.setText(getUserInfo(SP_NICKNAME));
             nickname_carry.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(getUserInfo("category"), "Student")) {
+        } else if (TextUtils.equals(getUserInfo(SP_CATEGORY), "Student")) {
             nickname.setText(getString(R.string.nick_name_not_provided));
             nickname_carry.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(getUserInfo("category"), "Teacher"))
+        } else if (TextUtils.equals(getUserInfo(SP_CATEGORY), "Teacher"))
             nickname_carry.setVisibility(View.GONE);
     }
 
@@ -290,28 +310,10 @@ public class ProfileActivity extends AppCompatActivity {
                                     Toast.makeText(ProfileActivity.this,
                                             "Specify your Division", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    edit_class.dismiss();
                                     String className = txt_class.getText().toString();
                                     className += txt_division.getText().toString();
-
-                                    reference = FirebaseDatabase.getInstance()
-                                            .getReference("Users").child(fuser.getUid());
-                                    HashMap<String, Object> hashMap = new HashMap<>();
-                                    hashMap.put("className", className);
-                                    final String finalClassName = className;
-                                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isComplete()) {
-                                                setUserInfo("className", finalClassName);
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Changes applied", Toast.LENGTH_SHORT).show();
-                                                init();
-                                            } else
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    updateInfo("className", SP_CLASS_NAME, className);
+                                    edit_class.dismiss();
                                 }
                             }
                         });
@@ -338,31 +340,14 @@ public class ProfileActivity extends AppCompatActivity {
                         ImageView ok = dialog.findViewById(R.id.ok);
                         ImageView cancel = dialog.findViewById(R.id.cancel);
                         final EditText number = dialog.findViewById(R.id.phone_number);
-                        number.setText(getUserInfo("number"));
-                        number.setSelection(0, getUserInfo("number").length());
+                        number.setText(getUserInfo(SP_PH_NUMBER));
+                        number.setSelection(0, getUserInfo(SP_PH_NUMBER).length());
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(number.getText().toString())) {
-
                                     if (TextUtils.getTrimmedLength(number.getText().toString()) >= 10) {
-                                        DatabaseReference reference = FirebaseDatabase.getInstance()
-                                                .getReference("Users").child(fuser.getUid());
-                                        HashMap<String, Object> hashMap = new HashMap<>();
-                                        hashMap.put("PhoneNumber", number.getText().toString());
-                                        reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isComplete()) {
-                                                    setUserInfo("number", number.getText().toString());
-                                                    Toast.makeText(ProfileActivity.this, "Changes applied",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    init();
-                                                } else
-                                                    Toast.makeText(ProfileActivity.this, "Failed to apply changes",
-                                                            Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                        updateInfo("PhoneNumber", SP_PH_NUMBER, number.getText().toString());
                                         dialog.dismiss();
                                     } else {
                                         number.setError("Must be 10 Digits");
@@ -401,34 +386,19 @@ public class ProfileActivity extends AppCompatActivity {
                         TextView username_txt = change_username.findViewById(R.id.username);
                         final EditText username = change_username.findViewById(R.id.edit_username_txt);
 
-                        username_txt.setText(getUserInfo("username"));
-                        username.setText(getUserInfo("username"));
-                        username.setSelection(0, getUserInfo("username").length());
-                        username.setSelection(getUserInfo("username").length());
+                        username_txt.setText(getUserInfo(SP_USERNAME));
+                        username.setText(getUserInfo(SP_USERNAME));
+                        username.setSelection(0, getUserInfo(SP_USERNAME).length());
+                        username.setSelection(getUserInfo(SP_USERNAME).length());
 
                         ImageView ok = change_username.findViewById(R.id.ok_btn);
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(username.getText().toString())) {
-                                    reference = FirebaseDatabase.getInstance()
-                                            .getReference("Users").child(fuser.getUid());
-                                    HashMap<String, Object> hashMap = new HashMap<>();
-                                    hashMap.put("username", username.getText().toString());
-                                    hashMap.put("search", username.getText().toString().toLowerCase());
-                                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isComplete()) {
-                                                setUserInfo("username", username.getText().toString());
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Changes applied", Toast.LENGTH_SHORT).show();
-                                                init();
-                                            } else
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    updateInfo("username", SP_USERNAME, username.getText().toString());
+                                } else {
+                                    username.setError("Required");
                                 }
                                 change_username.dismiss();
                                 init();
@@ -479,23 +449,8 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(description.getText())) {
-                                    reference = FirebaseDatabase.getInstance()
-                                            .getReference("Users").child(fuser.getUid());
-                                    HashMap<String, Object> hashMap = new HashMap<>();
-                                    hashMap.put("Description", description.getText().toString());
-                                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isComplete()) {
-                                                setUserInfo("description", description.getText().toString());
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Changes applied", Toast.LENGTH_SHORT).show();
-                                            } else
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
+                                    updateInfo("Description", SP_ABOUT, description.getText().toString());
+                                } else description.setError("Field is Empty !");
 
                                 change_description.dismiss();
                             }
@@ -536,24 +491,7 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(nickname.getText())) {
-                                    reference = FirebaseDatabase.getInstance()
-                                            .getReference("Users").child(fuser.getUid());
-                                    HashMap<String, Object> hashMap = new HashMap<>();
-                                    hashMap.put("Nickname", nickname.getText().toString());
-                                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isComplete()) {
-                                                setUserInfo("nickname", nickname.getText().toString());
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Changes applied", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(ProfileActivity.this,
-                                                        "Failed to apply changes", Toast.LENGTH_SHORT).show();
-                                            }
-                                            init();
-                                        }
-                                    });
+                                    updateInfo("Nickname", SP_NICKNAME, nickname.getText().toString());
                                 }
 
                                 changeNickname.dismiss();
@@ -601,9 +539,9 @@ public class ProfileActivity extends AppCompatActivity {
                 hashMap.put("Birthday", String.valueOf(dayOfMonth));
                 hashMap.put("BirthMonth", String.valueOf(month));
                 hashMap.put("BirthYear", String.valueOf(year));
-                setUserInfo("Birthday", String.valueOf(birth_day));
+                /*setUserInfo("Birthday", String.valueOf(birth_day));
                 setUserInfo("BirthMonth", String.valueOf(birth_month));
-                setUserInfo("BirthYear", String.valueOf(birth_year));
+                setUserInfo("BirthYear", String.valueOf(birth_year));*/
                 birth_day = dayOfMonth;
                 birth_month = month;
                 birth_year = year;
@@ -1082,24 +1020,25 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void setUserInfo(User user) {
-        setUserInfo("username", user.getUsername());
-        setUserInfo("number", user.getPhoneNumber());
-        setUserInfo("gender", user.getGender());
-        setUserInfo("className", user.getClassName());
-        setUserInfo("email", user.getEmail());
-        setUserInfo("Birthday", user.getBirthday());
-        setUserInfo("BirthYear", user.getBirthYear());
-        setUserInfo("BirthMonth", user.getBirthMonth());
-        setUserInfo("nickname", user.getNickname());
-        setUserInfo("category", user.getCategory());
-        setUserInfo("description", user.getDescription());
-        setUserInfo("LastSeenPrivacy", user.getLastSeenPrivacy());
-        setUserInfo("ProfilePrivacy", user.getProfilePrivacy());
-        setUserInfo("AboutPrivacy", user.getAboutPrivacy());
-        setUserInfo("LocationPrivacy", user.getLocationPrivacy());
-        setUserInfo("EmailPrivacy", user.getEmailPrivacy());
-        setUserInfo("PhonePrivacy", user.getPhonePrivacy());
-        setUserInfo("BirthdayPrivacy", user.getBirthdayPrivacy());
+        setUserInfo(SP_ID, user.getId());
+        setUserInfo(SP_USERNAME, user.getUsername());
+        setUserInfo(SP_PH_NUMBER, user.getPhoneNumber());
+        setUserInfo(SP_GENDER, user.getGender());
+        setUserInfo(SP_CLASS_NAME, user.getClassName());
+        setUserInfo(SP_EMAIL, user.getEmail());
+        setUserInfo(SP_BIRTH_DAY, user.getBirthday());
+        setUserInfo(SP_BIRTH_YEAR, user.getBirthYear());
+        setUserInfo(SP_BIRTH_MONTH, user.getBirthMonth());
+        setUserInfo(SP_NICKNAME, user.getNickname());
+        setUserInfo(SP_CATEGORY, user.getCategory());
+        setUserInfo(SP_ABOUT, user.getDescription());
+        setUserInfo(SP_LAST_SEEN, user.getLastSeenPrivacy());
+        setUserInfo(SP_PROFILE_PRIVACY, user.getProfilePrivacy());
+        setUserInfo(SP_ABOUT_PRIVACY, user.getAboutPrivacy());
+        setUserInfo(SP_LOCATION_PRIVACY, user.getLocationPrivacy());
+        setUserInfo(SP_EMAIL_PRIVACY, user.getEmailPrivacy());
+        setUserInfo(SP_PHONE_PRIVACY, user.getPhonePrivacy());
+        setUserInfo(SP_BIRTHDAY_PRIVACY, user.getBirthdayPrivacy());
     }
 
     public String getUserInfo(String key) {
@@ -1113,4 +1052,21 @@ public class ProfileActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private void updateInfo(String key1, final String key2, final String value) {
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(key1, value);
+        reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isComplete()) {
+                    setUserInfo(key2, value);
+                    Toast.makeText(ProfileActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Failed to apply changes", Toast.LENGTH_SHORT).show();
+                }
+                init();
+            }
+        });
+    }
 }

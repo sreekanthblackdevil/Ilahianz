@@ -7,11 +7,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Open"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         tools:ignore="HardcodedText" />
@@ -22,12 +22,10 @@
 
         <LinearLayout
             android:id="@+id/delete"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="78dp"
-            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -65,10 +63,10 @@
                 android:src="@mipmap/camera" />
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:text="Camera"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -90,10 +88,10 @@
                 android:src="@mipmap/picture" />
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:text="Gallery"
                 android:textColor="@color/black"
                 android:textSize="16sp"

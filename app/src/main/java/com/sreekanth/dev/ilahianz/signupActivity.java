@@ -31,6 +31,25 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTHDAY_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_DAY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_MONTH;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_YEAR;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CATEGORY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_GENDER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LAST_SEEN;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LOCATION_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_NICKNAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PHONE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PH_NUMBER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PROFILE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
+
 public class signupActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private DatabaseReference reference;
@@ -92,7 +111,8 @@ public class signupActivity extends AppCompatActivity {
                 String txt_passsConfirm = passwordConfirm.getText().toString();
                 if (start.Connected(signupActivity.this)) {
                     start.popupNoInternet(signupActivity.this);
-                } else if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password) || TextUtils.isEmpty(txt_passsConfirm) || TextUtils.isEmpty(txt_Username)) {
+                } else if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password) ||
+                        TextUtils.isEmpty(txt_passsConfirm) || TextUtils.isEmpty(txt_Username)) {
                     Toast.makeText(signupActivity.this, "All Fields are Required !", Toast.LENGTH_SHORT).show();
                 } else if (txt_password.length() < 8) {
                     Toast.makeText(signupActivity.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
@@ -184,24 +204,24 @@ public class signupActivity extends AppCompatActivity {
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    setUserInfo("username", username);
-                                    setUserInfo("number", phone);
-                                    setUserInfo("gender", gender);
-                                    setUserInfo("className", classname);
-                                    setUserInfo("email", email);
-                                    setUserInfo("Birthday", String.valueOf(birthDay));
-                                    setUserInfo("BirthYear", String.valueOf(birthYear));
-                                    setUserInfo("BirthMonth", String.valueOf(birthMonth));
-                                    setUserInfo("nickname", nickname);
-                                    setUserInfo("category", "Teacher");
-                                    setUserInfo("description", "Hey Ilahianz");
-                                    setUserInfo("LastSeenPrivacy", "Everyone");
-                                    setUserInfo("ProfilePrivacy", "Everyone");
-                                    setUserInfo("AboutPrivacy", "Everyone");
-                                    setUserInfo("LocationPrivacy", "Everyone");
-                                    setUserInfo("EmailPrivacy", "Everyone");
-                                    setUserInfo("PhonePrivacy", "Everyone");
-                                    setUserInfo("BirthdayPrivacy", "Everyone");
+                                    setUserInfo(SP_USERNAME, username);
+                                    setUserInfo(SP_PH_NUMBER, phone);
+                                    setUserInfo(SP_GENDER, gender);
+                                    setUserInfo(SP_CLASS_NAME, classname);
+                                    setUserInfo(SP_EMAIL, email);
+                                    setUserInfo(SP_BIRTH_DAY, String.valueOf(birthDay));
+                                    setUserInfo(SP_BIRTH_YEAR, String.valueOf(birthYear));
+                                    setUserInfo(SP_BIRTH_MONTH, String.valueOf(birthMonth));
+                                    setUserInfo(SP_NICKNAME, nickname);
+                                    setUserInfo(SP_CATEGORY, "Student");
+                                    setUserInfo(SP_ABOUT, "Hey Ilahianz");
+                                    setUserInfo(SP_LAST_SEEN, "Everyone");
+                                    setUserInfo(SP_PROFILE_PRIVACY, "Everyone");
+                                    setUserInfo(SP_ABOUT_PRIVACY, "Everyone");
+                                    setUserInfo(SP_LOCATION_PRIVACY, "Everyone");
+                                    setUserInfo(SP_EMAIL_PRIVACY, "Everyone");
+                                    setUserInfo(SP_PHONE_PRIVACY, "Everyone");
+                                    setUserInfo(SP_BIRTHDAY_PRIVACY, "Everyone");
                                     formPopupStud.cancel();
                                     Progressbar.cancel();
                                     Intent intent = new Intent(signupActivity.this, MainActivity.class);
@@ -392,30 +412,32 @@ public class signupActivity extends AppCompatActivity {
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    setUserInfo("username", username);
-                                    setUserInfo("number", phone);
-                                    setUserInfo("gender", gender);
-                                    setUserInfo("className", position);
-                                    setUserInfo("email", email);
-                                    setUserInfo("Birthday", String.valueOf(birthDay));
-                                    setUserInfo("BirthYear", String.valueOf(birthYear));
-                                    setUserInfo("BirthMonth", String.valueOf(birthMonth));
-                                    setUserInfo("nickname", "default");
-                                    setUserInfo("category", "Teacher");
-                                    setUserInfo("description", "Hey Ilahianz");
-                                    setUserInfo("LastSeenPrivacy", "Everyone");
-                                    setUserInfo("ProfilePrivacy", "Everyone");
-                                    setUserInfo("AboutPrivacy", "Everyone");
-                                    setUserInfo("LocationPrivacy", "Everyone");
-                                    setUserInfo("EmailPrivacy", "Everyone");
-                                    setUserInfo("PhonePrivacy", "Everyone");
-                                    setUserInfo("BirthdayPrivacy", "Everyone");
-                                    formPopupStaff.cancel();
-                                    Progressbar.cancel();
-                                    Intent intent = new Intent(signupActivity.this, MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
+                                    if (task.isComplete()) {
+                                        setUserInfo(SP_USERNAME, username);
+                                        setUserInfo(SP_PH_NUMBER, phone);
+                                        setUserInfo(SP_GENDER, gender);
+                                        setUserInfo(SP_CLASS_NAME, position);
+                                        setUserInfo(SP_EMAIL, email);
+                                        setUserInfo(SP_BIRTH_DAY, String.valueOf(birthDay));
+                                        setUserInfo(SP_BIRTH_YEAR, String.valueOf(birthYear));
+                                        setUserInfo(SP_BIRTH_MONTH, String.valueOf(birthMonth));
+                                        setUserInfo(SP_NICKNAME, "default");
+                                        setUserInfo(SP_CATEGORY, "Teacher");
+                                        setUserInfo(SP_ABOUT, "Hey Ilahianz");
+                                        setUserInfo(SP_LAST_SEEN, "Everyone");
+                                        setUserInfo(SP_PROFILE_PRIVACY, "Everyone");
+                                        setUserInfo(SP_ABOUT_PRIVACY, "Everyone");
+                                        setUserInfo(SP_LOCATION_PRIVACY, "Everyone");
+                                        setUserInfo(SP_EMAIL_PRIVACY, "Everyone");
+                                        setUserInfo(SP_PHONE_PRIVACY, "Everyone");
+                                        setUserInfo(SP_BIRTHDAY_PRIVACY, "Everyone");
+                                        formPopupStaff.cancel();
+                                        Progressbar.cancel();
+                                        Intent intent = new Intent(signupActivity.this, MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
                             });
 

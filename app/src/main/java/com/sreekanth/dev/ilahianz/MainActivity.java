@@ -46,6 +46,12 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.sreekanth.dev.ilahianz.model.Literals.DEFAULT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_NICKNAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -144,7 +150,7 @@ public class MainActivity extends AppCompatActivity
         remainder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RemainderActivity.class);
+                Intent intent = new Intent(MainActivity.this, UploadProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -197,15 +203,14 @@ public class MainActivity extends AppCompatActivity
 
     private void init() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        header_username.setText(getUserInfo("username"));
-        initial.setText(getUserInfo("className"));
-        if (!TextUtils.equals(getUserInfo("nickName"), "default")) {
-            header_username.setText(String.format("%s (%s)", getUserInfo("username").toUpperCase(),
-                    getUserInfo("nickName")));
+        initial.setText(getUserInfo(SP_CLASS_NAME));
+        if (!TextUtils.equals(getUserInfo(SP_NICKNAME), DEFAULT)) {
+            header_username.setText(String.format("%s (%s)", getUserInfo(SP_USERNAME).toUpperCase(),
+                    getUserInfo(SP_NICKNAME)));
         } else {
-            header_username.setText(getUserInfo("username").toUpperCase());
+            header_username.setText(getUserInfo(SP_USERNAME).toUpperCase());
         }
-        email.setText(getUserInfo("email"));
+        email.setText(getUserInfo(SP_EMAIL));
 
         if (Supports.Connected(this)) {
             drawer.openDrawer(GravityCompat.START);

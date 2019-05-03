@@ -1,0 +1,27 @@
+package com.sreekanth.dev.ilahianz.model;
+
+public abstract class Literals {
+    public static final String SP_USERNAME = "username";
+    public static final String SP_PH_NUMBER = "phone";
+    public static final String SP_GENDER = "gender";
+    public static final String SP_CLASS_NAME = "className";
+    public static final String SP_EMAIL = "email";
+    public static final String SP_BIRTH_DAY = "Birthday";
+    public static final String SP_BIRTH_MONTH = "BirthMonth";
+    public static final String SP_BIRTH_YEAR = "BirthYear";
+    public static final String SP_NICKNAME = "nickname";
+    public static final String SP_CATEGORY = "category";
+    public static final String SP_ABOUT = "description";
+    public static final String SP_ID = "UID";
+    public static final String SP_LAST_SEEN = "LastSeenPrivacy";
+    public static final String SP_PROFILE_PRIVACY = "ProfilePrivacy";
+    public static final String SP_ABOUT_PRIVACY = "AboutPrivacy";
+    public static final String SP_LOCATION_PRIVACY = "LocationPrivacy";
+    public static final String SP_EMAIL_PRIVACY = "EmailPrivacy";
+    public static final String SP_PHONE_PRIVACY = "PhonePrivacy";
+    public static final String SP_BIRTHDAY_PRIVACY = "BirthdayPrivacy";
+    public static final String DEFAULT = "default";
+    public static final int IMAGE_REQUEST = 357;
+    public static final int CAMERA_REQUEST = 254;
+
+}

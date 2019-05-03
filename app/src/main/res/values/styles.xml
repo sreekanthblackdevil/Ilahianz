@@ -19,7 +19,14 @@
     </style>
 
     <style name="startPageStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="profileUploadStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">#343435</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

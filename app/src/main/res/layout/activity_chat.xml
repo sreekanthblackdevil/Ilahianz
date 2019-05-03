@@ -91,10 +91,12 @@ could not fetch data from the server"
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:paddingStart="45dp"
+            android:paddingEnd="0dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/cloud_fail" />
+            android:src="@mipmap/nointernet_icon" />
 
         <ProgressBar
             android:visibility="gone"
@@ -112,9 +114,7 @@ could not fetch data from the server"
             android:layout_below="@+id/internet"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
-            android:background="@color/white"
             android:text="Retry"
-            android:textColor="#304FFE"
             tools:ignore="HardcodedText" />
     </RelativeLayout>
 

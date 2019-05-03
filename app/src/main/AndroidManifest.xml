@@ -38,7 +38,9 @@
             android:name=".MainActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UploadProfileActivity" />
+        <activity
+            android:name=".UploadProfileActivity"
+            android:theme="@style/profileUploadStyle" />
         <activity android:name=".CropActivity" />
         <activity android:name=".NotificationSettings" />
         <activity

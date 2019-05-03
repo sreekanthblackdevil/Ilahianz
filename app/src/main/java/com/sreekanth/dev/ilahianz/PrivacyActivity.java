@@ -11,19 +11,22 @@ package com.sreekanth.dev.ilahianz;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sreekanth.dev.ilahianz.Supports.Supports;
 import com.sreekanth.dev.ilahianz.model.User;
 
 import java.util.HashMap;
@@ -61,8 +65,8 @@ public class PrivacyActivity extends AppCompatActivity {
     User userInfo = new User();
     ScrollView content;
     RelativeLayout progress;
-    AnimationDrawable animationDrawable;
-    ImageView progressBar;
+    RelativeLayout internetFailed;
+    Button retry;
 
 
     @SuppressLint("SetTextI18n")
@@ -70,10 +74,44 @@ public class PrivacyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy);
+        edit_about = findViewById(R.id.layout3);
+        edit_lastSeen = findViewById(R.id.layout1);
+        edit_profile = findViewById(R.id.layout2);
+        edit_location = findViewById(R.id.LocationPrivacy);
+        edit_email = findViewById(R.id.email);
+        edit_phone = findViewById(R.id.phone_number);
+        lastSeen = findViewById(R.id.lastSeen_privacy);
+        about = findViewById(R.id.about_status);
+        profile = findViewById(R.id.profile_status);
+        location = findViewById(R.id.location_status);
+        phoneNumber = findViewById(R.id.phone_status);
+        birthday = findViewById(R.id.birthday);
+        EmailAddress = findViewById(R.id.email_status);
+        progress = findViewById(R.id.progress);
+        content = findViewById(R.id.content);
+        birthStatus = findViewById(R.id.birthStatus);
+        internetFailed = findViewById(R.id.internet_connection);
+        retry = findViewById(R.id.retry_btn);
 
-        init();
-        getUserInfo();
+        if (!Supports.Connected(this)) {
+            content.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.VISIBLE);
+            internetFailed.setVisibility(View.GONE);
+            init();
+            getUserInfo();
+        } else {
+            content.setVisibility(View.GONE);
+            progress.setVisibility(View.GONE);
+            internetFailed.setVisibility(View.VISIBLE);
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    init();
+                    getUserInfo();
+                }
+            });
 
+        }
         edit_lastSeen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -363,23 +401,6 @@ public class PrivacyActivity extends AppCompatActivity {
     }
 
     private void init() {
-        progressBar = findViewById(R.id.progressBar);
-        edit_about = findViewById(R.id.layout3);
-        edit_lastSeen = findViewById(R.id.layout1);
-        edit_profile = findViewById(R.id.layout2);
-        edit_location = findViewById(R.id.LocationPrivacy);
-        edit_email = findViewById(R.id.email);
-        edit_phone = findViewById(R.id.phone_number);
-        lastSeen = findViewById(R.id.lastSeen_privacy);
-        about = findViewById(R.id.about_status);
-        profile = findViewById(R.id.profile_status);
-        location = findViewById(R.id.location_status);
-        phoneNumber = findViewById(R.id.phone_status);
-        birthday = findViewById(R.id.birthday);
-        EmailAddress = findViewById(R.id.email_status);
-        progress = findViewById(R.id.progress);
-        content = findViewById(R.id.content);
-        birthStatus = findViewById(R.id.birthStatus);
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.last_seen);
         statusContainer = dialog.findViewById(R.id.rg_status);
@@ -393,10 +414,8 @@ public class PrivacyActivity extends AppCompatActivity {
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         content.setVisibility(View.GONE);
+        internetFailed.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
-        progressBar.setBackgroundResource(R.drawable.fly);
-        animationDrawable = (AnimationDrawable) progressBar.getBackground();
-        animationDrawable.start();
     }
 
     private void setUserInfo(User userInfo) {
@@ -410,10 +429,20 @@ public class PrivacyActivity extends AppCompatActivity {
     }
 
     private void statusUpdate(String key, String value) {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(key, value);
-        reference.updateChildren(hashMap);
+        reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isComplete()) {
+                    Toast.makeText(PrivacyActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PrivacyActivity.this, "Failed to apply changes", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -426,7 +455,7 @@ public class PrivacyActivity extends AppCompatActivity {
                 assert userInfo != null;
                 setUserInfo(userInfo);
                 content.setVisibility(View.VISIBLE);
-                animationDrawable.stop();
+                internetFailed.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
             }
 

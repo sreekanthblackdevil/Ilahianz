@@ -17,12 +17,6 @@
         android:drawable="@drawable/f5"
         android:duration="50" />
     <item
-        android:drawable="@drawable/f6"
-        android:duration="50" />
-    <item
-        android:drawable="@drawable/f6"
-        android:duration="50" />
-    <item
         android:drawable="@drawable/f5"
         android:duration="50" />
     <item
