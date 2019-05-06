@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -31,7 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +46,12 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.sreekanth.dev.ilahianz.model.Literals.ATTENDANCE_WEBSITE;
 import static com.sreekanth.dev.ilahianz.model.Literals.DEFAULT;
+import static com.sreekanth.dev.ilahianz.model.Literals.ILAHIA_LOCATION;
+import static com.sreekanth.dev.ilahianz.model.Literals.ILAHIA_WEBSITE;
+import static com.sreekanth.dev.ilahianz.model.Literals.IMAGE_REQUEST;
+import static com.sreekanth.dev.ilahianz.model.Literals.LOCATION_REQUEST;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_NICKNAME;
@@ -54,10 +59,6 @@ import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private final String ATTENDANCE_WEBSITE = "http://ilahiacollege.info/StudentPanel/studAttendance.aspx";
-    private final String ILAHIA_WEBSITE = "http://ilahiaartscollege.org/";
-    private final LatLng ILAHIA_LOCATION = new LatLng(10.025716, 76.567840);
 
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
@@ -91,8 +92,15 @@ public class MainActivity extends AppCompatActivity
 
         profile = new Dialog(this);
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_REQUEST);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, IMAGE_REQUEST);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, IMAGE_REQUEST);
+
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -143,14 +151,14 @@ public class MainActivity extends AppCompatActivity
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                Intent intent = new Intent(MainActivity.this, UploadProfileActivity.class);
                 startActivity(intent);
             }
         });
         remainder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UploadProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, Startup.class);
                 startActivity(intent);
             }
         });
@@ -259,19 +267,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class)
                     .putExtra("ProfileURL", myInfo.getThumbnailURL()));
@@ -290,7 +293,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard) {
@@ -342,6 +344,12 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public void NotificationPopup(Context context, String title, String content, String time, String date, String to, String from) {

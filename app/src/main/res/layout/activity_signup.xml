@@ -237,7 +237,7 @@
                 android:background="@drawable/signup_btn_background"
                 android:clickable="true"
                 android:focusable="true"
-                android:fontFamily="casual"
+                android:fontFamily="@font/roboto_black"
                 android:padding="16dp"
                 android:text="SignUp"
                 android:textAllCaps="false"

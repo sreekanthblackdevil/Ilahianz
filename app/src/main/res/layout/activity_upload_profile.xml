@@ -2,81 +2,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".UploadProfileActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_Image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@id/username"
+            android:layout_centerHorizontal="true" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_Image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp" />
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/selfie"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/roboto_bold"
+            android:text="USERNAME"
+            android:textSize="17sp"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/profile_Image"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="USERNAME"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText" />
+        <ImageView
+            android:id="@+id/selfie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/welcome" />
 
-            <ImageView
-                android:id="@+id/selfie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/username"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/tuffy" />
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selfie"
+            android:layout_centerHorizontal="true"
+            android:drawableStart="@drawable/ic_action_bulb"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Upload a profile image for better identification"
+            android:textSize="17sp"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/selfie"
-                android:layout_centerHorizontal="true"
-                android:drawableStart="@drawable/ic_action_bulb"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Upload a profile image for better identification"
-                android:textSize="17sp"
-                tools:ignore="HardcodedText" />
+        <Button
+            android:textColor="@color/white"
+            android:id="@+id/upload_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/cots"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/delete_bgi"
+            android:fontFamily="@font/roboto_black"
+            android:text="UPLOAD"
+            tools:ignore="HardcodedText" />
 
-            <Button
-                android:id="@+id/upload_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_below="@id/cots"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/delete_bgi"
-                android:fontFamily="@font/roboto_bold"
-                android:text="UPLOAD"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/cots"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dialog"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="@font/roboto_italic"
-                android:text="If you don't want to do this then skip and do later"
-                tools:ignore="HardcodedText" />
-        </RelativeLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/cots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/roboto_italic"
+            android:text="If you don't want to do this then skip and do later"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
 
     <Button
+        android:textColor="@color/white"
         android:id="@+id/skip_btn"
         android:layout_width="60dp"
         android:layout_height="35dp"

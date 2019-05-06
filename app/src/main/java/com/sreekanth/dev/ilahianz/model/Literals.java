@@ -1,5 +1,7 @@
 package com.sreekanth.dev.ilahianz.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public abstract class Literals {
     public static final String SP_USERNAME = "username";
     public static final String SP_PH_NUMBER = "phone";
@@ -23,5 +25,10 @@ public abstract class Literals {
     public static final String DEFAULT = "default";
     public static final int IMAGE_REQUEST = 357;
     public static final int CAMERA_REQUEST = 254;
+    public static final int LOCATION_REQUEST = 344;
+    public static final String ATTENDANCE_WEBSITE = "http://ilahiacollege.info/StudentPanel/studAttendance.aspx";
+    public static final String ILAHIA_WEBSITE = "http://ilahiaartscollege.org/";
+    public static final LatLng ILAHIA_LOCATION = new LatLng(10.025716, 76.567840);
+
 
 }

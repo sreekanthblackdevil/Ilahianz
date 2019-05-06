@@ -51,6 +51,7 @@ import static com.sreekanth.dev.ilahianz.model.Literals.SP_PROFILE_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
 
 public class signupActivity extends AppCompatActivity {
+
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private DatabaseReference reference;
     private Dialog Progressbar;
@@ -224,7 +225,7 @@ public class signupActivity extends AppCompatActivity {
                                     setUserInfo(SP_BIRTHDAY_PRIVACY, "Everyone");
                                     formPopupStud.cancel();
                                     Progressbar.cancel();
-                                    Intent intent = new Intent(signupActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(signupActivity.this, UploadProfileActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                     finish();
@@ -433,7 +434,7 @@ public class signupActivity extends AppCompatActivity {
                                         setUserInfo(SP_BIRTHDAY_PRIVACY, "Everyone");
                                         formPopupStaff.cancel();
                                         Progressbar.cancel();
-                                        Intent intent = new Intent(signupActivity.this, MainActivity.class);
+                                        Intent intent = new Intent(signupActivity.this, UploadProfileActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                         finish();
