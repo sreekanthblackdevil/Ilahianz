@@ -397,6 +397,7 @@ public class ProfileActivity extends AppCompatActivity {
                             public void onClick(final View v) {
                                 if (!TextUtils.isEmpty(username.getText().toString())) {
                                     updateInfo("username", SP_USERNAME, username.getText().toString());
+                                    updateInfo("search", SP_USERNAME, username.getText().toString());
                                 } else {
                                     username.setError("Required");
                                 }
@@ -1068,5 +1069,10 @@ public class ProfileActivity extends AppCompatActivity {
                 init();
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

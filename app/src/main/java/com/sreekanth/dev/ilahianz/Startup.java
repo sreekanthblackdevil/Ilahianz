@@ -57,7 +57,7 @@ public class Startup extends AppCompatActivity {
     }
 
     public void addDotsIndicator(int position) {
-        dots = new TextView[3];
+        dots = new TextView[4];
         dotLayout.removeAllViews();
 
         for (int i = 0; i < dots.length; i++) {
@@ -73,7 +73,6 @@ public class Startup extends AppCompatActivity {
 
         if (dots.length > 0) {
             dots[position].setTextColor(getResources().getColor(R.color.darkBlue));
-            dots[position].setTextSize(45);
         }
     }
 

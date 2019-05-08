@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sreekanth.dev.ilahianz.ChatActivity;
+import com.sreekanth.dev.ilahianz.MapsActivity;
 import com.sreekanth.dev.ilahianz.MessageActivity;
 import com.sreekanth.dev.ilahianz.R;
 import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
+import com.sreekanth.dev.ilahianz.UserProfile;
 import com.sreekanth.dev.ilahianz.model.Chat;
 import com.sreekanth.dev.ilahianz.model.User;
 
@@ -191,7 +196,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         Objects.requireNonNull(popupProfile.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView username = popupProfile.findViewById(R.id.username);
         ImageButton save = popupProfile.findViewById(R.id.save);
-        ImageButton message = popupProfile.findViewById(R.id.message);
+        ImageButton locationBtn = popupProfile.findViewById(R.id.message);
+        ImageButton call = popupProfile.findViewById(R.id.call_btn);
+        ImageButton info = popupProfile.findViewById(R.id.info);
         final ImageView profile_image = popupProfile.findViewById(R.id.profile_Image);
         username.setText(user.getUsername());
         ViewSupport.setProfileWithPrivacy(user, myInfo, profile_image);
@@ -199,15 +206,47 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 saveImage(mContext, profile_image, user);
-
             }
         });
-        message.setOnClickListener(new View.OnClickListener() {
+        locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, MessageActivity.class);
-                intent.putExtra("userid", user.getId());
-                mContext.startActivity(intent);
+                String latitude = user.getLatitude();
+                String longitude = user.getLongitude();
+                if (!TextUtils.equals(user.getCategory(), "Teacher")) {
+                    if (latitude != null && longitude != null) {
+                        if (TextUtils.equals("Not Provided", longitude)
+                                || TextUtils.equals("Not Provided", longitude)) {
+                            Snackbar.make(v, "Location not Provided ", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        } else {
+                            LatLng location = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
+                            MapsActivity.setLOCATION(location, user.getUsername());
+                            mContext.startActivity(new Intent(mContext, MapsActivity.class));
+                        }
+                    } else {
+                        Snackbar.make(v, "Location not available ", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                    }
+                } else {
+                    Snackbar.make(v, "You cannot access Teacher's Location", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+            }
+        });
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatActivity chatActivity = new ChatActivity();
+                chatActivity.PhoneNumber = user.getPhoneNumber();
+                chatActivity.makePhoneCall(mContext);
+            }
+        });
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, UserProfile.class)
+                        .putExtra("UId", user.getId()));
             }
         });
         popupProfile.show();

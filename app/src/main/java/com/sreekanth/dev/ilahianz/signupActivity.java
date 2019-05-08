@@ -194,8 +194,8 @@ public class signupActivity extends AppCompatActivity {
                             hashMap.put("className", classname);
                             hashMap.put("Nickname", nickname);
                             hashMap.put("Category", "Student");
-                            hashMap.put("Latitude", "null");
-                            hashMap.put("Longitude", "null");
+                            hashMap.put("Latitude", "Not Provided");
+                            hashMap.put("Longitude", "Not Provided");
                             hashMap.put("thumbnailURL", "default");
                             hashMap.put("email", email);
                             hashMap.put("Description", "Hey Ilahianz");
@@ -402,8 +402,8 @@ public class signupActivity extends AppCompatActivity {
                             hashMap.put("search", username.toLowerCase());
                             hashMap.put("className", position);
                             hashMap.put("Nickname", "default");
-                            hashMap.put("Latitude", "null");
-                            hashMap.put("Longitude", "null");
+                            hashMap.put("Latitude", "Not Provided");
+                            hashMap.put("Longitude", "Not Provided");
                             hashMap.put("thumbnailURL", "default");
                             hashMap.put("email", email);
                             hashMap.put("Description", "Hey Ilahianz");

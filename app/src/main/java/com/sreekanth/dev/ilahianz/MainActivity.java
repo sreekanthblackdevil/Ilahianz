@@ -4,14 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -24,15 +21,15 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,8 +37,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sreekanth.dev.ilahianz.Supports.Supports;
 import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
+import com.sreekanth.dev.ilahianz.Supports.locationService;
 import com.sreekanth.dev.ilahianz.model.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     FirebaseDatabase firebaseDatabase;
     LinearLayout chat, Notes, remainder, teachers, notifications, help, location, attendance, website;
     Dialog Notificatio_popup, profile;
@@ -72,6 +75,9 @@ public class MainActivity extends AppCompatActivity
     TextView header_username,
             initial, email, retry;
     User myInfo = new User();
+    LatLng CurrentLocation;
+    boolean fetched = false;
+    locationService locationService = new locationService();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -238,8 +245,10 @@ public class MainActivity extends AppCompatActivity
                     progressbar.setVisibility(View.GONE);
                     assert user != null;
                     setUserInfo(user);
+                    fetched = true;
                     myInfo = user;
                     ViewSupport.setThumbProfileImage(user, Header_DP);
+                    locationService.init(MainActivity.this);
                 }
 
                 @Override
@@ -346,49 +355,58 @@ public class MainActivity extends AppCompatActivity
         editor.apply();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void status(String status, String last_seen) {
+        reference = FirebaseDatabase.getInstance()
+                .getReference("Users").child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+        hashMap.put("lastSeen", last_seen);
+        reference.updateChildren(hashMap);
 
     }
 
-    public void NotificationPopup(Context context, String title, String content, String time, String date, String to, String from) {
-        Notificatio_popup = new Dialog(context);
-        Notificatio_popup.setContentView(R.layout.popup_notification);
-        TextView title_txt = Notificatio_popup.findViewById(R.id.title_notify);
-        TextView content_txt = Notificatio_popup.findViewById(R.id.content_notify);
-        TextView dateInfo = Notificatio_popup.findViewById(R.id.date_notify);
-        TextView fromInfo = Notificatio_popup.findViewById(R.id.from_notify);
-        TextView toInfo = Notificatio_popup.findViewById(R.id.public_or_private);
-        TextView timeInfo = Notificatio_popup.findViewById(R.id.time_notify);
-        Button rembr_btn = Notificatio_popup.findViewById(R.id.remember_btn_notify);
-        Button ok_btn = Notificatio_popup.findViewById(R.id.ok_btn_notify);
-        ImageView status = Notificatio_popup.findViewById(R.id.status_notify);
-        title_txt.setText(title);
-        content_txt.setText(content);
-        dateInfo.setText(date);
-        fromInfo.setText(from);
-        toInfo.setText(to);
-        timeInfo.setText(time);
-        if (to.equals("public")) {
-            status.setImageResource(R.drawable.ic_public_public_24dp);
-        } else {
-            status.setImageResource(R.drawable.ic_supervisor_account_black_24dp);
-        }
-        Objects.requireNonNull(Notificatio_popup.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ok_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Notificatio_popup.cancel();
-            }
-        });
-        rembr_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Notificatio_popup.cancel();
-            }
-        });
-        Notificatio_popup.show();
+    private void setLocation(String latitude, String longitude) {
+        reference = FirebaseDatabase.getInstance()
+                .getReference("Users").child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("Latitude", latitude);
+        hashMap.put("Longitude", longitude);
+        reference.updateChildren(hashMap);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!Supports.Connected(this) && fetched) {
+            status("online", "active");
+            CurrentLocation = locationService.getLocation();
+            setLocation(String.valueOf(CurrentLocation.latitude), String.valueOf(CurrentLocation.longitude));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!Supports.Connected(this) && fetched) {
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+            String time = format.format(calendar.getTime());
+            SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
+            String date = format1.format(calendar.getTime());
+            status(time, date);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                CurrentLocation = locationService.getLocation();
+                setLocation(String.valueOf(CurrentLocation.latitude),
+                        String.valueOf(CurrentLocation.longitude));
+            } else {
+                setLocation(getResources().getString(R.string.not_provided),
+                        getResources().getString(R.string.not_provided));
+            }
+        }
     }
 }

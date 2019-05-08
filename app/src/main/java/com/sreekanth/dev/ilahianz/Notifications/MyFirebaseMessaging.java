@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +36,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         assert sented != null;
         if (firebaseUser != null && sented.equals(firebaseUser.getUid())) {
             assert currentUser != null;
-            if (!currentUser.equals(user)) {
+            if (!TextUtils.equals(currentUser, user)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     sendOreoNotification(remoteMessage);
                 } else {

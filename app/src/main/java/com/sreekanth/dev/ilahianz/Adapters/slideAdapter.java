@@ -23,15 +23,19 @@ public class slideAdapter extends PagerAdapter {
 
     private int[] slideImages = {
             R.mipmap.welcome,
-            R.mipmap.location_onboard,
-            R.mipmap.chat_onboard
+            R.mipmap.chat_onboard,
+            R.mipmap.location,
+            R.mipmap.helpline
     };
     private String[] SlideHeading = {
-            "Welcome", "Map", "Chat"
+            "Welcome", "Chat", "Location", "Help"
     };
     private String[] slide_contents = {
-            "Welcome to all", "You can a lso make calls in your application " +
-            "and locate your friends by one click", "Chat with your friends"
+            "To make better Community. and Friendship",
+            "Chat with your friends and loved once. " +
+                    "And also you can ask questions to Teachers",
+            "Locate your friends.",
+            "Use Help if you need Check it out our Help Center"
     };
 
     @Override
@@ -41,7 +45,7 @@ public class slideAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view == (RelativeLayout) o;
+        return view == o;
     }
 
     @NonNull

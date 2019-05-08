@@ -9,8 +9,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,9 +54,14 @@ public class UserProfile extends AppCompatActivity {
     User myInfo = new User();
     LinearLayout info;
     RelativeLayout progress;
+    String latitude;
+    String longitude;
     TextView birthday;
     String PhoneNumber = null;
     Intent intent;
+    AppBarLayout appBar;
+    String username;
+    String category;
     FloatingActionButton locationBtn;
     public static final int REQUEST_CALL = 635;
 
@@ -65,7 +73,7 @@ public class UserProfile extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Profile");
-
+        appBar = findViewById(R.id.app_bar);
         locationBtn = findViewById(R.id.fab);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone_number);
@@ -75,6 +83,8 @@ public class UserProfile extends AppCompatActivity {
         profile_Image = findViewById(R.id.profile_Image);
         toolbarLayout = findViewById(R.id.collapsingtoolbar);
         locationStatus = findViewById(R.id.locationStatus);
+        latitude = null;
+        longitude = null;
         callBtn = findViewById(R.id.call_btn);
         online = findViewById(R.id.online);
         info = findViewById(R.id.info);
@@ -99,6 +109,33 @@ public class UserProfile extends AppCompatActivity {
                         .putExtra("userId", intent.getStringExtra("UId")), options.toBundle());
             }
         });
+
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.equals(category, "Teacher")) {
+                    if (latitude != null && longitude != null) {
+                        if (TextUtils.equals("Not Provided", longitude)
+                                || TextUtils.equals("Not Provided", longitude)) {
+                            Snackbar.make(v, "Location not Provided ", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        } else {
+                            LatLng location = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
+                            MapsActivity.setLOCATION(location, username);
+                            startActivity(new Intent(UserProfile.this, MapsActivity.class));
+                        }
+
+                    } else {
+                        Snackbar.make(v, "Location not available ", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                    }
+                } else {
+                    Snackbar.make(v, "You cannot access Teacher's Location", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+            }
+        });
+
     }
 
     private void init() {
@@ -127,6 +164,8 @@ public class UserProfile extends AppCompatActivity {
                 toolbarLayout.setTitle(user.getUsername());
                 info.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
+                username = user.getUsername();
+                category = user.getCategory();
                 //////////////////////////BIRTHDAY PRIVACY//////////////////////////
                 /////////////////////////////////
                 if (!TextUtils.equals(user.getBirthdayPrivacy(), "Nobody")) {
@@ -208,9 +247,13 @@ public class UserProfile extends AppCompatActivity {
                             case "Students Only":
                                 locationStatus.setText("Location Available");
                                 locationBtn.setEnabled(true);
+                                latitude = user.getLatitude();
+                                longitude = user.getLongitude();
                             case "Everyone":
                                 locationStatus.setText("Location Available");
                                 locationBtn.setEnabled(true);
+                                latitude = user.getLatitude();
+                                longitude = user.getLongitude();
                                 break;
                             default:
                                 locationStatus.setText("Location Not Available");
@@ -223,10 +266,14 @@ public class UserProfile extends AppCompatActivity {
                             case "Teachers Only":
                                 locationStatus.setText("Location Available");
                                 locationBtn.setEnabled(true);
+                                latitude = user.getLatitude();
+                                longitude = user.getLongitude();
                                 break;
                             case "Everyone":
                                 locationStatus.setText("Location Available");
                                 locationBtn.setEnabled(true);
+                                latitude = user.getLatitude();
+                                longitude = user.getLongitude();
                                 break;
                             default:
                                 locationStatus.setText("Location Not Available");

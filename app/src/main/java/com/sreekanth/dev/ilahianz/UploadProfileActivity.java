@@ -112,7 +112,7 @@ public class UploadProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (TextUtils.equals(upload_btn.getText(), "UPLOAD"))
                     openSheet();
-                else startActivity(new Intent(UploadProfileActivity.this, MainActivity.class)
+                else startActivity(new Intent(UploadProfileActivity.this, Startup.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });

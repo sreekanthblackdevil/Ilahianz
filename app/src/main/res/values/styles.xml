@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -8,6 +8,12 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="Maps_style" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">#1F1F1F</item>
+    </style>
     <style name="SignIn_Style" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">#371B5E</item>
         <item name="colorAccent">#0B8B3C</item>
@@ -26,7 +32,7 @@
     </style>
 
     <style name="profileUploadStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#343435</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -126,14 +127,11 @@ public class MessageActivity extends AppCompatActivity {
                 assert user != null;
                 username.setText(user.getUsername());
                 ViewSupport.setThumbProfileWithPrivacy(user, myInfo, profile_image);
-                switch (user.getStatus()) {
-                    case "online":
-                        online.setVisibility(View.VISIBLE);
-                        online.setText("online");
-                        break;
-                    default:
-                        online.setVisibility(View.GONE);
-                        break;
+                if ("online".equals(user.getStatus())) {
+                    online.setVisibility(View.VISIBLE);
+                    online.setText("online");
+                } else {
+                    online.setVisibility(View.GONE);
                 }
                 readMessages(fuser.getUid(), userid, user.getImageURL());
             }
@@ -354,9 +352,9 @@ public class MessageActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
         String time = format.format(calendar.getTime());
-        SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy");
+        SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
         String date = format1.format(calendar.getTime());
         reference.removeEventListener(seenListener);
         status(time, date);
