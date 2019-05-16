@@ -9,7 +9,6 @@ package com.sreekanth.dev.ilahianz;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,22 +24,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,20 +100,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private CircleImageView pro_image;
     private TextView username, about, birthday;
-    private DatePickerDialog.OnDateSetListener dateSetListener;
-    private Dialog change_username,
-            change_description,
-            changeNickname,
-            edit_class;
     private DatabaseReference reference;
     private FirebaseUser fuser;
     private ImageView change_profile;
     private StorageReference storageReference;
     private StorageTask uploadTask;
-    private int birth_day, birth_month, birth_year;
     private Dialog profile_view;
-    private ImageView changeName, editNickname;
-    private LinearLayout chaneDescription, ChangeBirthday;
     private String username_txt;
     private String imageURL;
     private String thumbURL;
@@ -132,14 +116,12 @@ public class ProfileActivity extends AppCompatActivity {
     private File compressedImage;
     private File thumbnail;
     private File actualImage;
-    private ProgressBar progress;
     private TextView phone;
     private TextView email;
     private TextView class_name;
     private TextView nickname;
-    private CardView nickname_carry;
     boolean fetched;
-    private LinearLayout edit_class_str;
+    LinearLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,31 +129,30 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         profile_view = new Dialog(this);
-        change_description = new Dialog(this);
-        change_username = new Dialog(this);
-        changeNickname = new Dialog(this);
-        edit_class = new Dialog(this);
 
         pro_image = findViewById(R.id.profile_Image);
         birthday = findViewById(R.id.birthday);
-        changeName = findViewById(R.id.edit_username);
-        ChangeBirthday = findViewById(R.id.editBirthday);
-        chaneDescription = findViewById(R.id.changeDescription);
         about = findViewById(R.id.description);
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone_number);
         class_name = findViewById(R.id.class_name);
+        container = findViewById(R.id.container);
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         change_profile = findViewById(R.id.btn_profile_change);
         mStorage = FirebaseStorage.getInstance();
-        progress = findViewById(R.id.progressBar);
         nickname = findViewById(R.id.nickname);
-        edit_class_str = findViewById(R.id.edit_class);
-        editNickname = findViewById(R.id.edit_nickname);
-        nickname_carry = findViewById(R.id.card6);
         init();
+        container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         fetched = false;
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -184,8 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
                 thumbURL = user.getThumbnailURL();
                 user1 = user;
                 setUserInfo(user);
-                progress.setVisibility(View.GONE);
-                ViewSupport.setProfileImage(user, pro_image);
+                ViewSupport.setThumbProfileImage(user, pro_image);
             }
 
             @Override
@@ -245,9 +225,9 @@ public class ProfileActivity extends AppCompatActivity {
         username.setText(getUserInfo(SP_USERNAME));
         username_txt = getUserInfo(SP_USERNAME);
         about.setText(getUserInfo(SP_ABOUT));
-        birth_day = Integer.parseInt(getUserInfo(SP_BIRTH_DAY));
-        birth_month = Integer.parseInt(getUserInfo(SP_BIRTH_MONTH));
-        birth_year = Integer.parseInt(getUserInfo(SP_BIRTH_YEAR));
+        int birth_day = Integer.parseInt(getUserInfo(SP_BIRTH_DAY));
+        int birth_month = Integer.parseInt(getUserInfo(SP_BIRTH_MONTH));
+        int birth_year = Integer.parseInt(getUserInfo(SP_BIRTH_YEAR));
         email.setText(getUserInfo(SP_EMAIL));
         phone.setText(getUserInfo(SP_PH_NUMBER));
         Calendar calendar = Calendar.getInstance();
@@ -264,249 +244,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (!TextUtils.equals(getUserInfo(SP_NICKNAME), DEFAULT)) {
             nickname.setText(getUserInfo(SP_NICKNAME));
-            nickname_carry.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(getUserInfo(SP_CATEGORY), "Student")) {
+        } else {
             nickname.setText(getString(R.string.nick_name_not_provided));
-            nickname_carry.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(getUserInfo(SP_CATEGORY), "Teacher"))
-            nickname_carry.setVisibility(View.GONE);
+        }
+
     }
 
     private void changes() {
-
-        edit_class_str.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Supports.Connected(ProfileActivity.this)) {
-                    if (fetched) {
-
-                        edit_class.setContentView(R.layout.edit_class);
-                        Objects.requireNonNull(edit_class.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        ImageView cancel = edit_class.findViewById(R.id.cancel_btn);
-                        ImageView ok = edit_class.findViewById(R.id.ok_btn);
-
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                edit_class.dismiss();
-                            }
-                        });
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(final View v) {
-                                int divisionID;
-                                RadioButton txt_class, txt_division;
-                                RadioGroup division = edit_class.findViewById(R.id.division_rg);
-                                RadioGroup classname = edit_class.findViewById(R.id.class_rg);
-                                divisionID = division.getCheckedRadioButtonId();
-                                int classID = classname.getCheckedRadioButtonId();
-                                txt_class = edit_class.findViewById(classID);
-                                txt_division = edit_class.findViewById(divisionID);
-
-                                if (txt_class == null) {
-                                    Toast.makeText(ProfileActivity.this,
-                                            "Specify your class", Toast.LENGTH_SHORT).show();
-                                } else if (txt_division == null) {
-                                    Toast.makeText(ProfileActivity.this,
-                                            "Specify your Division", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    String className = txt_class.getText().toString();
-                                    className += txt_division.getText().toString();
-                                    updateInfo("className", SP_CLASS_NAME, className);
-                                    edit_class.dismiss();
-                                }
-                            }
-                        });
-
-                        edit_class.show();
-
-                    } else {
-                        Toast.makeText(ProfileActivity.this, "Loading Information...", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Snackbar.make(v, "No Internet !", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-                }
-            }
-        });
-
-        phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Supports.Connected(ProfileActivity.this)) {
-                    if (fetched) {
-                        final Dialog dialog = new Dialog(ProfileActivity.this);
-                        dialog.setContentView(R.layout.edit_phone_number);
-                        ImageView ok = dialog.findViewById(R.id.ok);
-                        ImageView cancel = dialog.findViewById(R.id.cancel);
-                        final EditText number = dialog.findViewById(R.id.phone_number);
-                        number.setText(getUserInfo(SP_PH_NUMBER));
-                        number.setSelection(0, getUserInfo(SP_PH_NUMBER).length());
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(final View v) {
-                                if (!TextUtils.isEmpty(number.getText().toString())) {
-                                    if (TextUtils.getTrimmedLength(number.getText().toString()) >= 10) {
-                                        updateInfo("PhoneNumber", SP_PH_NUMBER, number.getText().toString());
-                                        dialog.dismiss();
-                                    } else {
-                                        number.setError("Must be 10 Digits");
-                                    }
-                                }
-                            }
-                        });
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        dialog.show();
-                    } else {
-                        Toast.makeText(ProfileActivity.this, "Loading information...", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-                }
-            }
-        });
-        changeName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Supports.Connected(ProfileActivity.this)) {
-                    if (fetched) {
-                        change_username.setContentView(R.layout.username_cahnge);
-                        Objects.requireNonNull(change_username.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        CircleImageView proImage = change_username.findViewById(R.id.profile_Image);
-                        ViewSupport.setThumbProfileImage(user1, proImage);
-
-                        TextView username_txt = change_username.findViewById(R.id.username);
-                        final EditText username = change_username.findViewById(R.id.edit_username_txt);
-
-                        username_txt.setText(getUserInfo(SP_USERNAME));
-                        username.setText(getUserInfo(SP_USERNAME));
-                        username.setSelection(0, getUserInfo(SP_USERNAME).length());
-                        username.setSelection(getUserInfo(SP_USERNAME).length());
-
-                        ImageView ok = change_username.findViewById(R.id.ok_btn);
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(final View v) {
-                                if (!TextUtils.isEmpty(username.getText().toString())) {
-                                    updateInfo("username", SP_USERNAME, username.getText().toString());
-                                    updateInfo("search", SP_USERNAME, username.getText().toString());
-                                } else {
-                                    username.setError("Required");
-                                }
-                                change_username.dismiss();
-                                init();
-                            }
-                        });
-
-                        ImageView cancel = change_username.findViewById(R.id.cancel_btn);
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                change_username.dismiss();
-                            }
-                        });
-
-                        change_username.show();
-                    } else {
-                        Toast.makeText(ProfileActivity.this, "Loading information...", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Snackbar.make(v, "No Internet", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-                }
-            }
-        });
-
-        chaneDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Supports.Connected(ProfileActivity.this)) {
-                    if (fetched) {
-                        change_description.setContentView(R.layout.discription_change);
-                        Objects.requireNonNull(change_description.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        final EditText description = change_description.findViewById(R.id.description_txt_edit);
-                        ImageView cancel = change_description.findViewById(R.id.cancel_btn);
-                        ImageView ok = change_description.findViewById(R.id.ok_btn);
-
-                        description.setText(getUserInfo("description"));
-                        description.setSelection(getUserInfo("description").length());
-                        description.setSelection(0, getUserInfo("description").length());
-                        description.setCursorVisible(true);
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                change_description.dismiss();
-                            }
-                        });
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(final View v) {
-                                if (!TextUtils.isEmpty(description.getText())) {
-                                    updateInfo("Description", SP_ABOUT, description.getText().toString());
-                                } else description.setError("Field is Empty !");
-
-                                change_description.dismiss();
-                            }
-                        });
-
-                        change_description.show();
-                    } else
-                        Toast.makeText(ProfileActivity.this, "Loading Information", Toast.LENGTH_SHORT).show();
-                } else
-                    Snackbar.make(v, "No Internet !", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-            }
-        });
-
-        editNickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Supports.Connected(ProfileActivity.this)) {
-                    if (fetched) {
-                        changeNickname.setContentView(R.layout.edit_nickname);
-                        Objects.requireNonNull(changeNickname.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        final EditText nickname = changeNickname.findViewById(R.id.nickname);
-                        ImageView cancel = changeNickname.findViewById(R.id.cancel);
-                        ImageView ok = changeNickname.findViewById(R.id.ok);
-
-                        nickname.setText(getUserInfo("nickname"));
-                        nickname.setSelection(getUserInfo("nickname").length());
-                        nickname.setSelection(0, getUserInfo("nickname").length());
-                        nickname.setCursorVisible(true);
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                changeNickname.dismiss();
-                            }
-                        });
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(final View v) {
-                                if (!TextUtils.isEmpty(nickname.getText())) {
-                                    updateInfo("Nickname", SP_NICKNAME, nickname.getText().toString());
-                                }
-
-                                changeNickname.dismiss();
-                            }
-                        });
-
-                        changeNickname.show();
-                    } else
-                        Toast.makeText(ProfileActivity.this, "Loading Information", Toast.LENGTH_SHORT).show();
-                } else
-                    Snackbar.make(v, "No Internet !", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-            }
-        });
 
         change_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -514,54 +258,6 @@ public class ProfileActivity extends AppCompatActivity {
                 openSheet();
             }
         });
-
-        ChangeBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                if (!Supports.Connected(ProfileActivity.this)) {
-                    if (fetched) {
-                        DatePickerDialog Dialog = new DatePickerDialog(
-                                ProfileActivity.this, android.R.style.Theme_Material_Light_Dialog,
-                                dateSetListener, birth_year, birth_month, birth_day);
-                        Dialog.show();
-                    } else
-                        Toast.makeText(ProfileActivity.this, "Loading information...", Toast.LENGTH_SHORT).show();
-                } else
-                    Snackbar.make(v, "No Internet !", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-            }
-        });
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(final DatePicker view, int year, int month, int dayOfMonth) {
-                reference = FirebaseDatabase.getInstance()
-                        .getReference("Users").child(fuser.getUid());
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("Birthday", String.valueOf(dayOfMonth));
-                hashMap.put("BirthMonth", String.valueOf(month));
-                hashMap.put("BirthYear", String.valueOf(year));
-                /*setUserInfo("Birthday", String.valueOf(birth_day));
-                setUserInfo("BirthMonth", String.valueOf(birth_month));
-                setUserInfo("BirthYear", String.valueOf(birth_year));*/
-                birth_day = dayOfMonth;
-                birth_month = month;
-                birth_year = year;
-                reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isComplete()) {
-                            setUserInfo("Birthday", String.valueOf(birth_day));
-                            setUserInfo("BirthMonth", String.valueOf(birth_month));
-                            setUserInfo("BirthYear", String.valueOf(birth_year));
-                            Toast.makeText(ProfileActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
-                            init();
-                        } else
-                            Toast.makeText(ProfileActivity.this, "Failed to apply changes", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        };
-
 
     }
 
@@ -1051,24 +747,6 @@ public class ProfileActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences("userInfo", MODE_PRIVATE).edit();
         editor.putString(key, value);
         editor.apply();
-    }
-
-    private void updateInfo(String key1, final String key2, final String value) {
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put(key1, value);
-        reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isComplete()) {
-                    setUserInfo(key2, value);
-                    Toast.makeText(ProfileActivity.this, "Changes applied", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ProfileActivity.this, "Failed to apply changes", Toast.LENGTH_SHORT).show();
-                }
-                init();
-            }
-        });
     }
 
     @Override

@@ -1,43 +1,107 @@
 package com.sreekanth.dev.ilahianz;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
-import com.github.clans.fab.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.sreekanth.dev.ilahianz.Fragments.MyNotificationFragment;
+import com.sreekanth.dev.ilahianz.Fragments.NotificationsFragment;
+
+import java.util.ArrayList;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    FloatingActionButton fab_public, fab_local, fab_teachers_only;
+    FirebaseUser firebaseUser;
+    Dialog dialog;
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    ImageButton back;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        fab_local = findViewById(R.id.local_fab);
-        fab_teachers_only = findViewById(R.id.teachers_only_fab);
-        fab_public = findViewById(R.id.public_fab);
 
-        fab_public.setOnClickListener(new View.OnClickListener() {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.create_notification);
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+        back = findViewById(R.id.back_btn);
+        fab = findViewById(R.id.fab);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new NotificationsFragment(), "ALL");
+        viewPagerAdapter.addFragment(new MyNotificationFragment(), "MY");
+        viewPager.setAdapter(viewPagerAdapter);
+
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(NotificationActivity.this, "public", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
-        fab_teachers_only.setOnClickListener(new View.OnClickListener() {
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(NotificationActivity.this, "Teachers", Toast.LENGTH_SHORT).show();
-
+                startActivity(new Intent(NotificationActivity.this, CreateNotificationActivity.class));
             }
         });
-        fab_local.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(NotificationActivity.this, "local", Toast.LENGTH_SHORT).show();
 
-            }
-        });
+    }
+
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<Fragment> fragments;
+        private ArrayList<String> titles;
+
+        ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fragments = new ArrayList<>();
+            this.titles = new ArrayList<>();
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragments.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            fragments.add(fragment);
+            titles.add(title);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+    }
+
+    private String getUserInfo(String key) {
+        SharedPreferences preferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+        return preferences.getString(key, "none");
     }
 }

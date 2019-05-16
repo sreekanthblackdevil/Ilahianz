@@ -23,6 +23,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".EditProfileActivity"></activity>
+        <activity
+            android:name=".ShowNotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_show_notification"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".CreateNotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_create_notification"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".ProfileActivity2"
             android:label="@string/title_activity_profile2"
@@ -38,7 +49,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AboutActivity"
-            android:label="Ilahianz"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
@@ -84,7 +95,6 @@
             android:theme="@style/HelpStyle" />
         <activity
             android:name=".NotificationActivity"
-            android:label="Notifications"
             android:theme="@style/Notification_Style" />
         <activity
             android:name=".ProfileActivity"

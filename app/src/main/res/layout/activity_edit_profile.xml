@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)
+  ~ This Code
+  ~ Author Sreekanth K R
+  ~ Name Ilahianz
+  ~ Github  https://github.com/sreekanthblackdevil/Ilahianz
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditProfileActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/green">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ok"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_check" />
+
+            <ImageButton
+                android:id="@+id/close"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="35dp"
+                android:layout_toStartOf="@+id/ok"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_close_white_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Edit Profile"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:background="#0091EA">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:elevation="5dp"
+            android:id="@+id/profile_Image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_profile_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:src="@mipmap/header2"
+            android:transitionName="imageTransition" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_Image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_bold"
+            android:hint="Username"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            android:textSize="19sp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Nickname"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/nickname_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/username"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_person_grey" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nickname"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Description"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/about_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/nickname"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_info_grey" />
+
+        <EditText
+            android:id="@+id/class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Class Name"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/class_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/description"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_class_grey" />
+
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/class_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Location"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/location_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/class_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_my_location_grey" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/phone_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/location"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_phone_grey" />
+
+        <EditText
+            android:id="@+id/birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Date of Birth"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/birthday_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/phone"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_child_grey" />
+
+        <EditText
+            android:id="@+id/bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/birthday"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@id/nickname_logo"
+            android:background="@drawable/edit_profile_edit_bg"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Bio"
+            android:inputType="textMultiLine"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:text="Candid"
+            android:textColor="@color/white"
+            android:textColorHint="#81FFFFFF"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/bio_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/birthday"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_bio_grey" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -133,7 +134,7 @@ public class MessageActivity extends AppCompatActivity {
                 } else {
                     online.setVisibility(View.GONE);
                 }
-                readMessages(fuser.getUid(), userid, user.getImageURL());
+                readMessages(fuser.getUid(), userid);
             }
 
             @Override
@@ -154,7 +155,7 @@ public class MessageActivity extends AppCompatActivity {
                 String msg = send_text.getText().toString();
                 if (!msg.isEmpty()) {
                     calendar = Calendar.getInstance();
-                    SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
+                    SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
                     String time = format.format(calendar.getTime());
                     sendMessage(fuser.getUid(), userid, msg, time);
                 }
@@ -274,17 +275,17 @@ public class MessageActivity extends AppCompatActivity {
                     apiService.sendNotification(sender).
                             enqueue(new Callback<MyResponse>() {
                                 @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                public void onResponse(@NonNull Call<MyResponse> call, @NonNull Response<MyResponse> response) {
                                     if (response.code() == 200) {
                                         assert response.body() != null;
                                         if (response.body().success == 1) {
-                                            //Toast.makeText(MessageActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MessageActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
+                                public void onFailure(@NonNull Call<MyResponse> call, @NonNull Throwable t) {
 
                                 }
                             });
@@ -298,7 +299,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    private void readMessages(final String myid, final String userid, final String imageurl) {
+    private void readMessages(final String myid, final String userid) {
         mChat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");

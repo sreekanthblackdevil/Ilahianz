@@ -1,365 +1,396 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)
+  ~ This Code
+  ~ Author Sreekanth K R
+  ~ Name Ilahianz
+  ~ Github  https://github.com/sreekanthblackdevil/Ilahianz
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F9FA"
-    android:orientation="vertical"
-    tools:context=".ProfileActivity">
+    android:background="#DDDCDC">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="@mipmap/header2"
+        android:orientation="vertical" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/content_carry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/edit_class"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="180dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:fontFamily="@font/roboto_black"
-                    android:id="@+id/class_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/condition"
+            <RelativeLayout
+                android:id="@+id/layout1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/card1"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="10dp"
-                android:text="Provide your Actual name because other users wants to identify you"
-                tools:ignore="HardcodedText" />
+                android:layout_height="220dp"
+                android:layout_below="@id/profile_Image"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/settings_btn"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/color_circle_blue"
+                            android:elevation="5dp"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_action_settings_white" />
+
+                        <TextView
+                            android:id="@+id/username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="57dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Mullaseri Shibu"
+                            android:textColor="@color/black"
+                            android:textSize="23sp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:id="@+id/class_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/username"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="BCA C4A"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/edit_profile_btn"
+                            android:layout_width="180dp"
+                            android:layout_height="40dp"
+                            android:layout_below="@id/class_name"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:background="@drawable/edit_btn_bg"
+                            android:elevation="5dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Edit Profile"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            tools:ignore="HardcodedText" />
+
+                        <ImageView
+                            android:id="@+id/btn_profile_change"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/color_circle_blue"
+                            android:elevation="6dp"
+                            android:padding="9dp"
+                            android:src="@drawable/ic_action_camera" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/card6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/condition"
+                android:layout_height="450dp"
+                android:layout_below="@id/layout1"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="1dp"
                 android:layout_marginEnd="10dp"
-                app:cardCornerRadius="15dp">
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/card1">
+                    android:layout_height="wrap_content">
 
-                    <View
-                        android:layout_width="1dp"
+                    <ImageView
+                        android:id="@+id/nickname_logo"
+                        android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="15dp"
-                        android:layout_toStartOf="@+id/edit_nickname"
-                        android:background="#AAAAAA" />
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_action_person_grey" />
+
+                    <TextView
+                        android:id="@+id/nickname_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Nickname"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
 
                     <TextView
                         android:id="@+id/nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_below="@id/nickname_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
-                        android:padding="5dp"
+                        android:text="Nickname"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/edit_nickname"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="15dp"
-                        android:src="@mipmap/edit" />
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edit_class"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="15dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/card1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="15dp"
-                        android:layout_toStartOf="@+id/edit_username"
-                        android:background="#AAAAAA" />
-
-                    <TextView
-                        android:id="@+id/username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:padding="5dp"
-                        android:text="USERNAME"
-                        android:textColor="#6C6E75"
-                        android:textSize="20sp"
-                        tools:ignore="HardcodedText" />
-
-                    <ImageView
-                        android:id="@+id/edit_username"
+                        android:id="@+id/about_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="15dp"
-                        android:src="@mipmap/edit" />
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/card6"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="10dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/card2">
+                        android:layout_below="@id/nickname"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_action_info_grey" />
 
                     <TextView
-                        android:fontFamily="@font/roboto_black"
-                        android:id="@+id/caption1"
+                        android:id="@+id/about_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="About and Birthday"
-                        android:textColor="@color/colorChatPrimaryDark"
-                        tools:ignore="HardcodedText" />
-
-                    <LinearLayout
-                        android:id="@+id/changeDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/caption1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground">
-
-                        <TextView
-                            android:id="@+id/description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:drawableEnd="@drawable/ic_action_edit"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:padding="5dp"
-                            android:text="About"
-                            android:textColor="@color/black"
-                            android:textSize="17sp"
-                            android:transitionName="descriptionTransition"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/view1"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/changeDescription"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="#D6D5D5" />
-
-                    <LinearLayout
-                        android:id="@+id/editBirthday"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/view1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/birthday"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:drawableEnd="@drawable/ic_action_edit"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:padding="5dp"
-                            android:text="Birthday"
-                            android:textColor="#000000"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/card2"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="10dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/card2">
+                        android:layout_below="@id/nickname"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Description"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
 
                     <TextView
-                        android:fontFamily="@font/roboto_black"
-                        android:id="@+id/caption2"
+                        android:id="@+id/description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Phone Number and Email"
-                        android:textColor="@color/colorChatPrimaryDark"
+                        android:layout_below="@id/about_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Hey Ilahianz"
+                        android:textColor="@color/black"
                         tools:ignore="HardcodedText" />
 
-                    <LinearLayout
-                        android:id="@+id/changePhoneNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/caption2"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground">
-
-                        <TextView
-                            android:id="@+id/phone_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:drawableEnd="@drawable/ic_action_edit"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:padding="5dp"
-                            android:text="Phone number"
-                            android:textColor="@color/black"
-                            android:textSize="17sp"
-                            android:transitionName="descriptionTransition"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/view2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/changePhoneNumber"
+                    <ImageView
+                        android:id="@+id/phone_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/location"
                         android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="#D6D5D5" />
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_action_phone_grey" />
 
-                    <LinearLayout
-                        android:id="@+id/editEmail"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/phone_title"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/view2"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:orientation="horizontal">
+                        android:layout_below="@id/location"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Phone Number"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
 
-                        <TextView
-                            android:id="@+id/email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:padding="5dp"
-                            android:text="Email"
-                            android:textColor="#000000"
-                            android:textSize="16sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phone_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="9946912334"
+                        android:textColor="@color/black"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:id="@+id/location_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/description"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_action_my_location_grey" />
+
+                    <TextView
+                        android:id="@+id/location_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/description"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Place"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/location_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Kothamangalam, kerala"
+                        android:textColor="@color/black"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:id="@+id/email_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/phone_number"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_action_email_grey" />
+
+                    <TextView
+                        android:id="@+id/email_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phone_number"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Email"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/email_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="ksreekanthkr@gmail.com"
+                        android:textColor="@color/black"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:id="@+id/birthday_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/email"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_action_child_grey" />
+
+                    <TextView
+                        android:id="@+id/birthday_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/email"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Birthday"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
+
+                    <TextView
+                        android:id="@+id/birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/birthday_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="16, jun, 2000"
+                        android:textColor="@color/black"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:id="@+id/bio_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/birthday"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_action_bio_grey" />
+
+                    <TextView
+                        android:id="@+id/bio_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/birthday"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Bio"
+                        android:textSize="11sp"
+                        tools:ignore="HardcodedText,SmallSp" />
+
+                    <TextView
+                        android:id="@+id/bio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bio_title"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/nickname_logo"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Bio not provided"
+                        android:textColor="@color/black"
+                        tools:ignore="HardcodedText" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_Image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="-50dp"
+                android:background="@drawable/bg_profile_card"
+                android:elevation="5dp"
+                android:padding="2dp"
+                android:src="@mipmap/men1"
+                android:transitionName="imageTransition" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp" />
         </RelativeLayout>
     </ScrollView>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_Image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_account_circle_grey_150dp"
-        android:transitionName="imageTransition" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/profile_Image"
-        android:layout_alignBottom="@+id/profile_Image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:layout_marginBottom="51dp" />
-
-    <ImageView
-        android:id="@+id/btn_profile_change"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignEnd="@+id/profile_Image"
-        android:layout_alignBottom="@+id/profile_Image"
-        android:background="@drawable/green_circle"
-        android:padding="12dp"
-        android:src="@drawable/ic_action_camera" />
 </RelativeLayout>

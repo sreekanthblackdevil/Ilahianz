@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -34,8 +33,6 @@ public class start extends AppCompatActivity {
     FirebaseUser firebaseUser;
     ImageView image;
 
-    AnimationDrawable animation;
-
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -58,14 +55,11 @@ public class start extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         image = findViewById(R.id.imageView);
-        image.setBackgroundResource(R.drawable.fly);
-        animation = (AnimationDrawable) image.getBackground();
-        animation.start();
         //firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (Connected(start.this)) {
             Toast.makeText(this, "No Internet !", Toast.LENGTH_SHORT).show();
         }
-        handler.postDelayed(runnable, 2000);
+        handler.postDelayed(runnable, 1000);
         newUser = false;
     }
 

@@ -1,4 +1,10 @@
 package com.sreekanth.dev.ilahianz;
+/**
+ * This Code
+ * Created in 2019
+ * Author Sreekanth K R
+ * Name Ilahianz
+ */
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -7,6 +13,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -54,19 +61,41 @@ import static com.sreekanth.dev.ilahianz.model.Literals.ILAHIA_LOCATION;
 import static com.sreekanth.dev.ilahianz.model.Literals.ILAHIA_WEBSITE;
 import static com.sreekanth.dev.ilahianz.model.Literals.IMAGE_REQUEST;
 import static com.sreekanth.dev.ilahianz.model.Literals.LOCATION_REQUEST;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTHDAY_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_DAY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_MONTH;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_YEAR;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CATEGORY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_GENDER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LAST_SEEN;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LOCATION_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_NICKNAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PHONE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PH_NUMBER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PROFILE_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     FirebaseDatabase firebaseDatabase;
-    LinearLayout chat, Notes, remainder, teachers, notifications, help, location, attendance, website;
-    Dialog Notificatio_popup, profile;
+    LinearLayout chat,
+            Notes,
+            remainder,
+            teachers,
+            notifications,
+            help,
+            location,
+            attendance,
+            website;
+    Dialog profile;
     DatabaseReference reference;
     RelativeLayout profile_view;
     RelativeLayout connectionStatus;
@@ -172,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         Notes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NotesActivity.class);
+                Intent intent = new Intent(MainActivity.this, ShowNotificationActivity.class);
                 startActivity(intent);
             }
         });
@@ -216,9 +245,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void init() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        initial.setText(getUserInfo(SP_CLASS_NAME));
+    private void adaptUserInfo() {
         if (!TextUtils.equals(getUserInfo(SP_NICKNAME), DEFAULT)) {
             header_username.setText(String.format("%s (%s)", getUserInfo(SP_USERNAME).toUpperCase(),
                     getUserInfo(SP_NICKNAME)));
@@ -226,6 +253,12 @@ public class MainActivity extends AppCompatActivity
             header_username.setText(getUserInfo(SP_USERNAME).toUpperCase());
         }
         email.setText(getUserInfo(SP_EMAIL));
+    }
+
+    private void init() {
+        adaptUserInfo();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        initial.setText(getUserInfo(SP_CLASS_NAME));
 
         if (Supports.Connected(this)) {
             drawer.openDrawer(GravityCompat.START);
@@ -249,6 +282,7 @@ public class MainActivity extends AppCompatActivity
                     myInfo = user;
                     ViewSupport.setThumbProfileImage(user, Header_DP);
                     locationService.init(MainActivity.this);
+                    adaptUserInfo();
                 }
 
                 @Override
@@ -301,7 +335,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard) {
@@ -312,10 +346,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, HelpActivity.class));
         } else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
-            startActivity(new Intent(MainActivity.this, signinActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
+            startActivity(new Intent(MainActivity.this,
+                    signinActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
         } else if (id == R.id.nav_invite) {
+            Toast.makeText(this, "Invite a Ilahianz", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_chat) {
             Intent intent = new Intent(MainActivity.this, ChatActivity.class);
@@ -328,24 +362,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setUserInfo(User user) {
-        setUserInfo("username", user.getUsername());
-        setUserInfo("number", user.getPhoneNumber());
-        setUserInfo("gender", user.getGender());
-        setUserInfo("className", user.getClassName());
-        setUserInfo("email", user.getEmail());
-        setUserInfo("Birthday", user.getBirthday());
-        setUserInfo("BirthYear", user.getBirthYear());
-        setUserInfo("BirthMonth", user.getBirthMonth());
-        setUserInfo("nickname", user.getNickname());
-        setUserInfo("category", user.getCategory());
-        setUserInfo("description", user.getDescription());
-        setUserInfo("LastSeenPrivacy", user.getLastSeenPrivacy());
-        setUserInfo("ProfilePrivacy", user.getProfilePrivacy());
-        setUserInfo("AboutPrivacy", user.getAboutPrivacy());
-        setUserInfo("LocationPrivacy", user.getLocationPrivacy());
-        setUserInfo("EmailPrivacy", user.getEmailPrivacy());
-        setUserInfo("PhonePrivacy", user.getPhonePrivacy());
-        setUserInfo("BirthdayPrivacy", user.getBirthdayPrivacy());
+        setUserInfo(SP_USERNAME, user.getUsername());
+        setUserInfo(SP_PH_NUMBER, user.getPhoneNumber());
+        setUserInfo(SP_GENDER, user.getGender());
+        setUserInfo(SP_CLASS_NAME, user.getClassName());
+        setUserInfo(SP_EMAIL, user.getEmail());
+        setUserInfo(SP_BIRTH_DAY, user.getBirthday());
+        setUserInfo(SP_BIRTH_YEAR, user.getBirthYear());
+        setUserInfo(SP_BIRTH_MONTH, user.getBirthMonth());
+        setUserInfo(SP_NICKNAME, user.getNickname());
+        setUserInfo(SP_CATEGORY, user.getCategory());
+        setUserInfo(SP_ABOUT, user.getDescription());
+        setUserInfo(SP_LAST_SEEN, user.getLastSeenPrivacy());
+        setUserInfo(SP_PROFILE_PRIVACY, user.getProfilePrivacy());
+        setUserInfo(SP_ABOUT_PRIVACY, user.getAboutPrivacy());
+        setUserInfo(SP_LOCATION_PRIVACY, user.getLocationPrivacy());
+        setUserInfo(SP_EMAIL_PRIVACY, user.getEmailPrivacy());
+        setUserInfo(SP_PHONE_PRIVACY, user.getPhonePrivacy());
+        setUserInfo(SP_BIRTHDAY_PRIVACY, user.getBirthdayPrivacy());
     }
 
     private void setUserInfo(String key, String value) {
@@ -377,17 +411,38 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        super.onResume();
         if (!Supports.Connected(this) && fetched) {
             status("online", "active");
-            CurrentLocation = locationService.getLocation();
-            setLocation(String.valueOf(CurrentLocation.latitude), String.valueOf(CurrentLocation.longitude));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(this,
+                                Manifest.permission.ACCESS_COARSE_LOCATION)
+                                == PackageManager.PERMISSION_GRANTED) {
+                    locationService.init(this);
+                    CurrentLocation = locationService.getLocation();
+                    setLocation(String.valueOf(CurrentLocation.latitude),
+                            String.valueOf(CurrentLocation.longitude));
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_REQUEST);
+                    setLocation(getResources().getString(R.string.not_provided),
+                            getResources().getString(R.string.not_provided));
+                }
+            } else {
+                locationService.init(this);
+                CurrentLocation = locationService.getLocation();
+                setLocation(String.valueOf(CurrentLocation.latitude),
+                        String.valueOf(CurrentLocation.longitude));
+            }
         }
+        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         if (!Supports.Connected(this) && fetched) {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
@@ -395,18 +450,27 @@ public class MainActivity extends AppCompatActivity
             SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
             String date = format1.format(calendar.getTime());
             status(time, date);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(this,
+                                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationService.init(this);
+                    CurrentLocation = locationService.getLocation();
+                    setLocation(String.valueOf(CurrentLocation.latitude),
+                            String.valueOf(CurrentLocation.longitude));
+                } else {
+                    setLocation(getResources().getString(R.string.not_provided),
+                            getResources().getString(R.string.not_provided));
+                }
+            } else {
+                locationService.init(this);
                 CurrentLocation = locationService.getLocation();
                 setLocation(String.valueOf(CurrentLocation.latitude),
                         String.valueOf(CurrentLocation.longitude));
-            } else {
-                setLocation(getResources().getString(R.string.not_provided),
-                        getResources().getString(R.string.not_provided));
             }
         }
+        super.onPause();
     }
+
 }

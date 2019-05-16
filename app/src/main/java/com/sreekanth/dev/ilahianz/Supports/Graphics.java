@@ -5,8 +5,17 @@ import android.graphics.Color;
 import java.util.Random;
 
 public class Graphics {
-    private int getRandomColor() {
+    public static int getRandomColor() {
         Random rand = new Random();
-        return Color.argb(100, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+        return Color.argb(50,
+                rand.nextInt(100),
+                rand.nextInt(100),
+                rand.nextInt(100)
+        );
+    }
+
+    public static int getRandomColorMaterial() {
+        Random rand = new Random();
+        return Color.rgb(rand.nextInt(200), rand.nextInt(200), rand.nextInt(200));
     }
 }

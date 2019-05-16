@@ -11,10 +11,6 @@ public class WebViewActivity extends AppCompatActivity {
     public static String URL = "http://www.google.com/";
     WebView browser;
 
-    public static String getURL() {
-        return URL;
-    }
-
     public static void setURL(String URL) {
         WebViewActivity.URL = URL;
     }
@@ -35,13 +31,12 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    if (browser.canGoBack())
-                        browser.goBack();
-                    else
-                        finish();
-                    return true;
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (browser.canGoBack())
+                    browser.goBack();
+                else
+                    finish();
+                return true;
             }
         }
         return super.onKeyDown(keyCode, event);

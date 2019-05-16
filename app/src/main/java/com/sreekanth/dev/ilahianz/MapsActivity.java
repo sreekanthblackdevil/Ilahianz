@@ -1,9 +1,14 @@
 package com.sreekanth.dev.ilahianz;
+/**
+ * This Code
+ * Created in 2019
+ * Author Sreekanth K R
+ * Name Ilahianz
+ */
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,8 +31,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sreekanth.dev.ilahianz.Supports.Supports;
+import com.sreekanth.dev.ilahianz.Supports.locationService;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static com.sreekanth.dev.ilahianz.model.Literals.LOCATION_REQUEST;
 
@@ -39,8 +48,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static float ZOOM;
     private GoogleMap mMap;
     private FirebaseUser fuser;
-    Location location;
     private int MAP_TYPE = 1;
+    private locationService locationService = new locationService();
 
     public static float getZOOM() {
         return ZOOM;
@@ -72,11 +81,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         final ImageView map_type_btn = findViewById(R.id.maptype_btn);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+        if (!Supports.Connected(this))
+            locationService.init(this);
 
         map_type_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,16 +111,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        // Add a marker in Sydney and move the camera
+
         mMap.setTrafficEnabled(true);
         mMap.addCircle(getCircleOptions(LOCATION));
         mMap.addMarker(getMarkerOption());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
-                location = mMap.getMyLocation();
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
@@ -118,7 +130,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         } else {
             mMap.setMyLocationEnabled(true);
-            location = mMap.getMyLocation();
         }
         mMap.setBuildingsEnabled(true);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LOCATION, ZOOM));
@@ -171,27 +182,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void updateLocation(String latitude, String longitude) {
+    private void updateLocation() {
+        locationService.init(this);
+        LatLng location = locationService.getLocation();
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("Users").child(fuser.getUid());
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("Latitude", latitude);
-        hashMap.put("Longitude", longitude);
+        hashMap.put("Latitude", String.valueOf(location.latitude));
+        hashMap.put("Longitude", String.valueOf(location.longitude));
         reference.updateChildren(hashMap);
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (!Supports.Connected(this)) {
-            updateLocation(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+            String time = format.format(calendar.getTime());
+            SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
+            String date = format1.format(calendar.getTime());
+            status(time, date);
+            locationService.init(this);
+            updateLocation();
         }
-
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (!Supports.Connected(this)) {
+            status("online", "active");
+            locationService.init(this);
+            updateLocation();
+        }
     }
 }
