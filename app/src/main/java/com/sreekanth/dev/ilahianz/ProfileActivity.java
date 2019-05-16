@@ -120,6 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView email;
     private TextView class_name;
     private TextView nickname;
+    ImageView back;
     boolean fetched;
     LinearLayout container;
 
@@ -135,6 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
         about = findViewById(R.id.description);
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
+        back = findViewById(R.id.back_btn);
         phone = findViewById(R.id.phone_number);
         class_name = findViewById(R.id.class_name);
         container = findViewById(R.id.container);
@@ -171,6 +173,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

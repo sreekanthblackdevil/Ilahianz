@@ -3,22 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/sheet_bg"
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/sheet_bg"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="10dp"
         android:text="Open"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp">
+        android:layout_height="110dp"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/delete"
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -53,7 +55,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <ImageView
@@ -78,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:orientation="vertical">
 

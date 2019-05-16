@@ -11,13 +11,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DDDCDC">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:background="@mipmap/header2"
+        android:layout_height="300dp"
+        android:background="@mipmap/header4"
         android:orientation="vertical" />
 
     <ScrollView
@@ -33,16 +33,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_below="@id/profile_Image"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:background="@android:color/transparent">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="10dp">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    app:cardBackgroundColor="#F2FFFFFF"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="15dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -55,7 +57,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_margin="10dp"
                             android:background="@drawable/color_circle_blue"
-                            android:elevation="5dp"
+                            android:elevation="7dp"
                             android:padding="8dp"
                             android:src="@drawable/ic_action_settings_white" />
 
@@ -64,9 +66,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="57dp"
+                            android:layout_marginTop="65dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Mullaseri Shibu"
+                            android:text="John Mathew"
                             android:textColor="@color/black"
                             android:textSize="23sp"
                             tools:ignore="HardcodedText" />
@@ -77,20 +79,21 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/username"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/roboto_regular"
                             android:text="BCA C4A"
+                            android:textColor="@color/green"
                             tools:ignore="HardcodedText" />
 
                         <Button
                             android:id="@+id/edit_profile_btn"
-                            android:layout_width="180dp"
+                            android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:layout_below="@id/class_name"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
                             android:background="@drawable/edit_btn_bg"
-                            android:elevation="5dp"
+                            android:elevation="10dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Edit Profile"
                             android:textAllCaps="false"
@@ -119,7 +122,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="7dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -378,19 +381,28 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="100dp"
-                android:layout_marginBottom="-50dp"
-                android:background="@drawable/bg_profile_card"
+                android:layout_marginBottom="-60dp"
                 android:elevation="5dp"
-                android:padding="2dp"
+                android:padding="1dp"
                 android:src="@mipmap/men1"
                 android:transitionName="imageTransition" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="125dp" />
         </RelativeLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_marginStart="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="back_btn"
+            android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
 </RelativeLayout>

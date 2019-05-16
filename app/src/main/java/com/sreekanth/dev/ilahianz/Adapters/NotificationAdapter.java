@@ -12,11 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sreekanth.dev.ilahianz.R;
 import com.sreekanth.dev.ilahianz.ShowNotificationActivity;
+import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
 import com.sreekanth.dev.ilahianz.model.Notification;
+import com.sreekanth.dev.ilahianz.model.User;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
@@ -40,18 +49,30 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull final NotificationAdapter.ViewHolder viewHolder, int i) {
         final Notification notification = mNotification.get(i);
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(notification.getUId());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                assert user != null;
+                ViewSupport.setThumbProfileImage(user, viewHolder.profile_image);
+                viewHolder.username.setText(user.getUsername());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         viewHolder.heading.setText(notification.getHeading());
         viewHolder.type.setText(notification.getType());
         viewHolder.date.setText(notification.getDate());
         viewHolder.time.setText(notification.getTime());
-        if (notification.getColor() != null)
-            viewHolder.notification_bg.setCardBackgroundColor(Integer.parseInt(notification.getColor()));
-        if (notification.getContent().length() <= 30)
-            viewHolder.message.setText(notification.getContent());
-        else {
-            String message = notification.getContent().substring(0, 30) + "...";
-            viewHolder.message.setText(message);
-        }
+//        if (notification.getColor() != null)
+//            viewHolder.notification_bg.setCardBackgroundColor(Integer.parseInt(notification.getColor()));
+        viewHolder.message.setText(notification.getContent());
 
         viewHolder.notification_bg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +93,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView heading, time, message, type, date;
+        TextView heading, time, message, type, date, username;
         CardView notification_bg;
+        CircleImageView profile_image;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            username = itemView.findViewById(R.id.username);
+            profile_image = itemView.findViewById(R.id.profile_Image);
             heading = itemView.findViewById(R.id.heading);
             time = itemView.findViewById(R.id.time);
             message = itemView.findViewById(R.id.message);
