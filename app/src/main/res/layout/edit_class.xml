@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
     android:layout_height="200dp"
     android:layout_gravity="center"
-    android:background="@drawable/bg_police_help">
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/dialog_bg">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="8dp"
+        android:src="@mipmap/ilahia" />
 
     <TextView
         android:id="@+id/head2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="9dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:text="Class"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
@@ -32,43 +42,49 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="C1"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="C2"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="C3"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="C4"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="C5"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="C6"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
     </RadioGroup>
@@ -83,7 +99,7 @@
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:text="Divisions"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
@@ -100,48 +116,42 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="non"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="A"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="B"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
     </RadioGroup>
 
-    <ImageView
+    <Button
         android:id="@+id/ok_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
-        android:background="@drawable/popup_btn_bg"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="10dp"
-        android:src="@drawable/ic_action_check" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_button_select"
+        android:elevation="5dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Select"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText" />
 
-    <ImageView
-        android:id="@+id/cancel_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
-        android:background="@drawable/popup_btn_bg"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="10dp"
-        android:src="@drawable/ic_close_white_24dp" />
 </RelativeLayout>

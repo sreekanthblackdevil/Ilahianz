@@ -28,6 +28,29 @@ import com.sreekanth.dev.ilahianz.model.User;
 
 import java.util.Objects;
 
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIO;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTHDAY_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_DAY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_MONTH;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_YEAR;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CATEGORY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CITY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_DEPARTMENT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_DISTRICT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_GENDER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LAST_SEEN;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_LOCATION_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_NICKNAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PHONE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PH_NUMBER;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_PROFILE_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
+
 public class signinActivity extends AppCompatActivity {
 
     Button signIn_btn, signUp_btn;
@@ -73,6 +96,7 @@ public class signinActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+                                        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                         reference = FirebaseDatabase.getInstance().getReference("Users")
                                                 .child(firebaseUser.getUid());
                                         reference.addValueEventListener(new ValueEventListener() {
@@ -93,7 +117,8 @@ public class signinActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else {
-                                        Toast.makeText(signinActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(signinActivity.this,
+                                                "Authentication failed", Toast.LENGTH_SHORT).show();
                                         progressbar.cancel();
                                     }
                                 }
@@ -104,24 +129,28 @@ public class signinActivity extends AppCompatActivity {
     }
 
     public void setUserInfo(User user) {
-        setUserInfo("username", user.getUsername());
-        setUserInfo("number", user.getPhoneNumber());
-        setUserInfo("gender", user.getGender());
-        setUserInfo("className", user.getClassName());
-        setUserInfo("email", user.getEmail());
-        setUserInfo("Birthday", user.getBirthday());
-        setUserInfo("BirthYear", user.getBirthYear());
-        setUserInfo("BirthMonth", user.getBirthMonth());
-        setUserInfo("nickname", user.getNickname());
-        setUserInfo("category", user.getCategory());
-        setUserInfo("description", user.getDescription());
-        setUserInfo("LastSeenPrivacy", user.getLastSeenPrivacy());
-        setUserInfo("ProfilePrivacy", user.getProfilePrivacy());
-        setUserInfo("AboutPrivacy", user.getAboutPrivacy());
-        setUserInfo("LocationPrivacy", user.getLocationPrivacy());
-        setUserInfo("EmailPrivacy", user.getEmailPrivacy());
-        setUserInfo("PhonePrivacy", user.getPhonePrivacy());
-        setUserInfo("BirthdayPrivacy", user.getBirthdayPrivacy());
+        setUserInfo(SP_USERNAME, user.getUsername());
+        setUserInfo(SP_PH_NUMBER, user.getPhoneNumber());
+        setUserInfo(SP_GENDER, user.getGender());
+        setUserInfo(SP_CLASS_NAME, user.getClassName());
+        setUserInfo(SP_EMAIL, user.getEmail());
+        setUserInfo(SP_BIRTH_DAY, user.getBirthday());
+        setUserInfo(SP_BIRTH_YEAR, user.getBirthYear());
+        setUserInfo(SP_BIRTH_MONTH, user.getBirthMonth());
+        setUserInfo(SP_NICKNAME, user.getNickname());
+        setUserInfo(SP_CATEGORY, user.getCategory());
+        setUserInfo(SP_ABOUT, user.getDescription());
+        setUserInfo(SP_LAST_SEEN, user.getLastSeenPrivacy());
+        setUserInfo(SP_PROFILE_PRIVACY, user.getProfilePrivacy());
+        setUserInfo(SP_ABOUT_PRIVACY, user.getAboutPrivacy());
+        setUserInfo(SP_LOCATION_PRIVACY, user.getLocationPrivacy());
+        setUserInfo(SP_EMAIL_PRIVACY, user.getEmailPrivacy());
+        setUserInfo(SP_PHONE_PRIVACY, user.getPhonePrivacy());
+        setUserInfo(SP_BIRTHDAY_PRIVACY, user.getBirthdayPrivacy());
+        setUserInfo(SP_BIO, user.getBio());
+        setUserInfo(SP_CITY, user.getCity());
+        setUserInfo(SP_DISTRICT, user.getDistrict());
+        setUserInfo(SP_DEPARTMENT, user.getDepartment());
     }
 
     private void setUserInfo(String key, String value) {

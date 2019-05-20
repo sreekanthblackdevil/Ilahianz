@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".UploadProfileActivity">
 
     <RelativeLayout
@@ -15,7 +15,9 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_above="@id/username"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:elevation="5dp"
+            android:src="@mipmap/men1" />
 
         <TextView
             android:id="@+id/username"
@@ -37,12 +39,12 @@
             android:src="@mipmap/welcome" />
 
         <TextView
-            android:layout_marginTop="-7dp"
             android:id="@+id/dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/selfie"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="-7dp"
             android:drawableStart="@drawable/ic_action_bulb"
             android:fontFamily="@font/roboto_bold"
             android:text="Upload a profile image for better identification"
@@ -50,16 +52,16 @@
             tools:ignore="HardcodedText" />
 
         <Button
-            android:textColor="@color/white"
             android:id="@+id/upload_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_below="@id/cots"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:background="@drawable/delete_bgi"
+            android:background="@drawable/button_bg_oval_outline"
             android:fontFamily="@font/roboto_black"
             android:text="UPLOAD"
+            android:textColor="@color/dd_green"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -74,15 +76,15 @@
     </RelativeLayout>
 
     <Button
-        android:textColor="@color/white"
         android:id="@+id/skip_btn"
         android:layout_width="60dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
-        android:background="@drawable/delete_bgi"
+        android:background="@drawable/button_bg_oval_outline"
         android:fontFamily="@font/roboto_italic"
         android:text="skip"
+        android:textColor="@color/dd_green"
         tools:ignore="HardcodedText" />
 
 </RelativeLayout>

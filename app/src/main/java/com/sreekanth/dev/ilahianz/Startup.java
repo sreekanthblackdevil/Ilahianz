@@ -1,6 +1,7 @@
 package com.sreekanth.dev.ilahianz;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,6 @@ public class Startup extends AppCompatActivity {
 
     private ViewPager viewPager;
     private LinearLayout dotLayout;
-    private slideAdapter slideAdapter;
     private TextView[] dots;
     private int currentPage;
     private Button next_btn, back_btn;
@@ -32,7 +32,7 @@ public class Startup extends AppCompatActivity {
         dotLayout = findViewById(R.id.dot_layout);
         next_btn = findViewById(R.id.next_btn);
         back_btn = findViewById(R.id.back_btn);
-        slideAdapter = new slideAdapter(this);
+        com.sreekanth.dev.ilahianz.Adapters.slideAdapter slideAdapter = new slideAdapter(this);
         viewPager.setAdapter(slideAdapter);
         addDotsIndicator(0);
         viewPager.addOnPageChangeListener(viewListener);
@@ -44,6 +44,8 @@ public class Startup extends AppCompatActivity {
                 if (!TextUtils.equals(next_btn.getText(), "Finish"))
                     viewPager.setCurrentItem(currentPage + 1);
                 else {
+                    startActivity(new Intent(Startup.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                     finish();
                 }
             }

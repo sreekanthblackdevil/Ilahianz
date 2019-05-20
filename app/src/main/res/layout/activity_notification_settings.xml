@@ -28,7 +28,6 @@
             tools:ignore="HardcodedText,SmallSp" />
 
         <CheckBox
-            android:id="@+id/conversationTone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

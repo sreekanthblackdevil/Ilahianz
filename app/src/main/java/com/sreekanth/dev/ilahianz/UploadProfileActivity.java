@@ -120,7 +120,7 @@ public class UploadProfileActivity extends AppCompatActivity {
         skip_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UploadProfileActivity.this, MainActivity.class)
+                startActivity(new Intent(UploadProfileActivity.this, Startup.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
             }

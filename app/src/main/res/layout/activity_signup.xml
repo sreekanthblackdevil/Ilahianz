@@ -33,7 +33,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20sp"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/roboto_regular"
                 android:text="SignUp"
                 android:textAlignment="center"
                 android:textColor="#fff"
@@ -51,13 +51,13 @@
                 android:drawableStart="@drawable/ic_person_white_24dp"
                 android:drawablePadding="12dp"
                 android:ems="8"
-                android:fontFamily="@font/roboto_italic"
+                android:fontFamily="@font/roboto_regular"
                 android:hint="Username"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#80FFFFFF"
                 tools:ignore="HardcodedText" />
 
             <EditText
@@ -71,13 +71,13 @@
                 android:drawableStart="@drawable/ic_email_black_24dp"
                 android:drawablePadding="12dp"
                 android:ems="8"
-                android:fontFamily="casual"
+                android:fontFamily="@font/roboto_regular"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#80FFFFFF"
                 tools:ignore="HardcodedText" />
 
             <LinearLayout
@@ -89,10 +89,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20sp"
+                    android:fontFamily="@font/roboto_bold"
                     android:padding="6dp"
                     android:text="Gender"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     tools:ignore="HardcodedText" />
 
                 <RadioGroup
@@ -103,27 +103,27 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/male_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:onClick="gender_Male"
                         android:text="Male"
                         android:textColor="@color/white"
                         tools:ignore="HardcodedText" />
 
                     <RadioButton
-                        android:id="@+id/female_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:onClick="gender_Female"
                         android:text="Female"
                         android:textColor="@color/white"
                         tools:ignore="HardcodedText" />
 
                     <RadioButton
-                        android:id="@+id/other_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:onClick="gender_bysex"
                         android:text="Other"
                         android:textColor="@color/white"
@@ -139,6 +139,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_ok"
+                android:elevation="5dp"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Birthday"
                 android:textColor="@color/white"
                 tools:ignore="HardcodedText" />
@@ -154,13 +156,13 @@
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="8"
-                android:fontFamily="casual"
+                android:fontFamily="@font/roboto_regular"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="#fff"
+                android:textColorHint="#80FFFFFF"
                 tools:ignore="HardcodedText" />
 
             <EditText
@@ -174,25 +176,26 @@
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="8"
-                android:fontFamily="casual"
+                android:fontFamily="@font/roboto_regular"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:padding="8dp"
+                android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="#fff"
+                android:textColorHint="#80FFFFFF"
                 tools:ignore="HardcodedText" />
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20sp"
+                    android:fontFamily="@font/roboto_bold"
                     android:padding="6dp"
                     android:text="Category"
                     android:textColor="@color/white"
@@ -207,18 +210,18 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/student_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:onClick="cat_studentClick"
                         android:text="Student"
                         android:textColor="@color/white"
                         tools:ignore="HardcodedText" />
 
                     <RadioButton
-                        android:id="@+id/teacher_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:onClick="cat_teacherClick"
                         android:text="Teacher"
                         android:textColor="@color/white"
@@ -233,7 +236,9 @@
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/signup_btn_background"
                 android:clickable="true"
                 android:focusable="true"
@@ -241,7 +246,7 @@
                 android:padding="16dp"
                 android:text="SignUp"
                 android:textAllCaps="false"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
     </ScrollView>

@@ -1,68 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)
+  ~ This Code
+  ~ Author Sreekanth K R
+  ~ Name Ilahianz
+  ~ Github  https://github.com/sreekanthblackdevil/Ilahianz
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout1"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
     android:background="@drawable/dialog_bg">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         android:drawableStart="@drawable/ic_action_bulb"
-        android:drawablePadding="7dp"
+        android:drawablePadding="5dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="Delete image ?"
+        android:text="Something went to wrong !"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         tools:ignore="HardcodedText" />
 
+
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="@font/roboto_regular"
-        android:padding="5dp"
-        android:text="You have an Existing image delete that first ! then upload an image
-for preventing database crashes please co-operate with Us"
+        android:text="Image Could not be delete !
+Something went to wrong in your database please
+report the developer to fix this problem"
         android:textColor="@color/black"
         android:textSize="16sp"
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/ok"
+        android:id="@+id/report_btn"
         android:layout_width="120dp"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="7dp"
         android:background="@drawable/bg_button_select"
         android:fontFamily="@font/roboto_bold"
-        android:text="Delete"
+        android:text="Report"
         android:textColor="@color/white"
         android:textSize="12sp"
-        tools:ignore="ContentDescription,HardcodedText" />
+        tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/cancel"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
+        android:id="@+id/cancel_btn"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="7dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="7dp"
+        android:layout_toStartOf="@id/report_btn"
         android:background="@drawable/bg_button_select_outline"
         android:fontFamily="@font/roboto_bold"
-        android:src="@mipmap/error"
         android:text="Cancel"
         android:textColor="@color/dd_green"
         android:textSize="12sp"
         tools:ignore="HardcodedText" />
+
 
 </RelativeLayout>

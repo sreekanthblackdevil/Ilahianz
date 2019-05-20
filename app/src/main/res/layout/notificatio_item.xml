@@ -10,11 +10,19 @@
     android:layout_marginEnd="10dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
+    tools:menu="@menu/main"
     app:cardElevation="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <View
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/profile_Image"
+            android:background="#1A000000" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_Image"
@@ -56,7 +64,8 @@
             android:layout_alignTop="@+id/profile_Image"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="189dp"
             android:fontFamily="@font/roboto_regular"
             android:text="Type"
             android:textColor="@color/white"
@@ -86,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="96dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/roboto_regular"
             android:text="Sun, May 12, 2019"
@@ -103,18 +112,17 @@
             android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/profile_Image"
             android:text="10:10 AM"
+            android:textColor="@color/dd_green"
             android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
-        <Button
-            android:textAllCaps="false"
-            android:fontFamily="@font/roboto_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/message"
-            android:background="@color/white"
-            android:text="Comment"
-            tools:ignore="HardcodedText" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_favorite_green_24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp" />
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

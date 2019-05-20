@@ -21,13 +21,12 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:transitionName="imageTransition"
                 android:layout_width="150dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:src="@mipmap/owl_no_bg" />
+                android:src="@drawable/ic_account_circle_grey_150dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +57,7 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:padding="10dp"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#80FFFFFF"
                 tools:ignore="HardcodedText" />
 
             <EditText
@@ -78,7 +77,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="10dp"
-                android:textColorHint="#fff"
+                android:textColorHint="#80FFFFFF"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -87,27 +86,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/signin_btn_background"
+                android:background="@drawable/button_bg_oval_outline"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/roboto_black"
                 android:padding="15dp"
                 android:text="Login"
                 android:textAllCaps="false"
-                android:textColor="#F15422"
+                android:textColor="@color/dd_green"
                 tools:ignore="HardcodedText" />
 
             <Button
+                android:elevation="5dp"
                 android:id="@+id/signup_btn"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/signup_btn_background"
+                android:background="@drawable/button_bg_oval"
                 android:clickable="true"
                 android:focusable="true"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_black"
                 android:padding="15dp"
                 android:text="SignUp"
                 android:textAllCaps="false"
@@ -115,7 +115,6 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/forgot_password_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"

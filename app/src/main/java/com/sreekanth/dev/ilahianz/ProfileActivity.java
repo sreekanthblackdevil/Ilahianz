@@ -1,5 +1,5 @@
 package com.sreekanth.dev.ilahianz;
-/**
+/*
  * This code {ProfileActivity}
  * Created on May-01-2019
  * Author Sreekanth K R
@@ -77,12 +77,16 @@ import static com.sreekanth.dev.ilahianz.model.Literals.DEFAULT;
 import static com.sreekanth.dev.ilahianz.model.Literals.IMAGE_REQUEST;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIO;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTHDAY_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_DAY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_MONTH;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_YEAR;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CATEGORY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CITY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_DEPARTMENT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_DISTRICT;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_GENDER;
@@ -102,7 +106,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView username, about, birthday;
     private DatabaseReference reference;
     private FirebaseUser fuser;
-    private ImageView change_profile;
     private StorageReference storageReference;
     private StorageTask uploadTask;
     private Dialog profile_view;
@@ -120,9 +123,10 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView email;
     private TextView class_name;
     private TextView nickname;
-    ImageView back;
+    private TextView location;
+    private TextView bio;
     boolean fetched;
-    LinearLayout container;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,21 +134,22 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         profile_view = new Dialog(this);
-
         pro_image = findViewById(R.id.profile_Image);
         birthday = findViewById(R.id.birthday);
         about = findViewById(R.id.description);
+        location = findViewById(R.id.location);
         username = findViewById(R.id.username);
+        nickname = findViewById(R.id.nickname);
         email = findViewById(R.id.email);
-        back = findViewById(R.id.back_btn);
         phone = findViewById(R.id.phone_number);
         class_name = findViewById(R.id.class_name);
-        container = findViewById(R.id.container);
+        bio = findViewById(R.id.bio);
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        change_profile = findViewById(R.id.btn_profile_change);
         mStorage = FirebaseStorage.getInstance();
-        nickname = findViewById(R.id.nickname);
+        LinearLayout container = findViewById(R.id.container);
+        ImageView back = findViewById(R.id.back_btn);
+        Button edit_btn = findViewById(R.id.edit_profile_btn);
         init();
         container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -176,6 +181,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,14 +237,15 @@ public class ProfileActivity extends AppCompatActivity {
                 profile_view.show();
             }
         });
-
-        changes();
     }
 
     private void init() {
+        bio.setText(getUserInfo(SP_BIO));
         username.setText(getUserInfo(SP_USERNAME));
         username_txt = getUserInfo(SP_USERNAME);
         about.setText(getUserInfo(SP_ABOUT));
+        location.setText(String.format("%s, %s",
+                getUserInfo(SP_CITY), getUserInfo(SP_DISTRICT)));
         int birth_day = Integer.parseInt(getUserInfo(SP_BIRTH_DAY));
         int birth_month = Integer.parseInt(getUserInfo(SP_BIRTH_MONTH));
         int birth_year = Integer.parseInt(getUserInfo(SP_BIRTH_YEAR));
@@ -248,7 +260,8 @@ public class ProfileActivity extends AppCompatActivity {
         birthday.setText(birthDay);
 
         if (!TextUtils.equals(getUserInfo(SP_CLASS_NAME), "Other"))
-            class_name.setText(getUserInfo(SP_CLASS_NAME));
+            class_name.setText(String.format("%s, %s",
+                    getUserInfo(SP_DEPARTMENT), getUserInfo(SP_CLASS_NAME)));
         else class_name.setVisibility(View.GONE);
 
         if (!TextUtils.equals(getUserInfo(SP_NICKNAME), DEFAULT)) {
@@ -256,17 +269,6 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             nickname.setText(getString(R.string.nick_name_not_provided));
         }
-
-    }
-
-    private void changes() {
-
-        change_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSheet();
-            }
-        });
 
     }
 
@@ -706,13 +708,19 @@ public class ProfileActivity extends AppCompatActivity {
     private void popupMSG() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.delete_dialog);
-        ImageView ok = dialog.findViewById(R.id.ok);
-        ImageView cancel = dialog.findViewById(R.id.cancel);
+        Button ok = dialog.findViewById(R.id.ok);
+        Button cancel = dialog.findViewById(R.id.cancel);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                deleteImage(imageURL, thumbURL);
+                if (!Supports.Connected(ProfileActivity.this))
+                    if (fetched)
+                        deleteImage(imageURL, thumbURL);
+                    else
+                        Toast.makeText(ProfileActivity.this, "Collecting information...", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(ProfileActivity.this, "Network Unavailable", Toast.LENGTH_SHORT).show();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -745,6 +753,10 @@ public class ProfileActivity extends AppCompatActivity {
         setUserInfo(SP_EMAIL_PRIVACY, user.getEmailPrivacy());
         setUserInfo(SP_PHONE_PRIVACY, user.getPhonePrivacy());
         setUserInfo(SP_BIRTHDAY_PRIVACY, user.getBirthdayPrivacy());
+        setUserInfo(SP_BIO, user.getBio());
+        setUserInfo(SP_CITY, user.getCity());
+        setUserInfo(SP_DISTRICT, user.getDistrict());
+        setUserInfo(SP_DEPARTMENT, user.getDepartment());
     }
 
     public String getUserInfo(String key) {
@@ -758,8 +770,4 @@ public class ProfileActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 }

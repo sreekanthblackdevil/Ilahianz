@@ -17,17 +17,20 @@ public class locationService implements LocationListener {
 
     private static double longitude;
     private static double latitude;
+    private static boolean fetched = false;
 
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+            fetched = true;
         }
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        fetched = false;
     }
 
     @Override
@@ -63,5 +66,9 @@ public class locationService implements LocationListener {
 
     public LatLng getLocation() {
         return new LatLng(latitude, longitude);
+    }
+
+    public boolean isFetched() {
+        return fetched;
     }
 }

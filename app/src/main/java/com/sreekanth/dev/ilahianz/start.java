@@ -3,7 +3,6 @@ package com.sreekanth.dev.ilahianz;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -11,19 +10,16 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.sreekanth.dev.ilahianz.model.User;
 
 import java.util.Objects;
 
 
 /*
  * Written by Sreekanth K R in (2018)
- * for Ilahia college of arts and science
  * */
 
 public class start extends AppCompatActivity {
@@ -31,7 +27,6 @@ public class start extends AppCompatActivity {
     Dialog NoInternetPopup;
     Handler handler = new Handler();
     FirebaseUser firebaseUser;
-    ImageView image;
 
     Runnable runnable = new Runnable() {
         @Override
@@ -54,8 +49,6 @@ public class start extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        image = findViewById(R.id.imageView);
-        //firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (Connected(start.this)) {
             Toast.makeText(this, "No Internet !", Toast.LENGTH_SHORT).show();
         }
@@ -79,32 +72,5 @@ public class start extends AppCompatActivity {
             NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             return (mobile == null || !mobile.isConnectedOrConnecting()) && (wifi == null || !wifi.isConnectedOrConnecting());
         } else return true;
-    }
-
-    public void setUserInfo(User user) {
-        setUserInfo("username", user.getUsername());
-        setUserInfo("number", user.getPhoneNumber());
-        setUserInfo("gender", user.getGender());
-        setUserInfo("className", user.getClassName());
-        setUserInfo("email", user.getEmail());
-        setUserInfo("Birthday", user.getBirthday());
-        setUserInfo("BirthYear", user.getBirthYear());
-        setUserInfo("BirthMonth", user.getBirthMonth());
-        setUserInfo("nickname", user.getNickname());
-        setUserInfo("category", user.getCategory());
-        setUserInfo("description", user.getDescription());
-        setUserInfo("LastSeenPrivacy", user.getLastSeenPrivacy());
-        setUserInfo("ProfilePrivacy", user.getProfilePrivacy());
-        setUserInfo("AboutPrivacy", user.getAboutPrivacy());
-        setUserInfo("LocationPrivacy", user.getLocationPrivacy());
-        setUserInfo("EmailPrivacy", user.getEmailPrivacy());
-        setUserInfo("PhonePrivacy", user.getPhonePrivacy());
-        setUserInfo("BirthdayPrivacy", user.getBirthdayPrivacy());
-    }
-
-    private void setUserInfo(String key, String value) {
-        SharedPreferences.Editor editor = getSharedPreferences("userInfo", MODE_PRIVATE).edit();
-        editor.putString(key, value);
-        editor.apply();
     }
 }

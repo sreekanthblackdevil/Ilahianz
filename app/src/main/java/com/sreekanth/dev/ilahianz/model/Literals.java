@@ -3,6 +3,7 @@ package com.sreekanth.dev.ilahianz.model;
 import com.google.android.gms.maps.model.LatLng;
 
 public abstract class Literals {
+
     public static final String SP_USERNAME = "username";
     public static final String SP_PH_NUMBER = "phone";
     public static final String SP_GENDER = "gender";
@@ -22,6 +23,10 @@ public abstract class Literals {
     public static final String SP_EMAIL_PRIVACY = "EmailPrivacy";
     public static final String SP_PHONE_PRIVACY = "PhonePrivacy";
     public static final String SP_BIRTHDAY_PRIVACY = "BirthdayPrivacy";
+    public static final String SP_CITY = "city";
+    public static final String SP_DISTRICT = "district";
+    public static final String SP_DEPARTMENT = "department";
+    public static final String SP_BIO = "bio";
     public static final String DEFAULT = "default";
     public static final int IMAGE_REQUEST = 357;
     public static final int CAMERA_REQUEST = 254;
@@ -29,6 +34,5 @@ public abstract class Literals {
     public static final String ATTENDANCE_WEBSITE = "http://ilahiacollege.info/StudentPanel/studAttendance.aspx";
     public static final String ILAHIA_WEBSITE = "http://ilahiaartscollege.org/";
     public static final LatLng ILAHIA_LOCATION = new LatLng(10.025716, 76.567840);
-
 
 }

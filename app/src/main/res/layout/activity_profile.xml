@@ -16,7 +16,7 @@
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:background="@mipmap/header4"
         android:orientation="vertical" />
 
@@ -41,25 +41,14 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="20dp"
                     app:cardBackgroundColor="#F2FFFFFF"
                     app:cardCornerRadius="7dp"
-                    app:cardElevation="15dp">
+                    app:cardElevation="5dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/settings_btn"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/color_circle_blue"
-                            android:elevation="7dp"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_action_settings_white" />
 
                         <TextView
                             android:id="@+id/username"
@@ -81,8 +70,8 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="BCA C4A"
-                            android:textColor="@color/green"
+                            android:text="BCA, C4A"
+                            android:textColor="@color/dd_green"
                             tools:ignore="HardcodedText" />
 
                         <Button
@@ -91,32 +80,23 @@
                             android:layout_height="40dp"
                             android:layout_below="@id/class_name"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
-                            android:background="@drawable/edit_btn_bg"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/bg_button_green"
                             android:elevation="10dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/roboto_black"
                             android:text="Edit Profile"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             tools:ignore="HardcodedText" />
 
-                        <ImageView
-                            android:id="@+id/btn_profile_change"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/color_circle_blue"
-                            android:elevation="6dp"
-                            android:padding="9dp"
-                            android:src="@drawable/ic_action_camera" />
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
             </RelativeLayout>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/layout1"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -146,6 +126,7 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Nickname"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
@@ -163,7 +144,6 @@
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/about_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/nickname"
@@ -181,6 +161,7 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Description"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
@@ -198,7 +179,6 @@
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/phone_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/location"
@@ -216,6 +196,7 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Phone Number"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
@@ -233,7 +214,6 @@
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/location_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/description"
@@ -251,6 +231,7 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Place"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
@@ -263,12 +244,11 @@
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Kothamangalam, kerala"
+                        android:text="City, district"
                         android:textColor="@color/black"
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/email_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/phone_number"
@@ -286,6 +266,7 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Email"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
@@ -303,7 +284,6 @@
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/birthday_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/email"
@@ -321,6 +301,7 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Birthday"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
@@ -338,7 +319,6 @@
                         tools:ignore="HardcodedText" />
 
                     <ImageView
-                        android:id="@+id/bio_logo"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/birthday"
@@ -356,10 +336,12 @@
                         android:layout_toEndOf="@id/nickname_logo"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Bio"
+                        android:textColor="@color/dd_green"
                         android:textSize="11sp"
                         tools:ignore="HardcodedText,SmallSp" />
 
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:id="@+id/bio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -397,9 +379,9 @@
 
         <ImageView
             android:id="@+id/back_btn"
-            android:layout_marginStart="5dp"
             android:layout_width="30dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
             android:background="@android:color/transparent"
             android:contentDescription="back_btn"
             android:src="@drawable/ic_keyboard_arrow_left_white_24dp"

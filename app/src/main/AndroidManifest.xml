@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:theme="@style/Notification_Style" />
         <activity
             android:name=".ShowNotificationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

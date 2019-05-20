@@ -23,7 +23,7 @@
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
-        android:background="@drawable/delete_bgi"
+        android:background="@drawable/dialog_bg"
         android:padding="5dp"
         android:src="@drawable/ic_close_white_24dp" />
 

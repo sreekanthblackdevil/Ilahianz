@@ -1,5 +1,5 @@
 package com.sreekanth.dev.ilahianz;
-/**
+/*
  * This Code
  * Created in 2019
  * Author Sreekanth K R
@@ -24,6 +24,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,12 +64,16 @@ import static com.sreekanth.dev.ilahianz.model.Literals.IMAGE_REQUEST;
 import static com.sreekanth.dev.ilahianz.model.Literals.LOCATION_REQUEST;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_ABOUT_PRIVACY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIO;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTHDAY_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_DAY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_MONTH;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_BIRTH_YEAR;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CATEGORY;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_CITY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_DEPARTMENT;
+import static com.sreekanth.dev.ilahianz.model.Literals.SP_DISTRICT;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_EMAIL_PRIVACY;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_GENDER;
@@ -243,6 +248,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        locationService.init(this);
     }
 
     private void adaptUserInfo() {
@@ -346,8 +352,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, HelpActivity.class));
         } else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
-            startActivity(new Intent(MainActivity.this,
-                    signinActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            startActivity(new Intent(MainActivity.this, signinActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
         } else if (id == R.id.nav_invite) {
             Toast.makeText(this, "Invite a Ilahianz", Toast.LENGTH_SHORT).show();
 
@@ -380,6 +387,11 @@ public class MainActivity extends AppCompatActivity
         setUserInfo(SP_EMAIL_PRIVACY, user.getEmailPrivacy());
         setUserInfo(SP_PHONE_PRIVACY, user.getPhonePrivacy());
         setUserInfo(SP_BIRTHDAY_PRIVACY, user.getBirthdayPrivacy());
+        setUserInfo(SP_BIO, user.getBio());
+        setUserInfo(SP_CITY, user.getCity());
+        setUserInfo(SP_DISTRICT, user.getDistrict());
+        setUserInfo(SP_DEPARTMENT, user.getDepartment());
+
     }
 
     private void setUserInfo(String key, String value) {
@@ -419,7 +431,6 @@ public class MainActivity extends AppCompatActivity
                         ActivityCompat.checkSelfPermission(this,
                                 Manifest.permission.ACCESS_COARSE_LOCATION)
                                 == PackageManager.PERMISSION_GRANTED) {
-                    locationService.init(this);
                     CurrentLocation = locationService.getLocation();
                     setLocation(String.valueOf(CurrentLocation.latitude),
                             String.valueOf(CurrentLocation.longitude));
@@ -455,22 +466,25 @@ public class MainActivity extends AppCompatActivity
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this,
                                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    locationService.init(this);
+                    locationService.init(MainActivity.this);
                     CurrentLocation = locationService.getLocation();
-                    setLocation(String.valueOf(CurrentLocation.latitude),
-                            String.valueOf(CurrentLocation.longitude));
+                    if (CurrentLocation.longitude != 0.0 || CurrentLocation.latitude != 0.0)
+                        setLocation(String.valueOf(CurrentLocation.latitude), String.valueOf(CurrentLocation.longitude));
+                    Log.d("MainActivity", "Location Updated");
                 } else {
                     setLocation(getResources().getString(R.string.not_provided),
                             getResources().getString(R.string.not_provided));
                 }
             } else {
-                locationService.init(this);
+                locationService.init(MainActivity.this);
                 CurrentLocation = locationService.getLocation();
-                setLocation(String.valueOf(CurrentLocation.latitude),
-                        String.valueOf(CurrentLocation.longitude));
+                if (CurrentLocation.longitude != 0.0 || CurrentLocation.latitude != 0.0)
+                    setLocation(String.valueOf(CurrentLocation.latitude), String.valueOf(CurrentLocation.longitude));
+                Log.d("MainActivity", "Location Updated " + CurrentLocation.latitude + " , " + CurrentLocation.longitude);
             }
         }
         super.onPause();
     }
+
 
 }

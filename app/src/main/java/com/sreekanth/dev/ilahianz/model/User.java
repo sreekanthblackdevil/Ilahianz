@@ -10,7 +10,8 @@ public class User {
     private String imageURL;
     private String className;
     private String gender;
-    private String Nickname, Category;
+    private String Nickname;
+    private String Category;
     private String search;
     private String status;
     private String lastSeen;
@@ -27,8 +28,13 @@ public class User {
     private String ProfilePrivacy;
     private String PhoneNumber;
     private String BirthdayPrivacy;
-    private String Latitude, Longitude;
+    private String Latitude;
+    private String Longitude;
     private String thumbnailURL;
+    private String city;
+    private String district;
+    private String bio;
+    private String department;
 
 
     public User() {
@@ -42,7 +48,11 @@ public class User {
                 String BirthMonth, String Description, String LastSeenPrivacy,
                 String LocationPrivacy, String PhonePrivacy, String EmailPrivacy,
                 String AboutPrivacy, String ProfilePrivacy, String PhoneNumber,
-                String Latitude, String Longitude, String BirthdayPrivacy, String thumbnailURL) {
+                String Latitude, String Longitude, String BirthdayPrivacy, String
+                        thumbnailURL, String city, String district, String bio, String department) {
+        this.bio = bio;
+        this.district = district;
+        this.city = city;
         this.username = username;
         this.id = id;
         this.BirthdayPrivacy = BirthdayPrivacy;
@@ -69,6 +79,39 @@ public class User {
         this.Latitude = Latitude;
         this.Longitude = Longitude;
         this.thumbnailURL = thumbnailURL;
+        this.department = department;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getThumbnailURL() {

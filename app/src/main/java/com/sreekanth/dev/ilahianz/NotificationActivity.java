@@ -2,7 +2,6 @@ package com.sreekanth.dev.ilahianz;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +26,6 @@ public class NotificationActivity extends AppCompatActivity {
     Dialog dialog;
     ViewPager viewPager;
     TabLayout tabLayout;
-    ImageButton back;
     FloatingActionButton fab;
 
     @Override
@@ -42,20 +39,12 @@ public class NotificationActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        back = findViewById(R.id.back_btn);
         fab = findViewById(R.id.fab);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new NotificationsFragment(), "ALL");
         viewPagerAdapter.addFragment(new MyNotificationFragment(), "MY");
         viewPager.setAdapter(viewPagerAdapter);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,10 +87,5 @@ public class NotificationActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
-    }
-
-    private String getUserInfo(String key) {
-        SharedPreferences preferences = getSharedPreferences("userInfo", MODE_PRIVATE);
-        return preferences.getString(key, "none");
     }
 }
