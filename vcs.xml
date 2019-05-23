@@ -6,7 +6,12 @@
           <option name="url" value="http://github.com" />
           <option name="userName" value="ksreekanthkr@gmail.com" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/sreekanthblackdevil/Ilahianz" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
+    <option name="cloneParentDir" value="C:\Users\SREEKANTH\AndroidStudioProjects\Ilahianz4" />
   </component>
 </application>
