@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)
+  ~ This Code
+  ~ Author Sreekanth K R
+  ~ Name Ilahianz
+  ~ Github  https://github.com/sreekanthblackdevil/Ilahianz
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stroke
+        android:color="@color/dd_green"
+        android:width="1dp" />
+    <solid android:color="@color/white" />
+    <corners android:radius="2dp" />
+</shape>
