@@ -9,10 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,8 +65,9 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Calendar calendar;
     TextView online;
-    LinearLayout back;
     ValueEventListener seenListener;
+    public static final int ON_PAUSE = 0;
+    public static final int ON_RESUME = 1;
 
     APIService apiService;
 
@@ -93,7 +94,6 @@ public class MessageActivity extends AppCompatActivity {
 
         apiService = Client.getClient("http://fcm.googleapis.com").create(APIService.class);
 
-        back = findViewById(R.id.profile_click);
         profile_image = findViewById(R.id.profile_Image);
         username = findViewById(R.id.username);
         intent = getIntent();
@@ -136,7 +136,10 @@ public class MessageActivity extends AppCompatActivity {
                 } else {
                     online.setVisibility(View.GONE);
                 }
-                readMessages(fuser.getUid(), userid);
+                //readMessages(fuser.getUid(), userid);
+                readMessages readMessages = new readMessages(fuser.getUid());
+                new Thread(readMessages).start();
+
             }
 
             @Override
@@ -164,7 +167,7 @@ public class MessageActivity extends AppCompatActivity {
                 send_text.setText("");
             }
         });
-        back.setOnClickListener(new View.OnClickListener() {
+        profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -335,6 +338,58 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+    class readMessages implements Runnable {
+        String myid;
+
+        readMessages(String myid) {
+            this.myid = myid;
+        }
+
+        @Override
+        public void run() {
+            mChat = new ArrayList<>();
+
+            reference = FirebaseDatabase.getInstance().getReference("Chats");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    mChat.clear();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Chat chat = snapshot.getValue(Chat.class);
+                        assert chat != null;
+                        if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
+                                chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
+                            mChat.add(chat);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                messageAdapter = new MessageAdapter(MessageActivity.this, mChat);
+                                recyclerView.setAdapter(messageAdapter);
+                            }
+                        });
+
+                    }
+                    for (int i = 0; i < 10; i++) {
+                        try {
+                            Thread.sleep(1000);
+                            Log.d("bg:", "loop " + i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
     private void currentUser(String userid) {
         SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
         editor.putString("currentUser", userid);
@@ -354,20 +409,47 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        status("online", "active");
+        PR resume = new PR(ON_RESUME);
+        new Thread(resume).start();
         currentUser(userid);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
-        String time = format.format(calendar.getTime());
-        SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
-        String date = format1.format(calendar.getTime());
-        reference.removeEventListener(seenListener);
-        status(time, date);
+        PR pause = new PR(ON_PAUSE);
+        new Thread(pause).start();
         currentUser("none");
+        reference.removeEventListener(seenListener);
+    }
+
+    class PR implements Runnable {
+        int type;
+
+        PR(int type) {
+            this.type = type;
+        }
+
+        @Override
+        public void run() {
+            if (type == ON_PAUSE) {
+                onPause();
+            } else {
+                onResume();
+            }
+        }
+
+        private void onResume() {
+            status("online", "active");
+        }
+
+        private void onPause() {
+            calendar = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+            String time = format.format(calendar.getTime());
+            SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
+            String date = format1.format(calendar.getTime());
+            status(time, date);
+        }
     }
 }

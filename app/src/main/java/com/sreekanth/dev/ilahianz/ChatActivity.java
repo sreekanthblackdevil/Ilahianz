@@ -10,8 +10,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -76,6 +78,8 @@ public class ChatActivity extends AppCompatActivity {
     TabLayout tabLayout;
     Button retry;
     AppBarLayout appBarLayout;
+    User user = new User();
+    ViewPager viewPager;
     public String PhoneNumber = null;
 
     @Override
@@ -101,6 +105,7 @@ public class ChatActivity extends AppCompatActivity {
 
         appBarLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        viewPager = findViewById(R.id.view_pager);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -108,7 +113,7 @@ public class ChatActivity extends AppCompatActivity {
                 int pos = tab.getPosition();
                 if (pos == 0) {
                     appBarLayout.setBackgroundColor(getResources().getColor(R.color.blue));
-                } else if (pos == 2) {
+                } else if (pos == 1) {
                     appBarLayout.setBackgroundColor(getResources().getColor(R.color.dd_green));
                 } else {
                     appBarLayout.setBackgroundColor(getResources().getColor(R.color.red));
@@ -125,11 +130,24 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfilePopup(ChatActivity.this);
+            }
+        });
+        tabLayout.setupWithViewPager(viewPager);
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfilePopup(ChatActivity.this);
+            }
+        });
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         if (!Supports.Connected(ChatActivity.this)) {
             setUserInfo();
+
         } else {
             tabLayout.setVisibility(View.GONE);
             offline.setVisibility(View.VISIBLE);
@@ -149,14 +167,15 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void setUserInfo() {
-        tabLayout.setVisibility(View.VISIBLE);
-        offline.setVisibility(View.GONE);
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference = FirebaseDatabase.getInstance().getReference("Users").
+                child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                user = dataSnapshot.getValue(User.class);
                 assert user != null;
+                offline.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.VISIBLE);
                 username.setText(user.getUsername());
                 ViewSupport.setThumbProfileImage(user, profile_image);
             }
@@ -167,23 +186,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfilePopup(ChatActivity.this);
-            }
-        });
-
-        username.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfilePopup(ChatActivity.this);
-            }
-        });
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        final ViewPager viewPager = findViewById(R.id.view_pager);
-
-        tabLayout.setupWithViewPager(viewPager);
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -192,6 +194,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
                 int unread = 0;
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
                     assert chat != null;
@@ -209,7 +212,6 @@ public class ChatActivity extends AppCompatActivity {
                 viewPagerAdapter.addFragment(new TeachersFragment(), "Staff");
 
                 viewPager.setAdapter(viewPagerAdapter);
-
             }
 
             @Override
@@ -218,6 +220,30 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+
+    private class setUserList extends AsyncTask<Integer, Integer, DataSnapshot> {
+
+        @Override
+        protected DataSnapshot doInBackground(Integer... integers) {
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(DataSnapshot dataSnapshot) {
+            super.onPostExecute(dataSnapshot);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -230,7 +256,6 @@ public class ChatActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.about:
-                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(ChatActivity.this, AboutActivity.class));
                 return true;
             case R.id.settings:
@@ -292,6 +317,7 @@ public class ChatActivity extends AppCompatActivity {
         save_image = profile_view.findViewById(R.id.save_pic);
         change_image = profile_view.findViewById(R.id.pro_change);
         save_image.setOnClickListener(new View.OnClickListener() {
+            @SuppressWarnings("ResultOfMethodCallIgnored")
             @Override
             public void onClick(View v) {
 
@@ -360,9 +386,6 @@ public class ChatActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
-    }
-
-    private void BirthdayCheck() {
 
     }
 

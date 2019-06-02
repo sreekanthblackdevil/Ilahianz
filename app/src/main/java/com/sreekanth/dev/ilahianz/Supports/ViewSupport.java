@@ -23,8 +23,8 @@ public class ViewSupport {
 
     public static void setProfileImage(User user, final ImageView imageView) {
         assert user != null;
-        if (user.getImageURL().equals("default")) {
-            if (user.getCategory().equals("Student")) {
+        if (TextUtils.equals(user.getImageURL(), "default")) {
+            if (TextUtils.equals(user.getCategory(), "Student")) {
                 switch (user.getGender()) {
                     case "Male":
                         imageView.setImageResource(R.mipmap.men1);

@@ -52,9 +52,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if (i == mChat.size() - 1) {
             if (chat.isIsseen()) {
-                viewHolder.seen_status.setImageResource(R.drawable.ic_action_eye);
+                viewHolder.seen_status.setImageResource(R.drawable.ic_action_double_check_blue);
             } else {
-                viewHolder.seen_status.setImageResource(R.drawable.ic_action_check);
+                viewHolder.seen_status.setImageResource(R.drawable.ic_action_check_blue);
             }
         } else {
             viewHolder.seen_status.setVisibility(View.GONE);

@@ -59,7 +59,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_user, viewGroup, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -103,10 +103,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         return mUsers.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView username, status_view, className, lastChat, unread;
-        public CircleImageView profile_image;
+        CircleImageView profile_image;
         View status;
 
         ViewHolder(@NonNull View itemView) {
@@ -164,7 +164,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         lastMsag.setText(lastMsg);
                     } else {
                         assert firebaseUser != null;
-                        String unread_msg = String.valueOf(unread_message);
+                        final String unread_msg;
+                        if (unread_message > 9) {
+                            unread_msg = unread_message + "+";
+                        } else {
+                            unread_msg = String.valueOf(unread_message);
+                        }
                         if (!TextUtils.equals(myid, firebaseUser.getUid())) {
                             lastMsag.setVisibility(View.VISIBLE);
                             lastMsag.setTextColor(Color.parseColor("#499C54"));
@@ -174,7 +179,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         } else {
                             lastMsag.setVisibility(View.VISIBLE);
                             unread.setVisibility(View.GONE);
-                            lastMsag.setText(lastMsg);
+                            if (lastMsg.length() > 25) {
+                                lastMsag.setText(String.format("%s...", lastMsg.substring(0, 24)));
+                            } else {
+                                lastMsag.setText(lastMsg);
+                            }
                         }
                     }
                 }

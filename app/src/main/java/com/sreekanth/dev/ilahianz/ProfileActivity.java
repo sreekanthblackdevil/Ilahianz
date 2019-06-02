@@ -23,9 +23,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -51,6 +57,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.sreekanth.dev.ilahianz.Fragments.MyNotificationFragment;
+import com.sreekanth.dev.ilahianz.Fragments.StoryFragment;
 import com.sreekanth.dev.ilahianz.Supports.Supports;
 import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
 import com.sreekanth.dev.ilahianz.model.User;
@@ -60,6 +68,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -147,10 +156,16 @@ public class ProfileActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         mStorage = FirebaseStorage.getInstance();
+
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         LinearLayout container = findViewById(R.id.container);
         ImageView back = findViewById(R.id.back_btn);
         Button edit_btn = findViewById(R.id.edit_profile_btn);
+
         init();
+
+        // full screen
         container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -160,6 +175,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        ////
+        //tab layout
+        tabLayout.setupWithViewPager(viewPager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new StoryFragment(), "Events");
+        viewPagerAdapter.addFragment(new MyNotificationFragment(), "Notifications");
+        viewPager.setAdapter(viewPagerAdapter);
+        ////
+
         fetched = false;
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -768,6 +792,40 @@ public class ProfileActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences("userInfo", MODE_PRIVATE).edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<Fragment> fragments;
+        private ArrayList<String> titles;
+
+        ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fragments = new ArrayList<>();
+            this.titles = new ArrayList<>();
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragments.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            fragments.add(fragment);
+            titles.add(title);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+
     }
 
 }
