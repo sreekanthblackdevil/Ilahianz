@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="end">
+
+        <LinearLayout
+            android:id="@+id/relat_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_item_right"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            tools:ignore="UnusedAttribute">
+
+            <TextView
+                android:id="@+id/show_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="10dp"
+                android:text="Hello"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/seen_indicator"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_below="@+id/relat_layout"
+            android:layout_alignEnd="@+id/relat_layout"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="5dp" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/seen"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/card_view"-->
+        <!--android:layout_marginStart="12dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:layout_toEndOf="@+id/time_view"-->
+        <!--android:text="seen"-->
+        <!--android:textSize="12sp"-->
+        <!--tools:ignore="HardcodedText,SmallSp" />-->
+        <TextView
+            android:id="@+id/time_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relat_layout"
+            android:layout_alignStart="@+id/relat_layout"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            android:text="12:12"
+            android:textSize="8sp"
+            tools:ignore="HardcodedText,SmallSp" />
+
+    </RelativeLayout>
+</RelativeLayout>

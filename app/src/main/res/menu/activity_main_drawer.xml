@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_action_notification"
+        android:title="Notifications" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Settings" />
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@drawable/ic_help_black_24dp"
+        android:title="Help" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:title="Log Out" />
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_invite"
+                android:icon="@drawable/ic_action_invite"
+                android:title="Invite" />
+            <item
+                android:id="@+id/nav_chat"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Chat" />
+        </menu>
+    </item>
+
+</menu>

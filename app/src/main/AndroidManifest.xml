@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sreekanth.dev.ilahianz">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/owl"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/owl"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".UserProfileActivity"></activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:theme="@style/Notification_Style" />
+        <activity
+            android:name=".ShowNotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_show_notification"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".CreateNotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_create_notification"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".ProfileActivity2"
+            android:label="@string/title_activity_profile2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Startup"
+            android:theme="@style/profileUploadStyle" />
+        <activity
+            android:name=".ShowProfilePicture"
+            android:label="Profile" />
+        <activity
+            android:name=".UserProfile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UploadProfileActivity"
+            android:theme="@style/profileUploadStyle" />
+        <activity android:name=".CropActivity" />
+        <activity android:name=".NotificationSettings" />
+        <activity
+            android:name=".PrivacyActivity"
+            android:label="Privacy"
+            android:theme="@style/SettingsStyle" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings"
+            android:theme="@style/SettingsStyle" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:theme="@style/Maps_style" /> <!-- <activity -->
+        <!-- android:name=".MapsActivity" -->
+        <!-- android:label="@string/title_activity_maps"> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".WebViewActivity"
+            android:theme="@style/ChatStyle" />
+        <activity
+            android:name=".HelpActivity"
+            android:label="Help Center"
+            android:theme="@style/HelpStyle" />
+        <activity
+            android:name=".NotificationActivity"
+            android:theme="@style/Notification_Style" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile"
+            android:theme="@style/ProfileStyle" />
+        <activity
+            android:name=".TeachersList"
+            android:label="Departments"
+            android:theme="@style/Teachers_style" />
+        <activity
+            android:name=".RemainderActivity"
+            android:label="Remainder"
+            android:theme="@style/Remainder_Style" />
+        <activity
+            android:name=".NotesActivity"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:label="Notes"
+            android:theme="@style/Notes_style" />
+        <activity
+            android:name=".start"
+            android:theme="@style/startPageStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".signinActivity"
+            android:theme="@style/SignIn_Style" />
+        <activity
+            android:name=".signupActivity"
+            android:theme="@style/SignUp_style" />
+        <activity
+            android:name=".ChatActivity"
+            android:theme="@style/ChatStyle" />
+        <activity
+            android:name=".MessageActivity"
+            android:theme="@style/ChatStyle" />
+
+        <service
+            android:name=".Notifications.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".Notifications.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    </application>
+
+</manifest>

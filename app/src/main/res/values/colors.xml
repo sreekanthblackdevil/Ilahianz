@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1F8E9E</color>
+    <color name="colorPrimaryDark">#056F7E</color>
+    <color name="colorAccent">#FF00875F</color>
+    <color name="black">#000</color>
+    <color name="colorChatPrimary">#1A91A1</color>
+    <color name="colorChatPrimaryDark">#177886</color>
+    <color name="colorChatAccent">#00973E</color>
+    <color name="white">#fff</color>
+    <color name="lightBlue">#D1EBF2</color>
+    <color name="darkBlue">#4EA8F4</color>
+    <color name="tblue">#1D4EA8F4</color>
+    <color name="blue">#2873F0</color>
+    <color name="green">#00C853</color>
+    <color name="dark">#FF343236</color>
+    <color name="red">#FFD13737</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="d_green">#038339</color>
+    <color name="dd_green">#00875F</color>
+</resources>

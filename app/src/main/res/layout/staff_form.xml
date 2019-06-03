@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="370dp"
+    android:layout_gravity="center"
+    android:background="@drawable/staff_form_bg"
+    android:orientation="vertical"
+    tools:context=".signupActivity">
+
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="Form for(BCA) Staff"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+
+    <!--<EditText-->
+    <!--android:id="@+id/position_txt"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_marginStart="20dp"-->
+    <!--android:layout_marginEnd="20dp"-->
+    <!--android:visibility="invisible"-->
+    <!--android:layout_marginBottom="96dp"-->
+    <!--android:background="@drawable/edittext_background"-->
+    <!--android:drawableStart="@drawable/ic_person_white_24dp"-->
+    <!--android:drawablePadding="12dp"-->
+    <!--android:ems="8"-->
+    <!--android:fontFamily="casual"-->
+    <!--android:hint="Specify Position"-->
+    <!--android:inputType="textEmailAddress"-->
+    <!--android:maxLines="1"-->
+    <!--android:padding="8dp"-->
+    <!--android:textColorHint="#ffffff"-->
+    <!--tools:ignore="HardcodedText" />-->
+
+    <Button
+        android:id="@+id/finish_btn_staff"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/finish_btn_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="16dp"
+        android:text="Finish"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="112dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Position"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        tools:ignore="HardcodedText" />
+
+    <RadioGroup
+        android:id="@+id/position_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/caption"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="vertical"
+        android:paddingStart="50sp"
+        android:paddingEnd="10dp">
+
+        <RadioButton
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guest"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HOD"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assist HOD"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Professor"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText"
+
+            />
+
+        <RadioButton
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/position_rg"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edittext_background"
+        android:drawableStart="@drawable/ic_phone_black_24dp"
+        android:drawablePadding="12dp"
+        android:ems="8"
+        android:fontFamily="@font/roboto_light"
+        android:hint="Phone No: (optional)"
+        android:inputType="phone"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="#ffffff"
+        tools:ignore="HardcodedText" />
+</RelativeLayout>
