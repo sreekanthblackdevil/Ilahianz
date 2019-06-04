@@ -68,7 +68,6 @@ public class MessageActivity extends AppCompatActivity {
     ValueEventListener seenListener;
     public static final int ON_PAUSE = 0;
     public static final int ON_RESUME = 1;
-
     APIService apiService;
 
     boolean notify = false;
@@ -338,6 +337,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+
     class readMessages implements Runnable {
         String myid;
 
@@ -355,13 +355,19 @@ public class MessageActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     mChat.clear();
 
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Chat chat = snapshot.getValue(Chat.class);
-                        assert chat != null;
-                        if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
-                                chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
-                            mChat.add(chat);
-                        }
+                    for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Chat chat = snapshot.getValue(Chat.class);
+                                assert chat != null;
+                                if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
+                                        chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
+                                    mChat.add(chat);
+                                }
+                            }
+                        });
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -371,15 +377,6 @@ public class MessageActivity extends AppCompatActivity {
                         });
 
                     }
-                    for (int i = 0; i < 10; i++) {
-                        try {
-                            Thread.sleep(1000);
-                            Log.d("bg:", "loop " + i);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
                 }
 
                 @Override

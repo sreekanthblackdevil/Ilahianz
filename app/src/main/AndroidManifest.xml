@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".ComposeNotification"></activity>
+        <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".EditProfileActivity"
             android:theme="@style/Notification_Style" />

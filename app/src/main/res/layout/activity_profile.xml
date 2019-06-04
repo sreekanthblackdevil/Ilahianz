@@ -95,6 +95,7 @@
             </RelativeLayout>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout1"
@@ -369,6 +370,28 @@
                 android:padding="1dp"
                 android:src="@mipmap/men1"
                 android:transitionName="imageTransition" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout2"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/tab_bg_profile"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="3dp"
+                app:tabSelectedTextColor="#7CFFFFFF"
+                app:tabTextColor="@color/white" />
+
+            <android.support.v4.view.ViewPager
+                android:layout_marginBottom="10dp"
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_below="@id/tab_layout"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
 
         </RelativeLayout>
     </ScrollView>

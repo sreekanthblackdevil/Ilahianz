@@ -331,7 +331,7 @@ public class ChatActivity extends AppCompatActivity {
                 File dir = new File(sdCard.getAbsolutePath() + "/Ilahianz/" + popup_usename);
                 if (!dir.exists())
                     dir.mkdirs();
-                String fileName = String.format("%d.jpg", System.currentTimeMillis());
+                String fileName = String.format("%d.jpg", System.currentTimeMillis(),Locale.US);
                 File outFile = new File(dir, fileName);
                 try {
                     outStream = new FileOutputStream(outFile);

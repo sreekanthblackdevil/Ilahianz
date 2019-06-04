@@ -311,20 +311,14 @@ public class ProfileActivity extends AppCompatActivity {
                     camera.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!TextUtils.equals(imageURL, "default"))
-                                popupMSG();
-                            else
-                                openCamera();
+                            openCamera();
                             dialog.dismiss();
                         }
                     });
                     gallery.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!TextUtils.equals(imageURL, "default"))
-                                popupMSG();
-                            else
-                                openImage();
+                            openImage();
                             dialog.dismiss();
                         }
                     });
@@ -727,34 +721,6 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             pd.dismiss();
         }
-    }
-
-    private void popupMSG() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.delete_dialog);
-        Button ok = dialog.findViewById(R.id.ok);
-        Button cancel = dialog.findViewById(R.id.cancel);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (!Supports.Connected(ProfileActivity.this))
-                    if (fetched)
-                        deleteImage(imageURL, thumbURL);
-                    else
-                        Toast.makeText(ProfileActivity.this, "Collecting information...", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(ProfileActivity.this, "Network Unavailable", Toast.LENGTH_SHORT).show();
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
     }
 
     public void setUserInfo(User user) {

@@ -91,15 +91,9 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     FirebaseDatabase firebaseDatabase;
-    LinearLayout chat,
-            Notes,
-            remainder,
-            teachers,
-            notifications,
-            help,
-            location,
-            attendance,
-            website;
+    LinearLayout chat, Notes, remainder, teachers,
+            notifications, help, location,
+            attendance, website;
     Dialog profile;
     DatabaseReference reference;
     RelativeLayout profile_view;

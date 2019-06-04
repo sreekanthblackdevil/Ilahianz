@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -96,7 +96,8 @@ could not fetch data from the server"
             android:layout_centerInParent="true"
             android:paddingStart="45dp"
             android:paddingEnd="0dp"
-            android:src="@mipmap/nointernet_icon" />
+            android:src="@mipmap/nointernet_icon"
+            tools:ignore="ContentDescription" />
 
         <ProgressBar
             android:id="@+id/progressBar"
