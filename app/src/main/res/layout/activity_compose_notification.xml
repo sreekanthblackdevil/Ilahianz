@@ -97,7 +97,7 @@
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@id/to_title"
             android:gravity="center"
-            android:text="C4A"
+            android:text="Choose here"
             android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
@@ -107,13 +107,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/to"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@id/bulb"
             android:background="@android:color/transparent"
+            android:fontFamily="@font/roboto_regular"
             android:hint="Subject"
             android:lines="1"
             android:padding="10dp"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText" />
 
         <ImageButton
@@ -122,11 +124,59 @@
             android:layout_height="45dp"
             android:layout_below="@id/to"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_action_bulb" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/from"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#4D747474" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/to"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#4D747474" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/subject"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#4D747474" />
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subject"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Type Notice..."
+            android:padding="10dp"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
-
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ilahia" />
 </RelativeLayout>
