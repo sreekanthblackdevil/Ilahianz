@@ -41,6 +41,7 @@ import com.sreekanth.dev.ilahianz.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
@@ -176,7 +177,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
     private void createNotification(String Content, String Heading, String Target, String Type, String Color) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
         String time = format.format(calendar.getTime());
         SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
         String date = format1.format(calendar.getTime());
@@ -187,7 +188,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
         hashMap.put("Target", Target);
         hashMap.put("Type", Type);
         hashMap.put("Color", Color);
-        hashMap.put("Time", time);
+        hashMap.put("Time", new Date().getTime());
         hashMap.put("Category", getUserInfo(SP_CATEGORY));
         hashMap.put("From", username);
         hashMap.put("Date", date);

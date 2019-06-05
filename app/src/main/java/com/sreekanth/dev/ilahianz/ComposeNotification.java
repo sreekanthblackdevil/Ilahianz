@@ -1,8 +1,12 @@
 package com.sreekanth.dev.ilahianz;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_CLASS_NAME;
 import static com.sreekanth.dev.ilahianz.model.Literals.SP_USERNAME;
@@ -44,10 +49,19 @@ public class ComposeNotification extends AppCompatActivity {
             }
         });
 
+        to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSheet();
+            }
+        });
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!TextUtils.equals(to.getText().toString(), "Choose here"))
+                    if (!TextUtils.isEmpty(message.getText().toString()))
+                        sendNotice();
             }
         });
     }
@@ -59,18 +73,24 @@ public class ComposeNotification extends AppCompatActivity {
 
     private void sendNotice() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
         String time = format.format(calendar.getTime());
-        SimpleDateFormat format1 = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
-        String date = format1.format(calendar.getTime());
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("subject", subject.getText().toString());
         hashMap.put("from", from.getText().toString());
         hashMap.put("message", message.getText().toString());
-        hashMap.put("time", time);
-        hashMap.put("date", date);
+        hashMap.put("Uid", message.getText().toString());
+        hashMap.put("timeStamp", time);
         reference.child("Notifications").push().setValue(hashMap);
     }
 
+    private void openSheet() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(R.layout.choose_list);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        dialog.show();
+    }
 }

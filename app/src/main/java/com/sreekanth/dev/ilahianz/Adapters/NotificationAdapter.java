@@ -22,7 +22,10 @@ import com.sreekanth.dev.ilahianz.ShowNotificationActivity;
 import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
 import com.sreekanth.dev.ilahianz.model.Notification;
 import com.sreekanth.dev.ilahianz.model.User;
+import com.sreekanth.dev.ilahianz.utils.TimeAgo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,8 +71,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         viewHolder.heading.setText(notification.getHeading());
         viewHolder.type.setText(notification.getType());
-        viewHolder.date.setText(notification.getDate());
-        viewHolder.time.setText(notification.getTime());
+        Date date;
+        date = new Date(Date.parse(notification.getTime()));
+        viewHolder.date.setText(new TimeAgo().getTimeAgo(date));
+        viewHolder.time.setText(new TimeAgo().getTimeAgo(date));
 //        if (notification.getColor() != null)
 //            viewHolder.notification_bg.setCardBackgroundColor(Integer.parseInt(notification.getColor()));
         viewHolder.message.setText(notification.getContent());
