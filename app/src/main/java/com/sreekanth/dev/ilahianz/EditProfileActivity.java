@@ -411,9 +411,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     camera.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!TextUtils.equals(imageURL, "default"))
-                                popupMSG();
-                            else
                                 openCamera();
                             dialog.dismiss();
                         }
@@ -421,9 +418,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     gallery.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!TextUtils.equals(imageURL, "default"))
-                                popupMSG();
-                            else
                                 openImage();
                             dialog.dismiss();
                         }
@@ -828,28 +822,6 @@ public class EditProfileActivity extends AppCompatActivity {
         } else {
             pd.dismiss();
         }
-    }
-
-    private void popupMSG() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.delete_dialog);
-        Button ok = dialog.findViewById(R.id.ok);
-        Button cancel = dialog.findViewById(R.id.cancel);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteImage(imageURL, thumbURL);
-                dialog.dismiss();
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
     }
 
     private void reportBug() {

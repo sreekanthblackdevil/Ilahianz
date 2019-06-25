@@ -3,9 +3,8 @@
 package com.sreekanth.dev.ilahianz.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sreekanth.dev.ilahianz.R;
-import com.sreekanth.dev.ilahianz.ShowNotificationActivity;
 import com.sreekanth.dev.ilahianz.Supports.ViewSupport;
 import com.sreekanth.dev.ilahianz.model.Notification;
 import com.sreekanth.dev.ilahianz.model.User;
+import com.sreekanth.dev.ilahianz.utils.TimeAgo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,7 +53,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         final Notification notification = mNotification.get(i);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
-                .child(notification.getUId());
+                .child(notification.getFrom());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -58,7 +61,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 assert user != null;
                 ViewSupport.setThumbProfileImage(user, viewHolder.profile_image);
                 viewHolder.username.setText(user.getUsername());
-            }
+            } // notificationte binding
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -67,23 +70,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
 
         viewHolder.heading.setText(notification.getHeading());
-        viewHolder.type.setText(notification.getType());
-        viewHolder.date.setText(notification.getDate());
-        viewHolder.time.setText(notification.getTime());
-//        if (notification.getColor() != null)
-//            viewHolder.notification_bg.setCardBackgroundColor(Integer.parseInt(notification.getColor()));
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+        TimeAgo timeAgo = new TimeAgo().locale(mContext).with(format);
+        Date date = null;
+        try {
+            date = format.parse(notification.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        viewHolder.time.setText(timeAgo.getTimeAgo(date));
         viewHolder.message.setText(notification.getContent());
-
-        viewHolder.notification_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, ShowNotificationActivity.class)
-                        .putExtra("message", notification.getContent())
-                        .putExtra("Uid", notification.getUId())
-                        .putExtra("heading", notification.getHeading())
-                        .putExtra("color", notification.getColor()));
-            }
-        });
     }
 
     @Override
@@ -93,8 +89,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView heading, time, message, type, date, username;
-        CardView notification_bg;
+        TextView heading, time, message, username;
         CircleImageView profile_image;
 
         ViewHolder(@NonNull View itemView) {
@@ -104,11 +99,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             heading = itemView.findViewById(R.id.heading);
             time = itemView.findViewById(R.id.time);
             message = itemView.findViewById(R.id.message);
-            type = itemView.findViewById(R.id.type);
-            date = itemView.findViewById(R.id.date);
-            notification_bg = itemView.findViewById(R.id.notification_bg);
         }
     }
-
-
 }

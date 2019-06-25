@@ -75,11 +75,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         lastMesg(user.getId(), viewHolder.lastChat, viewHolder.unread);
         if (user.getStatus().equals("online")) {
             viewHolder.status.setVisibility(View.VISIBLE);
-            viewHolder.status_view.setText(user.getStatus());
-            viewHolder.status_view.setTextColor(Color.parseColor("#499C54"));
         } else {
-            viewHolder.status_view.setText(user.getStatus());
-            viewHolder.status_view.setTextColor(Color.parseColor("#C75450"));
             viewHolder.status.setVisibility(View.INVISIBLE);
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +101,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView username, status_view, className, lastChat, unread;
+        TextView username, className, lastChat, unread;
         CircleImageView profile_image;
         View status;
 
@@ -129,7 +125,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             unread = itemView.findViewById(R.id.unread_mesg);
             status = itemView.findViewById(R.id.status);
             lastChat = itemView.findViewById(R.id.last_mesg);
-            status_view = itemView.findViewById(R.id.status_view);
             username = itemView.findViewById(R.id.username);
             profile_image = itemView.findViewById(R.id.profile_Image);
         }

@@ -6,40 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ILAHIANZ BCA"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/anton_regular"
-                    android:textSize="20sp"
-                    tools:ignore="HardcodedText" />
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
     <include layout="@layout/content_main" />
 
     <ScrollView
-        android:layout_below="@id/appbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -51,6 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="65dp"
                 android:gravity="center">
 
                 <android.support.v7.widget.CardView
@@ -83,18 +53,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Chat"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Chat with Ilahianz"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
@@ -128,18 +98,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Attendance"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Check Attendance "
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -184,18 +154,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Notes"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Write your Notes"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
@@ -226,23 +196,23 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@mipmap/alarm_clock" />
+                            android:src="@mipmap/notes" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Remainder"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Story"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Schedule your Day"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Post your story here"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
@@ -255,10 +225,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
-                <!--android:alignmentMode="alignMargins"-->
-                <!--android:columnCount="2"-->
-                <!--android:columnOrderPreserved="false"-->
-                <!--android:rowCount="1">-->
 
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
@@ -290,18 +256,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Notifications"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Notify everything you"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
@@ -314,8 +280,7 @@
                     android:layout_columnWeight="1"
                     android:layout_gravity="center"
                     android:layout_margin="12dp"
-                    app:cardCornerRadius="@dimen/cardView_radius"
-                    app:cardElevation="6dp">
+                    app:cardCornerRadius="@dimen/cardView_radius">
 
                     <LinearLayout
                         android:id="@+id/teachers"
@@ -337,18 +302,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Teachers"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Help from teachers"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
@@ -396,18 +361,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Location"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Find your college"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -442,18 +407,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Website"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Visit Ilahia Website"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -498,22 +463,56 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="Help Center"
                             android:textAlignment="center"
                             android:textSize="20sp"
-                            android:textStyle="bold"
                             tools:ignore="HardcodedText" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="Ready to Help you"
                             android:textAlignment="center"
-                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="7dp"
+        android:background="@drawable/toolbar_bg"
+        android:elevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/roboto_black"
+                android:text="ILAHIANZ BCA"
+                android:textSize="17sp"
+                tools:ignore="HardcodedText" />
+
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_search_grey" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 </RelativeLayout>

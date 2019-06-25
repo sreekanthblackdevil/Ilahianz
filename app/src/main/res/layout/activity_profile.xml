@@ -42,7 +42,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
-                    app:cardBackgroundColor="#F2FFFFFF"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="7dp"
                     app:cardElevation="5dp">
 
@@ -76,18 +76,17 @@
 
                         <Button
                             android:id="@+id/edit_profile_btn"
-                            android:layout_width="150dp"
-                            android:layout_height="40dp"
+                            android:layout_width="180dp"
+                            android:layout_height="30dp"
                             android:layout_below="@id/class_name"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/bg_button_green"
                             android:elevation="10dp"
-                            android:fontFamily="@font/roboto_black"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
                             android:text="Edit Profile"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
                             tools:ignore="HardcodedText" />
 
                     </RelativeLayout>
@@ -95,6 +94,7 @@
             </RelativeLayout>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout1"
@@ -366,9 +366,30 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginBottom="-60dp"
                 android:elevation="5dp"
-                android:padding="1dp"
                 android:src="@mipmap/men1"
                 android:transitionName="imageTransition" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout2"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/tab_bg_profile"
+                app:tabIndicatorColor="@color/black"
+                app:tabIndicatorHeight="3dp"
+                app:tabSelectedTextColor="@color/dd_green"
+                app:tabTextColor="@color/black" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_below="@id/tab_layout"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp" />
 
         </RelativeLayout>
     </ScrollView>

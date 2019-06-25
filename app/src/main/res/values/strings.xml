@@ -23,5 +23,8 @@
 
     <string name="title_activity_show_notification">ShowNotificationActivity</string>
     <string name="simple_formate">%s, %s</string>
+    <string name="notice_instructions">This Notice only appears for 7 days. After 7 days the Notice will be deleted.</string>
+    <string name="app_hint">ILAHIANZ BCA</string>
+    <string name="birthday_quotes1">May life leads you to great happiness , Success and hope that all your wishes comes true! enjoy your day</string>
 
 </resources>

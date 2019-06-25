@@ -8,32 +8,15 @@ public class Chat {
     private String time;
     private boolean isseen;
 
-    public String getTime() {
-        return time;
+    public Chat() {
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-
-    public Chat(String sender, String receiver, String message, String Time, boolean isseen) {
+    public Chat(String sender, String receiver, String message, String time, boolean isseen) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.time = Time;
+        this.time = time;
         this.isseen = isseen;
-    }
-
-    public boolean isIsseen() {
-        return isseen;
-    }
-
-    public void setIsseen(boolean isseen) {
-        this.isseen = isseen;
-    }
-
-    public Chat() {
     }
 
     public String getSender() {
@@ -58,5 +41,21 @@ public class Chat {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public boolean isIsseen() {
+        return isseen;
+    }
+
+    public void setIsseen(boolean isseen) {
+        this.isseen = isseen;
     }
 }

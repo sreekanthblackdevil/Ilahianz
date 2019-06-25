@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MessageActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -17,7 +18,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
@@ -25,14 +27,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_Image"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/developer"
-                        android:transitionName="imageTransition" />
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_Image"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/developer"
+                    android:transitionName="imageTransition" />
+
                 <TextView
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
@@ -58,10 +62,20 @@
                     android:layout_marginTop="1dp"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/roboto_regular"
                     android:layout_toEndOf="@+id/profile_Image"
                     android:text="online"
                     android:textColor="@color/mdtp_white"
                     tools:ignore="HardcodedText" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_action_phone_white" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -83,7 +97,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
         android:layout_toStartOf="@id/send_btn"
         android:background="@drawable/message_field_bg"
         tools:ignore="UnusedAttribute">
@@ -104,12 +118,12 @@
 
     <ImageButton
         android:id="@+id/send_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/btn_send_bg"
         android:elevation="5dp"
         app:srcCompat="@drawable/ic_action_send" />

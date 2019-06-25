@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".ComposeNotification"
+            android:theme="@style/messageStyle"/>
+        <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".EditProfileActivity"
             android:theme="@style/Notification_Style" />
@@ -90,7 +92,7 @@
         <!-- android:label="@string/title_activity_maps"> -->
         <!-- </activity> -->
         <activity
-            android:name=".WebViewActivity"
+            android:name="com.sreekanth.dev.netsports.WebViewActivity"
             android:theme="@style/ChatStyle" />
         <activity
             android:name=".HelpActivity"
@@ -108,7 +110,7 @@
             android:label="Departments"
             android:theme="@style/Teachers_style" />
         <activity
-            android:name=".RemainderActivity"
+            android:name=".StoryActivity"
             android:label="Remainder"
             android:theme="@style/Remainder_Style" />
         <activity
@@ -136,7 +138,7 @@
             android:theme="@style/ChatStyle" />
         <activity
             android:name=".MessageActivity"
-            android:theme="@style/ChatStyle" />
+            android:theme="@style/messageStyle" />
 
         <service
             android:name=".Notifications.MyFirebaseIdService"

@@ -15,10 +15,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:layout_height="50dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_Image"
@@ -26,14 +24,14 @@
                 android:layout_height="40dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@mipmap/men1" />
+                android:src="@drawable/ic_account_circle_grey_150dp" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/anton_regular"
+                android:fontFamily="@font/roboto_bold"
                 android:text="ILAHIANZ"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
@@ -96,7 +94,8 @@ could not fetch data from the server"
             android:layout_centerInParent="true"
             android:paddingStart="45dp"
             android:paddingEnd="0dp"
-            android:src="@mipmap/nointernet_icon" />
+            android:src="@mipmap/nointernet_icon"
+            tools:ignore="ContentDescription" />
 
         <ProgressBar
             android:id="@+id/progressBar"

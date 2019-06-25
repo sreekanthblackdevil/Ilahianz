@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="280dp"
+    android:background="@drawable/dialog_bg">
+
+    <Button
+        android:id="@+id/select"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_button_select"
+        android:text="Select"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/dd_green"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="Choose"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+
+    <RadioGroup
+        android:id="@+id/radio_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="All"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Students"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Teachers"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Custom"
+            tools:ignore="HardcodedText" />
+    </RadioGroup>
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:columnCount="6"
+        android:rowCount="1">
+
+        <CheckBox
+            android:id="@+id/c1a"
+            android:text="C1"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:text="C2"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:text="C3"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:text="C4"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:text="C5"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:text="C6"
+            tools:ignore="HardcodedText" />
+
+        <!-- <CheckBox
+             android:text="C1A"
+             tools:ignore="HardcodedText" />
+
+         <CheckBox
+             android:text="CA"
+             tools:ignore="HardcodedText" />
+
+         <CheckBox
+             android:text="C3A"
+             tools:ignore="HardcodedText" />
+
+         <CheckBox
+             android:text="C4A"
+             tools:ignore="HardcodedText" />
+
+         <CheckBox
+             android:text="C5A"
+             tools:ignore="HardcodedText" />
+
+         <CheckBox
+             android:text="C6A"
+             tools:ignore="HardcodedText" />-->
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_options"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Custom"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>
