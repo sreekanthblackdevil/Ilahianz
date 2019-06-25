@@ -16,6 +16,7 @@
             android:id="@+id/profile_Image"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
             android:layout_margin="5dp"
             android:src="@drawable/ic_account_circle_grey_150dp"
             android:transitionName="imageTransition" />
@@ -24,10 +25,10 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/about_text"
+            android:layout_below="@id/profile_Image"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="7dp"
             android:layout_marginBottom="6dp"
-            android:layout_toEndOf="@id/profile_Image"
             android:textColor="@color/black"
             android:textSize="17sp" />
 
@@ -35,10 +36,10 @@
             android:id="@+id/about_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/profile_Image"
+            android:layout_below="@id/username"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="15dp"
-            android:layout_toEndOf="@id/profile_Image"
             android:text="about"
             android:textColor="#4E4E4E"
             android:transitionName="descriptionTransition"

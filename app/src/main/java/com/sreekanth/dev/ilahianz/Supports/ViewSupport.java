@@ -229,6 +229,52 @@ public class ViewSupport {
         }
     }
 
+    public static void setThumbProfileWithPrivacy(User user, String category, ImageView profile_image) {
+        if (TextUtils.equals(user.getThumbnailURL(), "default")) {
+            setProfileImage(user, profile_image);
+        } else {
+            if (!TextUtils.equals(user.getProfilePrivacy(), "Everyone")) {
+                if (TextUtils.equals(category, "Student") &&
+                        TextUtils.equals(user.getProfilePrivacy(), "Students Only")) {
+                    Picasso.get().load(user.getThumbnailURL()).into(profile_image);
+                } else if (TextUtils.equals(category, "Teacher") &&
+                        TextUtils.equals(user.getProfilePrivacy(), "Teachers Only")) {
+                    Picasso.get().load(user.getThumbnailURL()).into(profile_image);
+                } else {
+                    if (user.getCategory().equals("Student")) {
+                        switch (user.getGender()) {
+                            case "Male":
+                                profile_image.setImageResource(R.mipmap.men1);
+                                break;
+                            case "Female":
+                                profile_image.setImageResource(R.mipmap.wumen4);
+                                break;
+                            case "Other":
+                                profile_image.setImageResource(R.mipmap.bysex);
+                            default:
+                                break;
+                        }
+                    } else {
+                        switch (user.getGender()) {
+                            case "Male":
+                                profile_image.setImageResource(R.mipmap.sir);
+                                break;
+                            case "Female":
+                                profile_image.setImageResource(R.mipmap.wumen2);
+                                break;
+                            case "Other":
+                                profile_image.setImageResource(R.mipmap.bysex);
+                            default:
+                                break;
+                        }
+                    }
+                }
+            } else {
+                Picasso.get().load(user.getThumbnailURL()).into(profile_image);
+            }
+        }
+    }
+
     public static void setAboutWithPrivacy(User user, TextView about, User myInfo) {
 
         if (!TextUtils.equals(user.getAboutPrivacy(), "Everyone")) {

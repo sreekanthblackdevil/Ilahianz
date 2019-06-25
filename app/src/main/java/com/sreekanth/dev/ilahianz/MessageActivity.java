@@ -9,7 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -310,7 +311,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    private void readMessages(final String myid, final String userid) {
+    /*private void readMessages(final String myid, final String userid) {
         mChat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -335,7 +336,7 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
 
     class readMessages implements Runnable {
@@ -385,6 +386,21 @@ public class MessageActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.message_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.report){
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void currentUser(String userid) {

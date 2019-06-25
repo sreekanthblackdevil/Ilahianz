@@ -10,9 +10,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,8 +52,10 @@ import com.sreekanth.dev.ilahianz.Supports.locationService;
 import com.sreekanth.dev.ilahianz.model.User;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -105,6 +110,8 @@ public class MainActivity extends AppCompatActivity
     User myInfo = new User();
     LatLng CurrentLocation;
     boolean fetched = false;
+    List<String> birthdayList;
+    String showStatus;
     locationService locationService = new locationService();
 
     @Override
@@ -186,7 +193,7 @@ public class MainActivity extends AppCompatActivity
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UploadProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
         });
@@ -243,6 +250,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
         locationService.init(this);
+        birthday birthday = new birthday(this);
+        new Thread(birthday).start();
     }
 
     private void adaptUserInfo() {
@@ -481,4 +490,88 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    private class birthday implements Runnable {
+
+        private Context mContext;
+
+        public birthday(Context mContext) {
+            this.mContext = mContext;
+        }
+
+        @Override
+        public void run() {
+            checkBirthday();
+        }
+
+        private void checkBirthday() {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            birthdayList = new ArrayList<>();
+            final SharedPreferences sharedPreferences = getSharedPreferences("birthdayShow", MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+            Calendar calendar = Calendar.getInstance();
+            final int day = calendar.get(Calendar.DAY_OF_MONTH);
+            final int month = calendar.get(Calendar.MONTH);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    birthdayList.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        User user = snapshot.getValue(User.class);
+                        assert user != null;
+                        if (TextUtils.equals(String.valueOf(day), user.getBirthMonth())
+                                && TextUtils.equals(String.valueOf(month), user.getBirthMonth())) {
+                            birthdayList.add(user.getId());
+                            showStatus = "" + user.getId();
+                        }
+                    }
+                    if (!(TextUtils.equals(sharedPreferences.getString("info", "none"), "none")
+                            || TextUtils.equals(sharedPreferences.getString("info", "none"), showStatus))) {
+                        if (birthdayList.size() != 0) {
+                            for (String list : birthdayList)
+                                showBirthday(list);
+                            editor.putString("info", showStatus);
+                            editor.apply();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        private void showBirthday(String UID) {
+            Dialog dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.birthday_view);
+            final CircleImageView proImage = dialog.findViewById(R.id.profile_Image);
+            final TextView title = dialog.findViewById(R.id.username);
+            final TextView title2 = dialog.findViewById(R.id.quotes);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+            reference.addValueEventListener(new ValueEventListener() {
+                @SuppressWarnings("ConstantConditions")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    Calendar calendar = Calendar.getInstance();
+                    assert user != null;
+                    ViewSupport.setProfileWithPrivacy(user, myInfo, proImage);
+                    int now = calendar.get(Calendar.YEAR);
+                    int age = now - Integer.getInteger(user.getBirthYear());
+                    if (TextUtils.equals(user.getGender(), "male")) {
+                        title.setText(String.format("Today is %s's %sth Birthday", user.getUsername(), age));
+                        title2.setText(String.format("Wish Happy Birthday to %s", user.getUsername()));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        }
+    }
 }

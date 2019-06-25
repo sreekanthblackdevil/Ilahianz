@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -30,6 +29,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -96,16 +97,12 @@ public class ChatActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
-        appBarLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        appBarLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         viewPager = findViewById(R.id.view_pager);
+
+        final Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -113,10 +110,15 @@ public class ChatActivity extends AppCompatActivity {
                 int pos = tab.getPosition();
                 if (pos == 0) {
                     appBarLayout.setBackgroundColor(getResources().getColor(R.color.blue));
+                    window.setStatusBarColor(getResources().getColor(R.color.blue));
                 } else if (pos == 1) {
                     appBarLayout.setBackgroundColor(getResources().getColor(R.color.dd_green));
+                    window.setStatusBarColor(getResources().getColor(R.color.dd_green));
+
                 } else {
                     appBarLayout.setBackgroundColor(getResources().getColor(R.color.red));
+                    window.setStatusBarColor(getResources().getColor(R.color.red));
+
                 }
             }
 
@@ -221,28 +223,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private class setUserList extends AsyncTask<Integer, Integer, DataSnapshot> {
-
-        @Override
-        protected DataSnapshot doInBackground(Integer... integers) {
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(DataSnapshot dataSnapshot) {
-            super.onPostExecute(dataSnapshot);
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-    }
 
 
     @Override
@@ -331,7 +311,7 @@ public class ChatActivity extends AppCompatActivity {
                 File dir = new File(sdCard.getAbsolutePath() + "/Ilahianz/" + popup_usename);
                 if (!dir.exists())
                     dir.mkdirs();
-                String fileName = String.format("%d.jpg", System.currentTimeMillis(),Locale.US);
+                String fileName = String.format("%d.jpg", System.currentTimeMillis(), Locale.US);
                 File outFile = new File(dir, fileName);
                 try {
                     outStream = new FileOutputStream(outFile);
@@ -390,8 +370,10 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void makePhoneCall(Context context) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
         } else {
             if (PhoneNumber != null && !TextUtils.equals(PhoneNumber, "Not Provided")) {
                 String dial = "tel:" + PhoneNumber;

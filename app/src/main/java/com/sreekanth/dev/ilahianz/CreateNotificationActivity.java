@@ -188,7 +188,7 @@ public class CreateNotificationActivity extends AppCompatActivity {
         hashMap.put("Target", Target);
         hashMap.put("Type", Type);
         hashMap.put("Color", Color);
-        hashMap.put("Time", new Date().getTime());
+        hashMap.put("Time", time);
         hashMap.put("Category", getUserInfo(SP_CATEGORY));
         hashMap.put("From", username);
         hashMap.put("Date", date);

@@ -53,7 +53,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_above="@id/ilahianz"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/from_title"
@@ -74,7 +76,7 @@
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@id/from_title"
             android:gravity="center"
-            android:text="ksreekanthkr@gmail.com"
+            android:text="from"
             android:textColor="@color/dd_green"
             tools:ignore="HardcodedText" />
 
@@ -94,10 +96,11 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/from"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="7dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@id/to_title"
+            android:fontFamily="@font/roboto_regular"
             android:gravity="center"
             android:text="Choose here"
             android:textColor="@color/black"
@@ -116,6 +119,8 @@
             android:fontFamily="@font/roboto_regular"
             android:hint="Subject"
             android:lines="1"
+            android:maxLength="10"
+            android:inputType="textShortMessage"
             android:padding="10dp"
             android:textColor="@color/black"
             tools:ignore="HardcodedText" />
@@ -170,17 +175,32 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/roboto_regular"
             android:hint="Type Notice"
-            android:inputType="textLongMessage"
+            android:inputType="textMultiLine"
             android:padding="10dp"
             android:textColor="@color/black"
             tools:ignore="HardcodedText,UnusedAttribute" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/notice_instructions" />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/ilahianz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:src="@mipmap/ilahia" />
+        android:layout_marginBottom="7dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/app_hint"
+        android:textSize="17sp" />
 </RelativeLayout>

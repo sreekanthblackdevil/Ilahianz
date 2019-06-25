@@ -49,7 +49,7 @@ public class NotificationActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NotificationActivity.this, CreateNotificationActivity.class));
+                startActivity(new Intent(NotificationActivity.this, ComposeNotification.class));
             }
         });
 
