@@ -189,18 +189,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     if (fetched) {
                         if (TextUtils.isEmpty(username.getText()))
                             username.setError("Empty");
-                        else if (TextUtils.getTrimmedLength(username.getText()) > 20)
-                            username.setError("Too much Characters");
-                        else if (TextUtils.getTrimmedLength(phone.getText().toString()) < 10)
-                            phone.setError("Must be 10 Digits");
                         else if (TextUtils.isEmpty(about.getText().toString()))
                             about.setError("is Empty");
-                        else if (TextUtils.getTrimmedLength(about.getText().toString()) > 35)
-                            about.setError("Too much characters");
                         else if (TextUtils.isEmpty(nickname.getText()))
                             nickname.setError("is Empty !");
-                        else if (TextUtils.getTrimmedLength(nickname.getText()) >= 15)
-                            nickname.setError("Too much Characters");
                         else {
                             progressDialog.show();
                             final String description;
@@ -235,6 +227,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                         Toast.makeText(EditProfileActivity.this,
                                                 "Changes applied", Toast.LENGTH_SHORT).show();
                                         progressDialog.cancel();
+                                        finish();
                                     } else {
                                         progressDialog.cancel();
                                         Toast.makeText(EditProfileActivity.this,
@@ -411,14 +404,14 @@ public class EditProfileActivity extends AppCompatActivity {
                     camera.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                                openCamera();
+                            openCamera();
                             dialog.dismiss();
                         }
                     });
                     gallery.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                                openImage();
+                            openImage();
                             dialog.dismiss();
                         }
                     });

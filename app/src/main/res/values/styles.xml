@@ -2,10 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#3F3F3F</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorAccent">@color/dd_green</item>
     </style>
 
     <style name="Maps_style" parent="Theme.AppCompat.Light.NoActionBar">

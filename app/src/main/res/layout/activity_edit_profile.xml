@@ -16,8 +16,9 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/dd_green">
+        android:layout_height="50dp"
+        android:background="#EBEBEB"
+        android:elevation="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,21 +26,21 @@
 
             <ImageButton
                 android:id="@+id/ok"
-                android:layout_width="60dp"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_action_check" />
+                android:src="@drawable/ic_action_check_green" />
 
             <ImageButton
                 android:id="@+id/close"
-                android:layout_width="60dp"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="35dp"
                 android:layout_toStartOf="@+id/ok"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_close_white_24dp" />
+                android:src="@drawable/ic_action_delete_dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
                 android:layout_marginStart="0dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Edit Profile"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
         </RelativeLayout>
@@ -70,10 +71,10 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/dark_circle"
                 android:clickable="true"
-                android:elevation="5dp"
                 android:focusable="true"
-                android:padding="4dp"
+                android:padding="0.7dp"
                 android:src="@mipmap/header2" />
 
             <TextView
@@ -82,98 +83,128 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_Image"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Change profile photo"
                 android:textColor="@color/dd_green"
+                android:textSize="15sp"
                 tools:ignore="HardcodedText" />
 
             <TextView
+                android:id="@+id/name_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/username"
-                android:layout_marginStart="10dp"
+                android:layout_below="@id/change_image"
+                android:layout_marginStart="20dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="Name"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <TextView
+                android:id="@+id/nickname_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/username"
-                android:layout_marginStart="10dp"
+                android:layout_below="@id/username"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Name"
-                android:textSize="12sp"
+                android:text="Nickname"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/change_image"
+                android:layout_below="@id/name_title"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Username"
-                android:paddingTop="0dp"
-                android:text="Sreekanth"
+                android:inputType="textPersonName"
+                android:maxLength="16"
                 android:textColor="@color/black"
-                android:textColorHint="#81000000"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/username"
+                android:layout_below="@id/nickname_title"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/ic_action_person_grey"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="start"
                 android:hint="Nickname"
-                android:padding="15dp"
+                android:inputType="textPersonName"
+                android:maxLength="10"
                 android:textColor="@color/black"
-                android:textColorHint="#80000000"
+                android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nickname"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Description"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nickname"
+                android:layout_below="@id/description_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/ic_action_info_grey"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Description"
-                android:padding="15dp"
+                android:inputType="textShortMessage"
+                android:maxLength="30"
                 android:textColor="@color/black"
                 android:textColorHint="#81000000"
+                android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/class_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/description"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Class Name"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/class_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/description"
+                android:layout_below="@id/class_name_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/ic_action_class_grey"
                 android:drawablePadding="7dp"
                 android:editable="false"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Class Name"
-                android:padding="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="#81000000"
+                android:textSize="15sp"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -189,46 +220,86 @@
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
                 android:text="Private Information"
+                android:textColor="@color/red"
                 android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/city_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title1"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="City"
+                android:textColor="@color/dd_green"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title1"
+                android:layout_below="@id/city_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/ic_action_my_location_grey"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="City"
-                android:padding="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="#81000000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/district_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/location"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="District"
+                android:textColor="@color/dd_green"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/location"
+                android:layout_below="@id/district_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/ic_action_my_location_grey"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="District"
-                android:padding="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="#81000000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/phone_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/district"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Phone Number"
+                android:textColor="@color/dd_green"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/district"
+                android:layout_below="@id/phone_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/ic_action_phone_grey"
@@ -236,16 +307,30 @@
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Phone Number"
                 android:inputType="phone"
-                android:padding="15dp"
+                android:maxLength="10"
                 android:textColor="@color/black"
                 android:textColorHint="#81000000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/birthday_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="District"
+                android:textColor="@color/dd_green"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/phone"
+                android:layout_below="@id/birthday_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="-1dp"
                 android:layout_marginEnd="20dp"
@@ -254,27 +339,40 @@
                 android:editable="false"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Date of Birth"
-                android:padding="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="#81000000"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/bio_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/birthday"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Bio"
+                android:textColor="@color/dd_green"
+                android:textSize="13sp"
                 tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/bio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/birthday"
+                android:layout_below="@id/bio_title"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 android:drawableStart="@drawable/ic_action_bio_grey"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Bio"
                 android:inputType="textMultiLine"
-                android:padding="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="#81020202"
+                android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
         </RelativeLayout>
