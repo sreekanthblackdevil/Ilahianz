@@ -111,8 +111,7 @@
             android:theme="@style/Teachers_style" />
         <activity
             android:name=".StoryActivity"
-            android:label="Remainder"
-            android:theme="@style/Remainder_Style" />
+            android:theme="@style/ChatStyle" />
         <activity
             android:name=".NotesActivity"
             android:icon="@drawable/ic_description_black_24dp"
