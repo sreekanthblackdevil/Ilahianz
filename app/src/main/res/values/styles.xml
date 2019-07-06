@@ -2,10 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#3F3F3F</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorAccent">@color/dd_green</item>
     </style>
 
     <style name="Maps_style" parent="Theme.AppCompat.Light.NoActionBar">
@@ -50,14 +47,7 @@
         <item name="colorPrimaryDark">#D6AB47</item>
         <item name="colorPrimary">#FFCA4F</item>
     </style>
-
-    <style name="Remainder_Style" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColor">@color/white</item>
-        <item name="colorAccent">#FC545A</item>
-        <item name="colorPrimaryDark">#14707C</item>
-        <item name="colorPrimary">#1A91A1</item>
-    </style>
-
+    
     <style name="Notification_Style" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimaryDark">#202332</item>

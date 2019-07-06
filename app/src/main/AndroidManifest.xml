@@ -28,7 +28,7 @@
         <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".EditProfileActivity"
-            android:theme="@style/Notification_Style" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ShowNotificationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -92,7 +92,7 @@
         <!-- android:label="@string/title_activity_maps"> -->
         <!-- </activity> -->
         <activity
-            android:name="com.sreekanth.dev.netsports.WebViewActivity"
+            android:name="WebViewActivity"
             android:theme="@style/ChatStyle" />
         <activity
             android:name=".HelpActivity"
@@ -111,8 +111,7 @@
             android:theme="@style/Teachers_style" />
         <activity
             android:name=".StoryActivity"
-            android:label="Remainder"
-            android:theme="@style/Remainder_Style" />
+            android:theme="@style/ChatStyle" />
         <activity
             android:name=".NotesActivity"
             android:icon="@drawable/ic_description_black_24dp"

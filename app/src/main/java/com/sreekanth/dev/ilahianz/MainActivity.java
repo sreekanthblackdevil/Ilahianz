@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity
         remainder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Startup.class);
+                Intent intent = new Intent(MainActivity.this, StoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -494,7 +494,7 @@ public class MainActivity extends AppCompatActivity
 
         private Context mContext;
 
-        public birthday(Context mContext) {
+        birthday(Context mContext) {
             this.mContext = mContext;
         }
 
